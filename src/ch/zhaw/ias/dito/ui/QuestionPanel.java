@@ -4,19 +4,19 @@ import java.util.List;
 
 import javax.swing.JScrollPane;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
 
-import org.jdesktop.swingx.JXPanel;
 import org.jdesktop.swingx.JXTable;
-import org.jdesktop.swingx.table.TableColumnModelExt;
 
 import ch.zhaw.ias.dito.config.Question;
+import ch.zhaw.ias.dito.ui.resource.Translation;
 
-public class TablePanel extends JXPanel {
+public class QuestionPanel extends DitoPanel {
   private JXTable table;
   private JScrollPane sp;
   
-  public TablePanel(List<Question> questions) {
+  public QuestionPanel() {
+    super(ScreenEnum.QUESTION, ScreenEnum.INPUT, ScreenEnum.OUTPUT);
+    List<Question> questions = Config.INSTANCE.getDitoConfig().getQuestions();
     QuestionTableModel model = new QuestionTableModel(questions);
     table = new JXTable(model);
     table.setColumnControlVisible(true);
@@ -57,9 +57,11 @@ public class TablePanel extends JXPanel {
       }
       throw new IllegalArgumentException("this is the end of the world");
     }
-  }
-  
-  /*static class QuestionColumnModel implements TableColumnModelExt {
     
-  }*/
+    @Override
+    public String getColumnName(int column) {
+      return Translation.INSTANCE.get("s2.title." + column);
+    }
+  }
+
 }
