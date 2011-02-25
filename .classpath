@@ -8,5 +8,6 @@
 	<classpathentry kind="lib" path="C:/libs/jgoodies-forms-1.4.0/lib/jgoodies-common-1.1.1.jar"/>
 	<classpathentry kind="lib" path="C:/libs/jgoodies-forms-1.4.0/jgoodies-forms-1.4.0.jar"/>
 	<classpathentry kind="lib" path="C:/libs/jgoodies-looks-2.4.0/jgoodies-looks-2.4.0.jar"/>
+	<classpathentry kind="lib" path="C:/libs/validation/ValidationAPI.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

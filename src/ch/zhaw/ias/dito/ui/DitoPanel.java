@@ -1,13 +1,17 @@
 package ch.zhaw.ias.dito.ui;
 
 import org.jdesktop.swingx.JXPanel;
+import org.jdesktop.swingx.JXTitledPanel;
+import org.netbeans.validation.api.ui.ValidationGroup;
 
-public abstract class DitoPanel extends JXPanel { 
+public abstract class DitoPanel extends JXTitledPanel { 
+  private ValidationGroup validationGroup;
   private ScreenEnum screenEnum;
   private ScreenEnum previous;
   private ScreenEnum next;
   
-  public DitoPanel(ScreenEnum screenEnum, ScreenEnum previous, ScreenEnum next) {
+  public DitoPanel(ScreenEnum screenEnum, ScreenEnum previous, ScreenEnum next, ValidationGroup validationGroup) {
+    this.setTitle("ajsldfjlsjadfl");
     this.screenEnum = screenEnum;
     this.previous = previous;
     this.next = next;
@@ -28,5 +32,9 @@ public abstract class DitoPanel extends JXPanel {
   }
   public boolean hasPrevious() {
     return previous != null;
+  }
+
+  public ValidationGroup getValidationGroup() {
+    return validationGroup;
   }
 }

@@ -1,40 +1,47 @@
 package ch.zhaw.ias.dito.ui;
 
+import org.jdesktop.swingx.JXButton;
 import org.jdesktop.swingx.JXPanel;
 import org.jdesktop.swingx.JXTextField;
+import org.netbeans.validation.api.builtin.Validators;
+import org.netbeans.validation.api.ui.ValidationGroup;
+
+import ch.zhaw.ias.dito.ui.resource.Translation;
+
+import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.debug.FormDebugPanel;
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
 
 public class InputPanel extends DitoPanel {
   private JXTextField filePath = new JXTextField();
+  private JXButton browseButton;
   private JXTextField separator = new JXTextField();
   private JXTextField questions = new JXTextField();
-  public InputPanel() {
-    super(ScreenEnum.INPUT, null, ScreenEnum.QUESTION);
-    /*FormLayout layout = new FormLayout("pref, 4dlu, 50dlu, 4dlu, min", 
+  public InputPanel(ValidationGroup validationGroup) {
+    super(ScreenEnum.INPUT, null, ScreenEnum.QUESTION, validationGroup);
+    FormLayout layout = new FormLayout("pref, 4dlu, 50dlu, 4dlu, min", 
     "pref, pref, 10px, pref, 10px, pref, 10px, pref, 10px, pref");
-    layout.setRowGroups(new int[][]{{1, 3, 5}}); 
-    ResourceBundle bundle = ResourceBundle.getBundle("ch.zhaw.ias.dito.ui.resource.uiTexts");
+    layout.setRowGroups(new int[][]{{2, 4, 6}}); 
     CellConstraints cc = new CellConstraints();
-    DefaultFormBuilder fb = new DefaultFormBuilder(layout, bundle);
-    fb.setDefaultDialogBorder();
+    DefaultFormBuilder fb = new DefaultFormBuilder(layout, Translation.INSTANCE.getBundle(), new FormDebugPanel());
+    //fb.setDefaultDialogBorder();
     
     fb.appendI15dSeparator("s1.lb.file");
-    fb.appendI15d("s1.lb.file", filePath);
+    browseButton = new JXButton(Translation.INSTANCE.get("s1.bu.browse"));    
+    fb.appendI15d("s1.lb.file", filePath, browseButton);
+    //fb.add();
+    fb.nextLine();
     fb.nextLine();
     fb.appendI15d("s1.lb.separator", separator);
     fb.nextLine();
+    fb.nextLine();
     fb.appendI15d("s1.lb.question", questions);
     fb.nextLine();
-    fb.appendI15d("s1.lb.survey", surveys);    
-    /*fb.appendadd(new JXLabel("Datei"), cc.xy(1, 1));
-    fb.add(filePath, cc.xy(3, 1));
-    fb.add(new JXLabel("Trennzeichen"), cc.xy(1, 3));
-    fb.add(separator, cc.xy(3, 3));
-    fb.add(new JXLabel("Fragen"), cc.xy(1, 5));
-    fb.add(separator, cc.xy(3, 5));
-    fb.add(new JXLabel("Fragebogen"), cc.xy(1, 7));
-    fb.add(separator, cc.xy(3, 7));
     
-    this.setLayout(new BorderLayout());
-    this.add(fb.getPanel(), BorderLayout.CENTER);*/
+    validationGroup.add(filePath, Validators.FILE_MUST_BE_FILE, Validators.FILE_MUST_EXIST);
+    validationGroup.add(separator, Validators.REQUIRE_NON_EMPTY_STRING);
+    
+    this.add(fb.getPanel());
   }
 }

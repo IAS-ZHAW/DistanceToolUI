@@ -2,15 +2,12 @@ package ch.zhaw.ias.dito.ui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
@@ -19,9 +16,9 @@ import javax.xml.bind.JAXBException;
 
 import org.jdesktop.swingx.JXButton;
 import org.jdesktop.swingx.JXFrame;
-import org.jdesktop.swingx.JXLabel;
 import org.jdesktop.swingx.JXPanel;
 import org.jdesktop.swingx.JXStatusBar;
+import org.netbeans.validation.api.ui.ValidationPanel;
 
 import ch.zhaw.ias.dito.DistanceAlgorithm;
 import ch.zhaw.ias.dito.Matrix;
@@ -31,52 +28,44 @@ import ch.zhaw.ias.dito.ui.resource.Translation;
 import com.jgoodies.looks.windows.WindowsLookAndFeel;
 
 public class MainFrame extends JXFrame implements ActionListener {
-  private static final String IMAGE_PATH = "C:/java-workspace/DistanceToolUI/src/ch/zhaw/ias/dito/ui/resource/";
+  private ValidationPanel validationPanel = new ValidationPanel();
+  private TopPanel topPanel;
   private JLabel statusLabel;
   private JProgressBar progressBar; 
   private DitoPanel currentMainPanel;
   private ScreenEnum currentScreen;
   
-  private JXLabel imageLabel = new JXLabel();
   private JXButton nextButton = new JXButton(Translation.INSTANCE.get("misc.next"));
   private JXButton previousButton = new JXButton(Translation.INSTANCE.get("misc.previous"));
-  
-  private JXButton newProject = new JXButton(Translation.INSTANCE.get("toolbar.new"));
-  private JXButton openProject = new JXButton(Translation.INSTANCE.get("toolbar.open"));
-  private JXButton saveProject = new JXButton(Translation.INSTANCE.get("toolbar.save"));
-  private JXButton saveAsProject = new JXButton(Translation.INSTANCE.get("toolbar.saveAs"));
-  
+    
   private String inputPath = "c:/java-workspace/DistanceToolCore/testdata/irisFlower.dito";
   private String outputPath = "c:/java-workspace/DistanceToolCore/testdata/irisFlower-output.dito";
   
   public MainFrame() {
-    /*try {
-      DitoConfiguration config = DitoConfiguration.loadFromFile(inputPath);
+    //Config.INSTANCE.setDitoConfig(DitoConfiguration.createEmpty());
+    //Just for testing purpose
+    try {
+      String testfile = "C:/java-workspace/DistanceToolCore/testdata/irisFlower.dito";
+      DitoConfiguration config = DitoConfiguration.loadFromFile(testfile);
+      config.setLocation(testfile);
+      config.loadMatrix();
       Config.INSTANCE.setDitoConfig(config);
-    } catch (Exception e) {
-      throw new Error("We're doomed!!!!");
-    }*/
-    Config.INSTANCE.setDitoConfig(DitoConfiguration.createEmpty());
-    JXPanel topPanel = new JXPanel();
-    
-    topPanel.setLayout(new FlowLayout());
-    JXPanel toolbarPanel = new JXPanel();
-    toolbarPanel.setLayout(new GridLayout(2, 2));
-    toolbarPanel.add(newProject);
-    toolbarPanel.add(openProject);
-    toolbarPanel.add(saveProject);
-    toolbarPanel.add(saveAsProject);
-    topPanel.add(imageLabel);
-    topPanel.add(toolbarPanel);
-    
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    } catch (JAXBException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
     JXPanel buttonPanel = new JXPanel();
     buttonPanel.setLayout(new FlowLayout());
     buttonPanel.add(previousButton);
     buttonPanel.add(nextButton);
     nextButton.addActionListener(this);
     previousButton.addActionListener(this);
-    openProject.addActionListener(this);
     
+    topPanel = new TopPanel(this);
     this.add(topPanel, BorderLayout.NORTH);
     this.add(buttonPanel, BorderLayout.SOUTH);
         
@@ -89,10 +78,9 @@ public class MainFrame extends JXFrame implements ActionListener {
             JXStatusBar.Constraint.ResizeBehavior.FILL); // Fill with no inserts
     progressBar = new JProgressBar();
     bar.add(progressBar, c2);            // Fill with no inserts - will use remaining space
-
+    this.add(validationPanel, BorderLayout.CENTER);
     
     this.setStatusBar(bar);
-    
     this.setTitle(Translation.INSTANCE.get("misc.title"));
     this.setSize(500, 500);
     this.setDefaultCloseOperation(JXFrame.EXIT_ON_CLOSE);
@@ -103,46 +91,9 @@ public class MainFrame extends JXFrame implements ActionListener {
 
   @Override
   public void actionPerformed(ActionEvent e) {   
-    if (e.getSource() == openProject) {
-      JFileChooser fileChooser = new JFileChooser();
-      int returnVal = fileChooser.showOpenDialog(this);
-
-      if (returnVal == JFileChooser.APPROVE_OPTION) {
-          File file = fileChooser.getSelectedFile();
-          try {
-            DitoConfiguration config = DitoConfiguration.loadFromFile(file);
-            Config.INSTANCE.setDitoConfig(config);
-            switchTo(currentScreen);
-          } catch (Exception e2) {
-            throw new Error("We're doomed!!!!", e2);
-          }
-          //This is where a real application would open the file.
-          //log.append("Opening: " + file.getName() + "." + newline);
-      } else {
-          //log.append("Open command cancelled by user." + newline);
-      }
-    } else if (e.getSource() == nextButton || e.getSource() == previousButton) { 
+    if (e.getSource() == nextButton || e.getSource() == previousButton) { 
       switchMainPanel(e.getSource() == previousButton);
-    } else {
-      try {
-        //System.out.println("reading input-file: " + config.getInput().getFilename());
-        DitoConfiguration config = Config.INSTANCE.getDitoConfig();
-        DitoConfiguration.saveToFile(outputPath, config);
-        Matrix m = Matrix.readFromFile(new File(config.getInput().getFilename()), config.getInput().getSeparator());
-        DistanceAlgorithm algo = new DistanceAlgorithm(m, config);
-        algo.doIt();
-        algo.writeToFile();
-      } catch (FileNotFoundException e1) {
-        // TODO Auto-generated catch block
-        e1.printStackTrace();
-      } catch (IOException e1) {
-        // TODO Auto-generated catch block
-        e1.printStackTrace();
-      } catch (JAXBException e1) {
-        // TODO Auto-generated catch block
-        e1.printStackTrace();
-      }
-    }
+    } 
   }
   
   public void switchMainPanel(boolean previous) {
@@ -159,13 +110,12 @@ public class MainFrame extends JXFrame implements ActionListener {
     if (currentMainPanel != null) {
       this.remove(currentMainPanel); 
     }
-    currentMainPanel = e.getPanel();
-    ImageIcon image = new ImageIcon(IMAGE_PATH + "process-screen" + currentMainPanel.getScreenEnum().getScreenId() + ".png");
-    imageLabel.setIcon(image);
+    currentMainPanel = e.getPanel(validationPanel.getValidationGroup());
+    topPanel.switchProcessImage(e);
     nextButton.setVisible(currentMainPanel.hasNext());
     previousButton.setVisible(currentMainPanel.hasPrevious());
     this.currentScreen = e;
-    this.add(currentMainPanel, BorderLayout.CENTER);
+    validationPanel.setInnerComponent(currentMainPanel);
     this.validate();
   }
   
@@ -186,5 +136,9 @@ public class MainFrame extends JXFrame implements ActionListener {
        new MainFrame();
       }
   });
+  }
+
+  public void reload() {
+    switchTo(currentScreen);
   }
 }
