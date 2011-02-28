@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.xml.bind.JAXBException;
@@ -28,6 +29,7 @@ public class ToolbarPanel extends JXTitledPanel implements ActionListener {
   public ToolbarPanel(MainFrame mainFrame) {
     this.mainFrame = mainFrame;
     setTitle(Translation.INSTANCE.get("main.toolbar"));
+    setBorder(BorderFactory.createEtchedBorder());
     
     JXPanel toolbarPanel = new JXPanel();
     toolbarPanel.setLayout(new GridLayout(2, 2));

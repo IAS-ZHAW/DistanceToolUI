@@ -11,6 +11,7 @@ import javax.xml.bind.JAXBException;
 
 import org.jdesktop.swingx.JXFrame;
 import org.jdesktop.swingx.JXStatusBar;
+import org.jdesktop.swingx.plaf.windows.WindowsLookAndFeelAddons;
 
 import ch.zhaw.ias.dito.config.DitoConfiguration;
 import ch.zhaw.ias.dito.ui.resource.Translation;
@@ -49,17 +50,17 @@ public class MainFrame extends JXFrame {
       e.printStackTrace();
     }
 
-    FormLayout layout = new FormLayout("150dlu, 2dlu, pref:grow", 
-    "fill:75dlu, 2dlu, fill:pref:grow");
+    FormLayout layout = new FormLayout("2dlu, 150dlu, 2dlu, pref:grow, 2dlu", 
+    "2dlu, fill:75dlu, 2dlu, fill:pref:grow, 2dlu");
     CellConstraints cc = new CellConstraints();
     this.getContentPane().setLayout(layout);
     
     toolbarPanel = new ToolbarPanel(this);
     
-    this.add(toolbarPanel, cc.xy(1, 1));
-    this.add(helpPanel, cc.xy(3, 1));
-    this.add(processPanel, cc.xy(1, 3));
-    this.add(mainPanel, cc.xy(3, 3));
+    this.add(toolbarPanel, cc.xy(2, 2));
+    this.add(helpPanel, cc.xy(4, 2));
+    this.add(processPanel, cc.xy(2, 4));
+    this.add(mainPanel, cc.xy(4, 4));
  
     JXStatusBar bar = new JXStatusBar();
     statusLabel = new JLabel("Ready");
@@ -81,9 +82,9 @@ public class MainFrame extends JXFrame {
   }
   
   public void switchTo(ScreenEnum e) {
-    processPanel.switchProcessImage(e);
     mainPanel.switchTo(e);
     helpPanel.switchTo(e);
+    processPanel.switchTo(e);
     this.currentScreen = e;
     this.validate();
   }

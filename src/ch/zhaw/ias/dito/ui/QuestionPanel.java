@@ -18,7 +18,7 @@ public class QuestionPanel extends DitoPanel {
   private JScrollPane sp;
   
   public QuestionPanel(ValidationGroup validationGroup) {
-    super(ScreenEnum.QUESTION, ScreenEnum.INPUT, ScreenEnum.OUTPUT, validationGroup);
+    super(ScreenEnum.QUESTION, ScreenEnum.INPUT, ScreenEnum.METHOD, validationGroup);
     List<Question> questions = Config.INSTANCE.getDitoConfig().getQuestions();
     QuestionTableModel model = new QuestionTableModel(questions);
     table = new JXTable(model);

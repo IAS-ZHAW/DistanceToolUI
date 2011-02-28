@@ -5,6 +5,8 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
+
 import org.jdesktop.swingx.JXButton;
 import org.jdesktop.swingx.JXPanel;
 import org.jdesktop.swingx.JXTitledPanel;
@@ -24,8 +26,10 @@ public class MainPanel extends JXTitledPanel implements ActionListener {
   public MainPanel(MainFrame mainFrame) {
     this.mainFrame = mainFrame;
     setTitle(Translation.INSTANCE.get("main.main"));
+    setBorder(BorderFactory.createEtchedBorder());
+    
     JXPanel buttonPanel = new JXPanel();
-    buttonPanel.setLayout(new FlowLayout());
+    buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
     buttonPanel.add(previousButton);
     buttonPanel.add(nextButton);
     
@@ -38,10 +42,9 @@ public class MainPanel extends JXTitledPanel implements ActionListener {
   
   public void switchTo(ScreenEnum e) {
     currentMainPanel = e.getPanel(validationPanel.getValidationGroup());    
-    nextButton.setVisible(currentMainPanel.hasNext());
-    previousButton.setVisible(currentMainPanel.hasPrevious());
+    nextButton.setEnabled(currentMainPanel.hasNext());
+    previousButton.setEnabled(currentMainPanel.hasPrevious());
     validationPanel.setInnerComponent(currentMainPanel);
-    
     setTitle(Translation.INSTANCE.get(e.getTitleKey()));
   }
   

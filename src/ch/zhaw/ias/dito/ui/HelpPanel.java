@@ -3,6 +3,7 @@ package ch.zhaw.ias.dito.ui;
 import java.io.IOException;
 import java.net.URL;
 
+import javax.swing.BorderFactory;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 
@@ -15,6 +16,7 @@ public class HelpPanel extends JXTitledPanel {
   
   public HelpPanel() {
     setTitle(Translation.INSTANCE.get("main.help"));
+    setBorder(BorderFactory.createEtchedBorder());
     textPane.setEditable(false);
     JScrollPane js = new JScrollPane(textPane);
 

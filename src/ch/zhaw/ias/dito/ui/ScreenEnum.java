@@ -1,15 +1,15 @@
 package ch.zhaw.ias.dito.ui;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 import org.netbeans.validation.api.ui.ValidationGroup;
 
 public enum ScreenEnum {
   INPUT(1, InputPanel.class), 
-  QUESTION(2, QuestionPanel.class), 
-  OUTPUT(3, OutputPanel.class), 
-  ANALYSIS(4, AnalysisPanel.class);
+  QUESTION(2, QuestionPanel.class),
+  METHOD(3, MethodPanel.class), 
+  OUTPUT(4, OutputPanel.class); 
+  //ANALYSIS(5, AnalysisPanel.class);
   
   private int screenId;
   private Class panelClass;
