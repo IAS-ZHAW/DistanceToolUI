@@ -1,11 +1,11 @@
 package ch.zhaw.ias.dito.ui;
 
 import org.jdesktop.swingx.JXButton;
-import org.jdesktop.swingx.JXPanel;
 import org.jdesktop.swingx.JXTextField;
 import org.netbeans.validation.api.builtin.Validators;
 import org.netbeans.validation.api.ui.ValidationGroup;
 
+import ch.zhaw.ias.dito.config.Input;
 import ch.zhaw.ias.dito.ui.resource.Translation;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
@@ -29,7 +29,8 @@ public class InputPanel extends DitoPanel {
     //fb.setDefaultDialogBorder();
     
     fb.appendI15dSeparator("s1.lb.file");
-    browseButton = new JXButton(Translation.INSTANCE.get("s1.bu.browse"));    
+    browseButton = new JXButton(Translation.INSTANCE.get("s1.bu.browse"));
+    filePath.setName(Translation.INSTANCE.get("s1.lb.file"));
     fb.appendI15d("s1.lb.file", filePath, browseButton);
     //fb.add();
     fb.nextLine();
@@ -42,6 +43,9 @@ public class InputPanel extends DitoPanel {
     
     validationGroup.add(filePath, Validators.FILE_MUST_BE_FILE, Validators.FILE_MUST_EXIST);
     validationGroup.add(separator, Validators.REQUIRE_NON_EMPTY_STRING);
+    Input i = Config.INSTANCE.getDitoConfig().getInput();
+    filePath.setText(i.getFilename());
+    separator.setText(Character.toString(i.getSeparator()));
     
     this.add(fb.getPanel());
   }

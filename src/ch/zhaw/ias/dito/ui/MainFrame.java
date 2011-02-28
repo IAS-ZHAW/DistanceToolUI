@@ -29,15 +29,12 @@ public class MainFrame extends JXFrame {
   private JLabel statusLabel;
   private JProgressBar progressBar; 
   private ScreenEnum currentScreen;
-      
-  private String inputPath = "c:/java-workspace/DistanceToolCore/testdata/irisFlower.dito";
-  private String outputPath = "c:/java-workspace/DistanceToolCore/testdata/irisFlower-output.dito";
-  
+        
   public MainFrame() {
     //Config.INSTANCE.setDitoConfig(DitoConfiguration.createEmpty());
     //Just for testing purpose
     try {
-      String testfile = "C:/java-workspace/DistanceToolCore/testdata/irisFlower.dito";
+      String testfile = "C:/java-workspace/DistanceToolUI/testdata/irisFlower.dito";
       DitoConfiguration config = DitoConfiguration.loadFromFile(testfile);
       config.setLocation(testfile);
       config.loadMatrix();
@@ -62,7 +59,7 @@ public class MainFrame extends JXFrame {
     this.add(processPanel, cc.xy(2, 4));
     this.add(mainPanel, cc.xy(4, 4));
  
-    JXStatusBar bar = new JXStatusBar();
+    /*JXStatusBar bar = new JXStatusBar();
     statusLabel = new JLabel("Ready");
     JXStatusBar.Constraint c1 = new JXStatusBar.Constraint();
     c1.setFixedWidth(100);
@@ -71,8 +68,8 @@ public class MainFrame extends JXFrame {
             JXStatusBar.Constraint.ResizeBehavior.FILL); // Fill with no inserts
     progressBar = new JProgressBar();
     bar.add(progressBar, c2);            // Fill with no inserts - will use remaining space
+    this.setStatusBar(bar);*/
     
-    this.setStatusBar(bar);
     this.setTitle(Translation.INSTANCE.get("misc.title"));
     this.setSize(1000, 1000);
     this.setDefaultCloseOperation(JXFrame.EXIT_ON_CLOSE);

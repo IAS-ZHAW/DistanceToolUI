@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:ditoConfiguration xmlns:ns2="http://ias.zhaw.ch/">
+    <input>
+        <filename>C:\java-workspace\DistanceToolCore\testdata\m150x4irisFlower.csv</filename>
+        <separator>;</separator>
+    </input>
+    <output>
+        <filename>C:\java-workspace\DistanceToolCore\testdata\m150x4irisFlower-$$METHOD$$.csv</filename>
+        <separator>|</separator>
+        <precision>6</precision>
+    </output>
+    <method>
+        <name>Euklid</name>
+    </method>
+    <questionConfig>
+        <enableScale>true</enableScale>
+        <enableQuestionWeight>true</enableQuestionWeight>
+        <enableDistanceWeight>false</enableDistanceWeight>
+        <enableAutoScale>true</enableAutoScale>
+    </questionConfig>
+    <questions>
+        <question>
+            <column>1</column>
+            <distanceWeight>1.0</distanceWeight>
+            <name>LÃ¤nge</name>
+            <questionType>ORDINAL</questionType>
+            <questionWeight>2.0</questionWeight>
+            <scaling>1.0</scaling>
+        </question>
+        <question>
+            <column>2</column>
+            <distanceWeight>1.0</distanceWeight>
+            <name>Juhui</name>
+            <questionType>ORDINAL</questionType>
+            <questionWeight>2.0</questionWeight>
+            <scaling>1.0</scaling>
+        </question>
+        <question>
+            <column>3</column>
+            <distanceWeight>1.0</distanceWeight>
+            <name>Sepal Width</name>
+            <questionType>ORDINAL</questionType>
+            <questionWeight>1.0</questionWeight>
+            <scaling>1.0</scaling>
+        </question>
+        <question>
+            <column>4</column>
+            <distanceWeight>1.0</distanceWeight>
+            <name>Sepal Width</name>
+            <questionType>ORDINAL</questionType>
+            <questionWeight>1.0</questionWeight>
+            <scaling>1.0</scaling>
+        </question>
+    </questions>
+</ns2:ditoConfiguration>
