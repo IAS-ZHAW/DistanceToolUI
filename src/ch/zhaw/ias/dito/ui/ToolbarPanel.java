@@ -5,36 +5,30 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.xml.bind.JAXBException;
 
 import org.jdesktop.swingx.JXButton;
-import org.jdesktop.swingx.JXLabel;
 import org.jdesktop.swingx.JXPanel;
 import org.jdesktop.swingx.JXTitledPanel;
 
-import ch.zhaw.ias.dito.DistanceAlgorithm;
-import ch.zhaw.ias.dito.Matrix;
 import ch.zhaw.ias.dito.config.DitoConfiguration;
 import ch.zhaw.ias.dito.ui.resource.Translation;
 
-public class TopPanel extends JXTitledPanel implements ActionListener {
-  private static final String IMAGE_PATH = "C:/java-workspace/DistanceToolUI/src/ch/zhaw/ias/dito/ui/resource/";
+public class ToolbarPanel extends JXTitledPanel implements ActionListener {
   private MainFrame mainFrame;
   
-  private JXLabel imageLabel = new JXLabel();
   private JXButton newProject = new JXButton(Translation.INSTANCE.get("toolbar.new"), new ImageIcon(Toolkit.getDefaultToolkit().getImage(Translation.class.getResource("ic-new.png"))));
   private JXButton openProject = new JXButton(Translation.INSTANCE.get("toolbar.open"), new ImageIcon(Toolkit.getDefaultToolkit().getImage(Translation.class.getResource("ic-open.png"))));
   private JXButton saveProject = new JXButton(Translation.INSTANCE.get("toolbar.save"), new ImageIcon(Toolkit.getDefaultToolkit().getImage(Translation.class.getResource("ic-save.png"))));
   private JXButton saveAsProject = new JXButton(Translation.INSTANCE.get("toolbar.saveAs"), new ImageIcon(Toolkit.getDefaultToolkit().getImage(Translation.class.getResource("ic-saveAs.png"))));
   
-  public TopPanel(MainFrame mainFrame) {
+  public ToolbarPanel(MainFrame mainFrame) {
     this.mainFrame = mainFrame;
-    //setTitle("asdfjlasjfd");
+    setTitle(Translation.INSTANCE.get("main.toolbar"));
+    
     JXPanel toolbarPanel = new JXPanel();
     toolbarPanel.setLayout(new GridLayout(2, 2));
     toolbarPanel.add(newProject);
@@ -47,9 +41,8 @@ public class TopPanel extends JXTitledPanel implements ActionListener {
     saveProject.addActionListener(this);
     saveAsProject.addActionListener(this);
     
-    this.setLayout(new GridLayout(1, 2));  
+    //this.setLayout(new GridLayout(1, 2));
     this.add(toolbarPanel);
-    this.add(imageLabel);    
   }
   
   @Override
@@ -107,10 +100,5 @@ public class TopPanel extends JXTitledPanel implements ActionListener {
         e1.printStackTrace();
       }
     }
-  }
-  
-  public void switchProcessImage(ScreenEnum screen) {
-    ImageIcon image = new ImageIcon(IMAGE_PATH + "process-screen" + screen.getScreenId() + ".png");
-    imageLabel.setIcon(image);
   }
 }

@@ -23,6 +23,10 @@ public enum ScreenEnum {
     return screenId;
   }
   
+  public String getTitleKey() {
+    return "s" + getScreenId() + ".title";
+  }
+  
   public DitoPanel getPanel(ValidationGroup validationGroup) {
     try {
       Constructor<DitoPanel> c = panelClass.getConstructor(ValidationGroup.class);

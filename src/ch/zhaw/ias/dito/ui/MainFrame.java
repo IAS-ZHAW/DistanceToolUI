@@ -1,10 +1,5 @@
 package ch.zhaw.ias.dito.ui;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -14,30 +9,26 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.xml.bind.JAXBException;
 
-import org.jdesktop.swingx.JXButton;
 import org.jdesktop.swingx.JXFrame;
-import org.jdesktop.swingx.JXPanel;
 import org.jdesktop.swingx.JXStatusBar;
-import org.netbeans.validation.api.ui.ValidationPanel;
 
-import ch.zhaw.ias.dito.DistanceAlgorithm;
-import ch.zhaw.ias.dito.Matrix;
 import ch.zhaw.ias.dito.config.DitoConfiguration;
 import ch.zhaw.ias.dito.ui.resource.Translation;
 
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.looks.windows.WindowsLookAndFeel;
 
-public class MainFrame extends JXFrame implements ActionListener {
-  private ValidationPanel validationPanel = new ValidationPanel();
-  private TopPanel topPanel;
+public class MainFrame extends JXFrame {
+  private ToolbarPanel toolbarPanel;
+  private HelpPanel helpPanel = new HelpPanel();
+  private ProcessPanel processPanel = new ProcessPanel();
+  private MainPanel mainPanel = new MainPanel(this);
+  
   private JLabel statusLabel;
   private JProgressBar progressBar; 
-  private DitoPanel currentMainPanel;
   private ScreenEnum currentScreen;
-  
-  private JXButton nextButton = new JXButton(Translation.INSTANCE.get("misc.next"));
-  private JXButton previousButton = new JXButton(Translation.INSTANCE.get("misc.previous"));
-    
+      
   private String inputPath = "c:/java-workspace/DistanceToolCore/testdata/irisFlower.dito";
   private String outputPath = "c:/java-workspace/DistanceToolCore/testdata/irisFlower-output.dito";
   
@@ -58,17 +49,18 @@ public class MainFrame extends JXFrame implements ActionListener {
       e.printStackTrace();
     }
 
-    JXPanel buttonPanel = new JXPanel();
-    buttonPanel.setLayout(new FlowLayout());
-    buttonPanel.add(previousButton);
-    buttonPanel.add(nextButton);
-    nextButton.addActionListener(this);
-    previousButton.addActionListener(this);
+    FormLayout layout = new FormLayout("150dlu, 2dlu, pref:grow", 
+    "fill:75dlu, 2dlu, fill:pref:grow");
+    CellConstraints cc = new CellConstraints();
+    this.getContentPane().setLayout(layout);
     
-    topPanel = new TopPanel(this);
-    this.add(topPanel, BorderLayout.NORTH);
-    this.add(buttonPanel, BorderLayout.SOUTH);
-        
+    toolbarPanel = new ToolbarPanel(this);
+    
+    this.add(toolbarPanel, cc.xy(1, 1));
+    this.add(helpPanel, cc.xy(3, 1));
+    this.add(processPanel, cc.xy(1, 3));
+    this.add(mainPanel, cc.xy(3, 3));
+ 
     JXStatusBar bar = new JXStatusBar();
     statusLabel = new JLabel("Ready");
     JXStatusBar.Constraint c1 = new JXStatusBar.Constraint();
@@ -78,45 +70,26 @@ public class MainFrame extends JXFrame implements ActionListener {
             JXStatusBar.Constraint.ResizeBehavior.FILL); // Fill with no inserts
     progressBar = new JProgressBar();
     bar.add(progressBar, c2);            // Fill with no inserts - will use remaining space
-    this.add(validationPanel, BorderLayout.CENTER);
     
     this.setStatusBar(bar);
     this.setTitle(Translation.INSTANCE.get("misc.title"));
-    this.setSize(500, 500);
+    this.setSize(1000, 1000);
     this.setDefaultCloseOperation(JXFrame.EXIT_ON_CLOSE);
     this.setVisible(true);
     
     switchTo(ScreenEnum.INPUT);
   }
-
-  @Override
-  public void actionPerformed(ActionEvent e) {   
-    if (e.getSource() == nextButton || e.getSource() == previousButton) { 
-      switchMainPanel(e.getSource() == previousButton);
-    } 
-  }
-  
-  public void switchMainPanel(boolean previous) {
-    ScreenEnum nextScreen;
-    if (previous == true) {
-      nextScreen = currentMainPanel.getPrevious();
-    } else {
-      nextScreen = currentMainPanel.getNext();
-    }
-    switchTo(nextScreen);
-  }
   
   public void switchTo(ScreenEnum e) {
-    if (currentMainPanel != null) {
-      this.remove(currentMainPanel); 
-    }
-    currentMainPanel = e.getPanel(validationPanel.getValidationGroup());
-    topPanel.switchProcessImage(e);
-    nextButton.setVisible(currentMainPanel.hasNext());
-    previousButton.setVisible(currentMainPanel.hasPrevious());
+    processPanel.switchProcessImage(e);
+    mainPanel.switchTo(e);
+    helpPanel.switchTo(e);
     this.currentScreen = e;
-    validationPanel.setInnerComponent(currentMainPanel);
     this.validate();
+  }
+  
+  public void reload() {
+    switchTo(currentScreen);
   }
   
   public static void main(String... args) {
@@ -136,9 +109,5 @@ public class MainFrame extends JXFrame implements ActionListener {
        new MainFrame();
       }
   });
-  }
-
-  public void reload() {
-    switchTo(currentScreen);
   }
 }

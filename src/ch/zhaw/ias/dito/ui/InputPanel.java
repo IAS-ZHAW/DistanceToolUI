@@ -18,6 +18,7 @@ public class InputPanel extends DitoPanel {
   private JXButton browseButton;
   private JXTextField separator = new JXTextField();
   private JXTextField questions = new JXTextField();
+  
   public InputPanel(ValidationGroup validationGroup) {
     super(ScreenEnum.INPUT, null, ScreenEnum.QUESTION, validationGroup);
     FormLayout layout = new FormLayout("pref, 4dlu, 50dlu, 4dlu, min", 
