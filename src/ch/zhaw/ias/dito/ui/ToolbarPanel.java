@@ -17,6 +17,7 @@ import org.jdesktop.swingx.JXTitledPanel;
 
 import ch.zhaw.ias.dito.config.DitoConfiguration;
 import ch.zhaw.ias.dito.ui.resource.Translation;
+import ch.zhaw.ias.dito.ui.util.ExtensionFileFilter;
 
 public class ToolbarPanel extends JXTitledPanel implements ActionListener {
   private MainFrame mainFrame;
@@ -51,6 +52,7 @@ public class ToolbarPanel extends JXTitledPanel implements ActionListener {
   public void actionPerformed(ActionEvent e) {
     if (e.getSource() == openProject) {
       JFileChooser fileChooser = new JFileChooser();
+      fileChooser.setFileFilter(ExtensionFileFilter.DITO);
       int returnVal = fileChooser.showOpenDialog(this);
 
       if (returnVal == JFileChooser.APPROVE_OPTION) {

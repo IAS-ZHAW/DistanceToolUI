@@ -1,6 +1,8 @@
 package ch.zhaw.ias.dito.ui;
 
 import java.awt.BorderLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.JScrollPane;
@@ -12,16 +14,31 @@ import org.netbeans.validation.api.ui.ValidationGroup;
 import ch.zhaw.ias.dito.config.Question;
 import ch.zhaw.ias.dito.config.TableColumn;
 import ch.zhaw.ias.dito.ui.resource.Translation;
+import ch.zhaw.ias.dito.ui.util.HistogramFrame;
 
 public class QuestionPanel extends DitoPanel {
   private JXTable table;
   private JScrollPane sp;
+  private List<Question> questions;
   
   public QuestionPanel(ValidationGroup validationGroup) {
     super(ScreenEnum.QUESTION, ScreenEnum.INPUT, ScreenEnum.METHOD, validationGroup);
-    List<Question> questions = Config.INSTANCE.getDitoConfig().getQuestions();
+    questions = Config.INSTANCE.getDitoConfig().getQuestions();
     QuestionTableModel model = new QuestionTableModel(questions);
+    
     table = new JXTable(model);
+    table.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        if (e.getClickCount() == 2) {
+          JXTable target = (JXTable)e.getSource();
+          int viewIndex = target.getSelectedRow();
+          int modelIndex = table.convertRowIndexToModel(viewIndex);
+          Question q = questions.get(modelIndex);
+          new HistogramFrame(q);
+        }      
+      }
+    });
     table.setColumnControlVisible(true);
     sp = new JScrollPane(table);
     //table.setColumnModel(new QuestionColumnModel());
@@ -76,4 +93,8 @@ public class QuestionPanel extends DitoPanel {
     }
   }
 
+  @Override
+  public void saveToModel() {
+    // TODO Auto-generated method stub
+  }
 }

@@ -34,7 +34,7 @@ public class MainFrame extends JXFrame {
     //Config.INSTANCE.setDitoConfig(DitoConfiguration.createEmpty());
     //Just for testing purpose
     try {
-      String testfile = "C:/java-workspace/DistanceToolUI/testdata/irisFlower.dito";
+      String testfile = "C:/daten/java-workspace/DistanceToolUI/testdata/irisFlower.dito";
       DitoConfiguration config = DitoConfiguration.loadFromFile(testfile);
       config.setLocation(testfile);
       config.loadMatrix();
@@ -71,7 +71,7 @@ public class MainFrame extends JXFrame {
     this.setStatusBar(bar);*/
     
     this.setTitle(Translation.INSTANCE.get("misc.title"));
-    this.setSize(1000, 1000);
+    this.setSize(1200, 1000);
     this.setDefaultCloseOperation(JXFrame.EXIT_ON_CLOSE);
     this.setVisible(true);
     

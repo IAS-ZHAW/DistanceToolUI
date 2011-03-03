@@ -35,4 +35,6 @@ public abstract class DitoPanel extends JXPanel {
   public ValidationGroup getValidationGroup() {
     return validationGroup;
   }
+  
+  public abstract void saveToModel();
 }

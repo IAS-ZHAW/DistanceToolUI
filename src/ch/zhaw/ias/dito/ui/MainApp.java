@@ -20,9 +20,16 @@ public class MainApp {
 		    DitoConfiguration config = DitoConfiguration.loadFromFile(params.get("-p"));
 		    //System.out.println("reading input-file: " + config.getInput().getFilename());
 		    Matrix m = Matrix.readFromFile(new File(config.getInput().getFilename()), config.getInput().getSeparator());
-		    DistanceAlgorithm algo = new DistanceAlgorithm(m, config);
-		    algo.doIt();
-		    algo.writeToFile();
+		    DistanceAlgorithm algo = new DistanceAlgorithm(config);
+		    Matrix dist = algo.doIt();
+		    
+	      String outputFilename = config.getOutput().getFilename().replace("$$METHOD$$", config.getMethod().getName());
+	      try {
+	        Matrix.writeToFile(m, outputFilename, config.getOutput().getSeparator(), config.getOutput().getPrecision());
+	      } catch (IOException e1) {
+	        // TODO Error-Handling
+	        e1.printStackTrace();
+	      }
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

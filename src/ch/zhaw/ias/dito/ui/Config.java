@@ -4,12 +4,14 @@ import java.util.ConcurrentModificationException;
 
 import javax.swing.SwingUtilities;
 
+import ch.zhaw.ias.dito.Matrix;
 import ch.zhaw.ias.dito.config.DitoConfiguration;
 
 public enum Config {
   INSTANCE;
   
   private DitoConfiguration config;
+  private Matrix distanceMatrix;
   
   public DitoConfiguration getDitoConfig() {
     return config;
@@ -20,5 +22,16 @@ public enum Config {
       throw new ConcurrentModificationException("only EDT is allowed to change the configuration for thread-safety reasons");
     }
     this.config = config;
+  }
+  
+  public Matrix getDistanceMatrix() {
+    return distanceMatrix;
+  }
+  
+  public void setDistanceMatrix(Matrix distanceMatrix) {
+    if (SwingUtilities.isEventDispatchThread() == false) {
+      throw new ConcurrentModificationException("only EDT is allowed to change the configuration for thread-safety reasons");
+    }    
+    this.distanceMatrix = distanceMatrix;
   }
 }

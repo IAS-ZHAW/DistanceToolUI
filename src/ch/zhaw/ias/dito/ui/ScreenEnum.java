@@ -8,8 +8,8 @@ public enum ScreenEnum {
   INPUT(1, InputPanel.class), 
   QUESTION(2, QuestionPanel.class),
   METHOD(3, MethodPanel.class), 
-  OUTPUT(4, OutputPanel.class); 
-  //ANALYSIS(5, AnalysisPanel.class);
+  ANALYSIS(4, AnalysisPanel.class),
+  OUTPUT(5, OutputPanel.class);
   
   private int screenId;
   private Class panelClass;

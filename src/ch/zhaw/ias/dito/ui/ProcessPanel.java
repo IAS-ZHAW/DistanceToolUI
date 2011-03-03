@@ -1,5 +1,6 @@
 package ch.zhaw.ias.dito.ui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -21,17 +22,17 @@ import com.jgoodies.forms.layout.FormLayout;
 import ch.zhaw.ias.dito.config.ConfigProperty;
 import ch.zhaw.ias.dito.ui.resource.Translation;
 
-public class ProcessPanel extends JXTitledPanel {
+public class ProcessPanel extends JXPanel {
   private ScreenEnum currentScreen;
   private Map<ScreenEnum, ProcessStepPanel> panels = new HashMap<ScreenEnum, ProcessPanel.ProcessStepPanel>();
   private JTextPane textPane = new JTextPane();
   
   public ProcessPanel() {
-    setTitle(Translation.INSTANCE.get("main.process"));
+    //setTitle(Translation.INSTANCE.get("main.process"));
     setBorder(BorderFactory.createEtchedBorder());
     
     FormLayout layout = new FormLayout("5dlu, pref:grow, 5dlu", 
-    "5dlu, fill:pref, fill:pref:grow, fill:pref, fill:pref:grow, fill:pref, fill:pref:grow, fill:pref, 5dlu");
+    "5dlu, fill:pref, fill:pref:grow, fill:pref, fill:pref:grow, fill:pref, fill:pref:grow, fill:pref, fill:pref:grow, fill:pref, 5dlu");
     int[][] rowGroups = new int[][] {{2, 4, 6, 8}, {3, 5, 7}};
     layout.setRowGroups(rowGroups);
     CellConstraints cc = new CellConstraints();
@@ -39,6 +40,7 @@ public class ProcessPanel extends JXTitledPanel {
     panels.put(ScreenEnum.INPUT, new ProcessStepPanel(ScreenEnum.INPUT, ConfigProperty.INPUT_FILENAME, ConfigProperty.INPUT_SEPARATOR));
     panels.put(ScreenEnum.QUESTION, new ProcessStepPanel(ScreenEnum.QUESTION));
     panels.put(ScreenEnum.METHOD, new ProcessStepPanel(ScreenEnum.METHOD, ConfigProperty.METHOD_NAME));
+    panels.put(ScreenEnum.ANALYSIS, new ProcessStepPanel(ScreenEnum.ANALYSIS));
     panels.put(ScreenEnum.OUTPUT, new ProcessStepPanel(ScreenEnum.OUTPUT, ConfigProperty.OUTPUT_FILENAME, ConfigProperty.OUTPUT_SEPARATOR, ConfigProperty.OUTPUT_PRECISION));
     
     pb.add(panels.get(ScreenEnum.INPUT), cc.xy(2, 2));
@@ -47,9 +49,12 @@ public class ProcessPanel extends JXTitledPanel {
     pb.add(new ArrowPanel(), cc.xy(2, 5));
     pb.add(panels.get(ScreenEnum.METHOD), cc.xy(2, 6));
     pb.add(new ArrowPanel(), cc.xy(2, 7));
-    pb.add(panels.get(ScreenEnum.OUTPUT), cc.xy(2, 8));
+    pb.add(panels.get(ScreenEnum.ANALYSIS), cc.xy(2, 8));    
+    pb.add(new ArrowPanel(), cc.xy(2, 9));
+    pb.add(panels.get(ScreenEnum.OUTPUT), cc.xy(2, 10));
     
-    this.add(pb.getPanel());
+    this.setLayout(new BorderLayout());
+    add(pb.getPanel(), BorderLayout.CENTER);
   }
   
   public void switchTo(ScreenEnum e) {
