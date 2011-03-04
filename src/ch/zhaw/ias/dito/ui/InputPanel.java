@@ -14,8 +14,10 @@ import org.jdesktop.swingx.JXTextField;
 import org.netbeans.validation.api.builtin.Validators;
 import org.netbeans.validation.api.ui.ValidationGroup;
 
+import ch.zhaw.ias.dito.config.ConfigProperty;
 import ch.zhaw.ias.dito.config.DitoConfiguration;
 import ch.zhaw.ias.dito.config.Input;
+import ch.zhaw.ias.dito.config.PropertyGuardian;
 import ch.zhaw.ias.dito.ui.resource.Translation;
 import ch.zhaw.ias.dito.ui.util.ExtensionFileFilter;
 
@@ -77,6 +79,10 @@ public class InputPanel extends DitoPanel implements ActionListener {
     Input i = Config.INSTANCE.getDitoConfig().getInput();
     i.setFilename(filePath.getText());
     i.setSeparator(separator.getText().charAt(0));
+    
+    PropertyGuardian guardian = Config.INSTANCE.getPropertyGuardian();
+    guardian.propertyChanged(ConfigProperty.INPUT_FILENAME, "", i.getFile().getName());
+    guardian.propertyChanged(ConfigProperty.INPUT_SEPARATOR, "", i.getSeparator());
   }
   
   @Override

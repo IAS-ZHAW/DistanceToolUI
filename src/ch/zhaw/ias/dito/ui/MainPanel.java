@@ -62,7 +62,6 @@ public class MainPanel extends JXPanel implements ActionListener, ChangeListener
     nextButton.setEnabled(currentMainPanel.hasNext());
     previousButton.setEnabled(currentMainPanel.hasPrevious());
     validationPanel.setInnerComponent(currentMainPanel);
-    //setTitle(Translation.INSTANCE.get(e.getTitleKey()));
   }
   
   @Override
@@ -70,15 +69,27 @@ public class MainPanel extends JXPanel implements ActionListener, ChangeListener
     nextButton.setEnabled(!validationPanel.isProblem());
   }
 
-  @Override
-  public void actionPerformed(ActionEvent e) {   
+  public void switchPanel(ActionEvent e) {
+    setProcessState(false);
     if (e.getSource() == nextButton || e.getSource() == previousButton) { 
-      currentMainPanel.saveToModel();
       switchMainPanel(e.getSource() == previousButton);
     } 
   }
   
-  public void switchMainPanel(boolean previous) {
+  @Override
+  public void actionPerformed(ActionEvent e) {   
+    if (e.getSource() == nextButton || e.getSource() == previousButton) {
+      mainFrame.setProcessState(true);
+      currentMainPanel.saveToModel();
+      currentMainPanel.calculate(e, this);
+    } 
+  }
+  
+  public void setProcessState(boolean active) {
+    mainFrame.setProcessState(active);
+  }
+  
+  private void switchMainPanel(boolean previous) {
     ScreenEnum nextScreen;
     if (previous == true) {
       nextScreen = currentMainPanel.getPrevious();

@@ -1,16 +1,22 @@
 package ch.zhaw.ias.dito.ui;
 
+import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.SwingWorker;
 
 import org.jdesktop.swingx.JXComboBox;
 import org.netbeans.validation.api.ui.ValidationGroup;
 
 import ch.zhaw.ias.dito.DistanceAlgorithm;
+import ch.zhaw.ias.dito.Matrix;
+import ch.zhaw.ias.dito.config.ConfigProperty;
 import ch.zhaw.ias.dito.config.DitoConfiguration;
 import ch.zhaw.ias.dito.config.Method;
+import ch.zhaw.ias.dito.config.PropertyGuardian;
 import ch.zhaw.ias.dito.dist.DistanceMethodEnum;
 
 public class MethodPanel extends DitoPanel {
@@ -26,14 +32,43 @@ public class MethodPanel extends DitoPanel {
     this.add(methods);
   }
   
+  
+  public void calculate(final ActionEvent e, final MainPanel mp) {
+    
+    SwingWorker worker = new SwingWorker<Matrix, Void> () {
+
+      @Override
+      protected Matrix doInBackground() throws Exception {
+        DitoConfiguration config = Config.INSTANCE.getDitoConfig();
+        DistanceAlgorithm algo = new DistanceAlgorithm(config);
+        return algo.doIt();
+      }
+      
+      @Override
+      protected void done() {
+        try {
+          Matrix m = get();
+          Config.INSTANCE.setDistanceMatrix(m);
+          mp.switchPanel(e);
+        } catch (InterruptedException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        } catch (ExecutionException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
+      }
+    };
+    worker.execute();
+  };
+
+  
   @Override
   public void saveToModel() {
     Method m = Config.INSTANCE.getDitoConfig().getMethod();
     m.setName(comboModel.getSelectedMethod().getName());
-    
-    DitoConfiguration config = Config.INSTANCE.getDitoConfig();
-    DistanceAlgorithm algo = new DistanceAlgorithm(config);
-    Config.INSTANCE.setDistanceMatrix(algo.doIt());
+    PropertyGuardian guardian = Config.INSTANCE.getPropertyGuardian();
+    guardian.propertyChanged(ConfigProperty.METHOD_NAME, "", m.getName());
   }
   
   static class MethodComboModel extends DefaultComboBoxModel {

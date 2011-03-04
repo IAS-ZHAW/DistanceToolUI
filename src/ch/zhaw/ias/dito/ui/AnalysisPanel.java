@@ -2,6 +2,7 @@ package ch.zhaw.ias.dito.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.GradientPaint;
 import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
@@ -15,6 +16,7 @@ import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.GrayPaintScale;
+import org.jfree.chart.renderer.LookupPaintScale;
 import org.jfree.chart.renderer.PaintScale;
 import org.jfree.chart.renderer.xy.XYBlockRenderer;
 import org.jfree.data.statistics.SimpleHistogramBin;
@@ -25,6 +27,7 @@ import org.netbeans.validation.api.ui.ValidationGroup;
 import ch.zhaw.ias.dito.DVector;
 import ch.zhaw.ias.dito.Matrix;
 import ch.zhaw.ias.dito.ui.resource.Translation;
+import ch.zhaw.ias.dito.ui.util.ColorPaintScale;
 import ch.zhaw.ias.dito.ui.util.MatrixXYZDataset;
 
 public class AnalysisPanel extends DitoPanel {
@@ -63,7 +66,8 @@ public class AnalysisPanel extends DitoPanel {
     yAxis.setLowerMargin(0.0);
     yAxis.setUpperMargin(0.0);
     XYBlockRenderer renderer = new XYBlockRenderer();
-    //PaintScale scale = new LookupPaintScale(0, 16, Paint);
+    //PaintScale scale = new ColorPaintScale(distanceMatrix.extremum(false), distanceMatrix.extremum(true));
+    
     PaintScale scale = new GrayPaintScale(distanceMatrix.extremum(false), distanceMatrix.extremum(true));
     renderer.setPaintScale(scale);
     XYPlot plot = new XYPlot(dataset, xAxis, yAxis, renderer);

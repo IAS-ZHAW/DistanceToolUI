@@ -108,4 +108,8 @@ public class MainFrame extends JXFrame {
       }
   });
   }
+  
+  public void setProcessState(boolean active) {
+    processPanel.setProcessState(active);
+  }
 }

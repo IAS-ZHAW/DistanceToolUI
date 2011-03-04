@@ -1,5 +1,7 @@
 package ch.zhaw.ias.dito.ui;
 
+import java.awt.event.ActionEvent;
+
 import org.jdesktop.swingx.JXPanel;
 import org.netbeans.validation.api.ui.ValidationGroup;
 
@@ -37,4 +39,12 @@ public abstract class DitoPanel extends JXPanel {
   }
   
   public abstract void saveToModel();
+  
+  /**
+   * Default implementation. 
+   * Designed to be overwritten.
+   */
+  public void calculate(ActionEvent e, MainPanel mp) {
+    mp.switchPanel(e);
+  }
 }

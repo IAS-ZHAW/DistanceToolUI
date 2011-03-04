@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
+import javax.swing.JProgressBar;
 import javax.swing.JTextPane;
 
 import org.jdesktop.swingx.JXLabel;
@@ -20,19 +21,20 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 import ch.zhaw.ias.dito.config.ConfigProperty;
+import ch.zhaw.ias.dito.config.PropertyListener;
 import ch.zhaw.ias.dito.ui.resource.Translation;
 
 public class ProcessPanel extends JXPanel {
   private ScreenEnum currentScreen;
   private Map<ScreenEnum, ProcessStepPanel> panels = new HashMap<ScreenEnum, ProcessPanel.ProcessStepPanel>();
-  private JTextPane textPane = new JTextPane();
+  private JProgressBar progress = new JProgressBar();
   
   public ProcessPanel() {
     //setTitle(Translation.INSTANCE.get("main.process"));
     setBorder(BorderFactory.createEtchedBorder());
     
     FormLayout layout = new FormLayout("5dlu, pref:grow, 5dlu", 
-    "5dlu, fill:pref, fill:pref:grow, fill:pref, fill:pref:grow, fill:pref, fill:pref:grow, fill:pref, fill:pref:grow, fill:pref, 5dlu");
+    "5dlu, fill:pref, fill:pref:grow, fill:pref, fill:pref:grow, fill:pref, fill:pref:grow, fill:pref, fill:pref:grow, fill:pref, 5dlu, fill:20dlu, 5dlu");
     int[][] rowGroups = new int[][] {{2, 4, 6, 8}, {3, 5, 7}};
     layout.setRowGroups(rowGroups);
     CellConstraints cc = new CellConstraints();
@@ -53,6 +55,8 @@ public class ProcessPanel extends JXPanel {
     pb.add(new ArrowPanel(), cc.xy(2, 9));
     pb.add(panels.get(ScreenEnum.OUTPUT), cc.xy(2, 10));
     
+    pb.add(progress, cc.xy(2, 12));
+    
     this.setLayout(new BorderLayout());
     add(pb.getPanel(), BorderLayout.CENTER);
   }
@@ -65,8 +69,12 @@ public class ProcessPanel extends JXPanel {
     panels.get(currentScreen).setHighlighted(true);
   }
   
-  static class ProcessStepPanel extends JXTitledPanel {
-    private Map<String, JXLabel> labels = new HashMap<String, JXLabel>();
+  public void setProcessState(boolean active) {
+    progress.setIndeterminate(active);
+  }
+  
+  static class ProcessStepPanel extends JXTitledPanel implements PropertyListener {
+    private Map<ConfigProperty, JXLabel> labels = new HashMap<ConfigProperty, JXLabel>();
     
     public ProcessStepPanel(ScreenEnum screen, ConfigProperty... properties) {
       this.setTitle(Translation.INSTANCE.get(screen.getTitleKey()));
@@ -77,8 +85,11 @@ public class ProcessPanel extends JXPanel {
       contentPanel.setLayout(new GridLayout(properties.length, 2, 2, 2));
       contentPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
       for (int i = 0; i < properties.length; i++) {
+        Config.INSTANCE.getPropertyGuardian().addListener(this);
+        JXLabel valueLabel = new JXLabel();
+        labels.put(properties[i], valueLabel);
         contentPanel.add(new JXLabel(Translation.INSTANCE.get(properties[i].getKey())));
-        contentPanel.add(new JXLabel("dummy"));
+        contentPanel.add(valueLabel);
       }
       contentPanel.setBackground(Color.LIGHT_GRAY);
       this.setContentContainer(contentPanel);
@@ -92,6 +103,18 @@ public class ProcessPanel extends JXPanel {
         setTitleForeground(Color.BLACK);
         setBackground(Color.LIGHT_GRAY);  
       }
+    }
+    
+    @Override
+    public boolean listensTo(ConfigProperty prop) {
+      return labels.containsKey(prop);
+    }
+    
+    @Override
+    public void propertyChanged(ConfigProperty prop, Object oldValue,
+        Object newValue) {
+      JXLabel lb = labels.get(prop);
+      lb.setText(newValue.toString());
     }
   }
   
