@@ -25,7 +25,7 @@ public enum Config {
    */
   public void setDitoConfig(DitoConfiguration config) {
     // this is pretty ugly, since it leads to a strong coupling between the guardian and the configuration
-    // even worse it could lead to significant memory leaks when forgotten!
+    // even worse it could lead to significant memory leaks when removing the listener is forgotten!
     if (this.config != null) {
       propertyGuardian.removeListener(this.config);
       this.config.kill();

@@ -3,15 +3,11 @@ package ch.zhaw.ias.dito.ui;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import javax.swing.JLabel;
-import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.xml.bind.JAXBException;
 
 import org.jdesktop.swingx.JXFrame;
-import org.jdesktop.swingx.JXStatusBar;
-import org.jdesktop.swingx.plaf.windows.WindowsLookAndFeelAddons;
 
 import ch.zhaw.ias.dito.config.DitoConfiguration;
 import ch.zhaw.ias.dito.ui.resource.Translation;
@@ -26,8 +22,6 @@ public class MainFrame extends JXFrame {
   private ProcessPanel processPanel = new ProcessPanel();
   private MainPanel mainPanel = new MainPanel(this);
   
-  private JLabel statusLabel;
-  private JProgressBar progressBar; 
   private ScreenEnum currentScreen;
         
   public MainFrame() {
@@ -48,7 +42,7 @@ public class MainFrame extends JXFrame {
     }
 
     FormLayout layout = new FormLayout("2dlu, 150dlu, 2dlu, pref:grow, 2dlu", 
-    "2dlu, fill:75dlu, 2dlu, fill:pref:grow, 2dlu");
+      "2dlu, fill:75dlu, 2dlu, fill:pref:grow, 2dlu");
     CellConstraints cc = new CellConstraints();
     this.getContentPane().setLayout(layout);
     
@@ -111,5 +105,9 @@ public class MainFrame extends JXFrame {
   
   public void setProcessState(boolean active) {
     processPanel.setProcessState(active);
+  }
+
+  public void save() {
+    mainPanel.save();
   }
 }

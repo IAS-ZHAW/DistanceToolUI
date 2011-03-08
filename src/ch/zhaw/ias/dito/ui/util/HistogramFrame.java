@@ -21,7 +21,8 @@ public class HistogramFrame extends JXFrame {
     setTitle(title);
     HistogramDataset hist = new HistogramDataset();
     hist.setType(HistogramType.FREQUENCY);
-    hist.addSeries(q.getName(), q.getData().getValues(), 10);
+    int numOfBins = (q.getData().filteredLength()/20) + 10;
+    hist.addSeries(q.getName(), q.getData().getValues(), numOfBins);
     
     JFreeChart chart = ChartFactory.createHistogram(title, Translation.INSTANCE.get("misc.graphic.value"), Translation.INSTANCE.get("misc.graphic.frequency"), hist, PlotOrientation.VERTICAL, false, true, false);
     this.add(new ChartPanel(chart),  BorderLayout.CENTER);

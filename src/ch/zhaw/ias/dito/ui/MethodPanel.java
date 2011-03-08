@@ -35,7 +35,7 @@ public class MethodPanel extends DitoPanel {
   
   public void calculate(final ActionEvent e, final MainPanel mp) {
     
-    SwingWorker worker = new SwingWorker<Matrix, Void> () {
+    SwingWorker<Matrix, Void> worker = new SwingWorker<Matrix, Void> () {
 
       @Override
       protected Matrix doInBackground() throws Exception {

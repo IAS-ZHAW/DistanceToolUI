@@ -85,6 +85,10 @@ public class MainPanel extends JXPanel implements ActionListener, ChangeListener
     } 
   }
   
+  public void save() {
+    currentMainPanel.saveToModel();
+  }
+  
   public void setProcessState(boolean active) {
     mainFrame.setProcessState(active);
   }

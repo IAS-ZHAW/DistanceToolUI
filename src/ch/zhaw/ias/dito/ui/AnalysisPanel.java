@@ -27,7 +27,7 @@ import org.netbeans.validation.api.ui.ValidationGroup;
 import ch.zhaw.ias.dito.DVector;
 import ch.zhaw.ias.dito.Matrix;
 import ch.zhaw.ias.dito.ui.resource.Translation;
-import ch.zhaw.ias.dito.ui.util.ColorPaintScale;
+import ch.zhaw.ias.dito.ui.util.SingleHistogramPanel;
 import ch.zhaw.ias.dito.ui.util.MatrixXYZDataset;
 
 public class AnalysisPanel extends DitoPanel {
@@ -42,6 +42,9 @@ public class AnalysisPanel extends DitoPanel {
     String title = Translation.INSTANCE.get("misc.graphic.histogram");
     JFreeChart chart = createHistogramChart(title);
     tabs.addTab(title, new ChartPanel(chart));
+    
+    title = Translation.INSTANCE.get("misc.graphic.singleHistogram");
+    tabs.addTab(title, new SingleHistogramPanel(distanceMatrix));
     
     title = Translation.INSTANCE.get("misc.graphic.block");
     chart = createColorChart(title, dataset);
@@ -92,9 +95,9 @@ public class AnalysisPanel extends DitoPanel {
       dataset.addBin(new SimpleHistogramBin(currentBound, (currentBound + spacing), true, false));
       currentBound += spacing;
     }
-    //ensure that the maximum is included and not lost because of numeric problems
+    //ensure that the maximum is included and not lost because of numerical problems
     dataset.addBin(new SimpleHistogramBin(currentBound, max, true, true));
-    
+        
     int summe = 0;
     for (int i = 0; i < distanceMatrix.getColCount(); i++) {
       DVector v = distanceMatrix.col(i);

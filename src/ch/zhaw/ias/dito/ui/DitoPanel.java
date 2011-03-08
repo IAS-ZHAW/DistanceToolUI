@@ -38,11 +38,16 @@ public abstract class DitoPanel extends JXPanel {
     return validationGroup;
   }
   
+  /**
+   * Saves the current values entered in the UI to the data model.
+   * Designed to be overwritten.  
+   */
   public abstract void saveToModel();
   
   /**
-   * Default implementation. 
-   * Designed to be overwritten.
+   * Default implementation. Only executes a callback to the mainpanel.
+   * Designed to be overwritten. Can be useful for long calculations. 
+   * As soon as calculations are finished super.swichtPanel(e) should be called.
    */
   public void calculate(ActionEvent e, MainPanel mp) {
     mp.switchPanel(e);

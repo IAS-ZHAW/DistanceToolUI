@@ -74,8 +74,9 @@ public class ToolbarPanel extends JXTitledPanel implements ActionListener {
     } else if (e.getSource() == newProject) {
       DitoConfiguration config = DitoConfiguration.createEmpty();
       Config.INSTANCE.setDitoConfig(config);
-      mainFrame.reload();
+      mainFrame.switchTo(ScreenEnum.INPUT);
     } else if (e.getSource() == saveProject) {
+      mainFrame.save();
       DitoConfiguration config = Config.INSTANCE.getDitoConfig();
       if (config.hasLocation() == false) {
         saveAs();
@@ -87,6 +88,7 @@ public class ToolbarPanel extends JXTitledPanel implements ActionListener {
         }
       }
     } else if (e.getSource() == saveAsProject) {
+      mainFrame.save();
       saveAs();
     }
   }
