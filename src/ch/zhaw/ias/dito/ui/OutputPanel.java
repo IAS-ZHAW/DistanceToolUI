@@ -27,13 +27,14 @@ public class OutputPanel extends DitoPanel implements ActionListener {
   private JXTextField filePath = new JXTextField();
   private JXButton browseButton;
   private JXTextField separator = new JXTextField();
-  private JXButton saveButton = new JXButton("Abspeichern");
+  private JXTextField precision = new JXTextField();
+  private JXButton saveButton = new JXButton(Translation.INSTANCE.get("s5.lb.save"));
   
   public OutputPanel(ValidationGroup validationGroup) {
     super(ScreenEnum.OUTPUT, ScreenEnum.ANALYSIS, null, validationGroup);
     
     FormLayout layout = new FormLayout("max(50dlu; pref), 5dlu, max(100dlu; pref), 5dlu, max(50dlu; pref), 5dlu, max(100dlu; pref), 5dlu, max(50dlu; pref)", 
-    "pref, 2dlu, pref, 2dlu, pref, 2dlu, pref");
+      "pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, 2dlu, pref");
     //layout.setRowGroups(new int[][]{{2, 4, 6}}); 
     CellConstraints cc = new CellConstraints();
     DefaultFormBuilder fb = new DefaultFormBuilder(layout, Translation.INSTANCE.getBundle());
@@ -41,19 +42,22 @@ public class OutputPanel extends DitoPanel implements ActionListener {
     browseButton = new JXButton(Translation.INSTANCE.get("s1.bu.browse"));
     filePath.setName(Translation.INSTANCE.get("s1.lb.file"));
 
-    fb.addI15dSeparator("s1.title.file", cc.xyw(1, 1, 9));
+    fb.addI15dSeparator("s5.title.file", cc.xyw(1, 1, 9));
     fb.addI15dLabel("s1.lb.file", cc.xy(1, 3));
     fb.add(filePath, cc.xyw(3, 3, 5));
     fb.add(browseButton, cc.xy(9, 3));
     fb.addI15dLabel("s1.lb.separator", cc.xy(1, 5));
     fb.add(separator, cc.xy(7, 5));
-    fb.add(saveButton, cc.xy(7, 7));
+    fb.addI15dLabel("s5.lb.precision", cc.xy(1, 7));
+    fb.add(precision, cc.xy(7, 7));
+    fb.add(saveButton, cc.xy(7, 9));
     
     //validationGroup.add(filePath, Validators.fFILE_MUST_BE_FILE);
     validationGroup.add(separator, Validators.REQUIRE_NON_EMPTY_STRING);
     Output o = Config.INSTANCE.getDitoConfig().getOutput();
     filePath.setText(o.getFilename());
     separator.setText(Character.toString(o.getSeparator()));
+    precision.setText(Integer.toString(o.getPrecision()));
     
     browseButton.addActionListener(this);
     saveButton.addActionListener(this);
@@ -66,6 +70,7 @@ public class OutputPanel extends DitoPanel implements ActionListener {
     Output o = Config.INSTANCE.getDitoConfig().getOutput();
     o.setFilename(filePath.getText());
     o.setSeparator(separator.getText().charAt(0));
+    o.setPrecision(Integer.parseInt(precision.getText()));
   }
   
   @Override

@@ -10,18 +10,22 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.BoxLayout;
+import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBox;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellEditor;
 
+import org.jdesktop.swingx.JXComboBox;
 import org.jdesktop.swingx.JXPanel;
 import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.decorator.ColorHighlighter;
 import org.jdesktop.swingx.decorator.HighlightPredicate;
 import org.netbeans.validation.api.ui.ValidationGroup;
 
+import ch.zhaw.ias.dito.QuestionType;
 import ch.zhaw.ias.dito.config.Question;
 import ch.zhaw.ias.dito.config.QuestionConfig;
 import ch.zhaw.ias.dito.config.TableColumn;
@@ -56,6 +60,13 @@ public class QuestionPanel extends DitoPanel implements ActionListener {
       }
     });
     table.setColumnControlVisible(true);
+
+    //javax.swing.table.TableColumn questionTypeColumn = table.getColumnModel().getColumn(5);
+    JXComboBox comboBox = new JXComboBox();
+    comboBox.addItem(QuestionType.NOMINAL);
+    comboBox.addItem(QuestionType.ORDINAL);
+    table.setDefaultEditor(QuestionType.class, new DefaultCellEditor(comboBox));
+
     sp = new JScrollPane(table);
     //table.setColumnModel(new QuestionColumnModel());
     this.setLayout(new BorderLayout());
@@ -105,22 +116,32 @@ public class QuestionPanel extends DitoPanel implements ActionListener {
     }
     
     @Override
+    public Class<?> getColumnClass(int columnIndex) {
+      TableColumn column = TableColumn.getById(columnIndex);
+      if (column == TableColumn.TYPE) {
+        return QuestionType.class;
+      } else {
+        return super.getColumnClass(columnIndex);
+      }
+    }
+    
+    @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
       Question q = questions.get(rowIndex);
       TableColumn column = TableColumn.getById(columnIndex);
       Object value = q.getValue(column);
-      if (columnIndex == TableColumn.TYPE.getId()) {
+      /*if (columnIndex == TableColumn.TYPE.getId()) {
         return Translation.INSTANCE.get("misc.type." + value.toString());
-      } else {
+      } else {*/
         return value;
-      }
+      //}
     }
     
     @Override
     public String getColumnName(int column) {
       return Translation.INSTANCE.get("s2.title." + column);
     }
-        
+            
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
       TableColumn column = TableColumn.getById(columnIndex);
@@ -132,6 +153,11 @@ public class QuestionPanel extends DitoPanel implements ActionListener {
       }
       if (column == TableColumn.SCALING) {
         return column.isEditable() && activateScale.isSelected() && (!activateAutoscale.isSelected());  
+      }
+      if (column == TableColumn.TYPE) {
+        Question q = questions.get(rowIndex);
+        QuestionType type = (QuestionType) q.getValue(column);
+        return type == QuestionType.NOMINAL || type == QuestionType.ORDINAL;
       }
       return column.isEditable();
     }

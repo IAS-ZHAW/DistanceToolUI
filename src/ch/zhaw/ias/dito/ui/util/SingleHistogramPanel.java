@@ -61,6 +61,7 @@ public class SingleHistogramPanel extends JPanel implements ChangeListener {
 
   private SimpleHistogramDataset createDataset() {
     this.dataset = new SimpleHistogramDataset("");
+    dataset.setAdjustForBinSize(false);
     return dataset;
   }
 

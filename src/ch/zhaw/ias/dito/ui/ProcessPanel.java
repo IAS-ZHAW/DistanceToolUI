@@ -39,11 +39,11 @@ public class ProcessPanel extends JXPanel {
     layout.setRowGroups(rowGroups);
     CellConstraints cc = new CellConstraints();
     PanelBuilder pb = new PanelBuilder(layout);
-    panels.put(ScreenEnum.INPUT, new ProcessStepPanel(ScreenEnum.INPUT, ConfigProperty.INPUT_FILENAME, ConfigProperty.INPUT_SEPARATOR));
-    panels.put(ScreenEnum.QUESTION, new ProcessStepPanel(ScreenEnum.QUESTION));
+    panels.put(ScreenEnum.INPUT, new ProcessStepPanel(ScreenEnum.INPUT, ConfigProperty.INPUT_FILENAME, ConfigProperty.INPUT_SIZE));
+    panels.put(ScreenEnum.QUESTION, new ProcessStepPanel(ScreenEnum.QUESTION, ConfigProperty.QUESTION_NUMBER));
     panels.put(ScreenEnum.METHOD, new ProcessStepPanel(ScreenEnum.METHOD, ConfigProperty.METHOD_NAME));
     panels.put(ScreenEnum.ANALYSIS, new ProcessStepPanel(ScreenEnum.ANALYSIS));
-    panels.put(ScreenEnum.OUTPUT, new ProcessStepPanel(ScreenEnum.OUTPUT, ConfigProperty.OUTPUT_FILENAME, ConfigProperty.OUTPUT_SEPARATOR, ConfigProperty.OUTPUT_PRECISION));
+    panels.put(ScreenEnum.OUTPUT, new ProcessStepPanel(ScreenEnum.OUTPUT, ConfigProperty.OUTPUT_FILENAME, ConfigProperty.OUTPUT_PRECISION));
     
     pb.add(panels.get(ScreenEnum.INPUT), cc.xy(2, 2));
     pb.add(new ArrowPanel(), cc.xy(2, 3));

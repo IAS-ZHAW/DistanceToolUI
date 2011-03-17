@@ -1,7 +1,6 @@
 package ch.zhaw.ias.dito.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -15,14 +14,12 @@ import org.netbeans.validation.api.builtin.Validators;
 import org.netbeans.validation.api.ui.ValidationGroup;
 
 import ch.zhaw.ias.dito.config.ConfigProperty;
-import ch.zhaw.ias.dito.config.DitoConfiguration;
 import ch.zhaw.ias.dito.config.Input;
 import ch.zhaw.ias.dito.config.PropertyGuardian;
 import ch.zhaw.ias.dito.ui.resource.Translation;
 import ch.zhaw.ias.dito.ui.util.ExtensionFileFilter;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.debug.FormDebugPanel;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
@@ -61,7 +58,7 @@ public class InputPanel extends DitoPanel implements ActionListener {
     fb.addI15dLabel("s1.lb.to", cc.xy(5, 11));
     fb.add(surveyTo, cc.xy(7, 11));
     fb.add(allSurveys, cc.xy(3, 13));
-    fb.addI15dLabel("s1.lb.question", cc.xy(1, 15));    
+    //fb.addI15dLabel("s1.lb.question", cc.xy(1, 15));    
     
     validationGroup.add(filePath, Validators.FILE_MUST_BE_FILE, Validators.FILE_MUST_EXIST);
     validationGroup.add(separator, Validators.REQUIRE_NON_EMPTY_STRING);

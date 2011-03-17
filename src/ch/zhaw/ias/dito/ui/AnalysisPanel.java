@@ -86,6 +86,7 @@ public class AnalysisPanel extends DitoPanel {
   private JFreeChart createHistogramChart(String title) {
     int NUM_OF_BINS = 50;
     SimpleHistogramDataset dataset = new SimpleHistogramDataset("");
+    dataset.setAdjustForBinSize(false);
     double min = distanceMatrix.extremum(false);
     double max = distanceMatrix.extremum(true);
     double spacing = (max-min)/NUM_OF_BINS;
@@ -104,6 +105,6 @@ public class AnalysisPanel extends DitoPanel {
       dataset.addObservations(v.getValues());
       summe += v.getValues().length;
     }
-    return ChartFactory.createHistogram(title, Translation.INSTANCE.get("misc.graphic.distance"), Translation.INSTANCE.get("misc.graphic.frequency"), dataset, PlotOrientation.VERTICAL, false, false, false);
+    return ChartFactory.createHistogram(title, Translation.INSTANCE.get("misc.graphic.distance"), Translation.INSTANCE.get("misc.graphic.frequency"), dataset, PlotOrientation.VERTICAL, false, true, false);
   }
 }

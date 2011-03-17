@@ -1,6 +1,9 @@
 package ch.zhaw.ias.dito.ui.util;
 
 import java.awt.BorderLayout;
+import java.util.Set;
+import java.util.TreeSet;
+
 import javax.swing.JFrame;
 
 import org.jdesktop.swingx.JXFrame;
@@ -21,7 +24,10 @@ public class HistogramFrame extends JXFrame {
     setTitle(title);
     HistogramDataset hist = new HistogramDataset();
     hist.setType(HistogramType.FREQUENCY);
-    int numOfBins = (q.getData().filteredLength()/20) + 10;
+    
+    Set<Double> values = new TreeSet<Double>();
+    q.getData().addValuesToCollection(values);
+    int numOfBins = Math.min(values.size(), (q.getData().filteredLength()/20) + 10);
     hist.addSeries(q.getName(), q.getData().getValues(), numOfBins);
     
     JFreeChart chart = ChartFactory.createHistogram(title, Translation.INSTANCE.get("misc.graphic.value"), Translation.INSTANCE.get("misc.graphic.frequency"), hist, PlotOrientation.VERTICAL, false, true, false);

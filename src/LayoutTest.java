@@ -1,6 +1,10 @@
+import java.util.EnumSet;
+
 import javax.swing.JFrame;
 
 import org.jdesktop.swingx.JXTitledPanel;
+
+import ch.zhaw.ias.dito.QuestionType;
 
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
