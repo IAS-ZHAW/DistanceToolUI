@@ -31,11 +31,14 @@ import ch.zhaw.ias.dito.config.DitoConfiguration;
 import ch.zhaw.ias.dito.config.Method;
 import ch.zhaw.ias.dito.config.PropertyGuardian;
 import ch.zhaw.ias.dito.dist.DistanceMethodEnum;
+import ch.zhaw.ias.dito.dist.UniversalBinaryDist;
 import ch.zhaw.ias.dito.ui.resource.Translation;
 
 public class MethodPanel extends DitoPanel implements ActionListener {
   private JXComboBox methods;
   private JXTextField parameter = new JXTextField();
+  private JCheckBox ownDefinition = new JCheckBox(Translation.INSTANCE.get("s3.lb.ownDefinition"));
+  private JXTextField createDefinition = new JXTextField();
   private JCheckBox randomSample = new JCheckBox(Translation.INSTANCE.get("s3.lb.randomSample"));
   private JXTextField sampleSize = new JXTextField();
   private JCheckBox parallel = new JCheckBox(Translation.INSTANCE.get("s3.lb.parallel"));
@@ -49,12 +52,12 @@ public class MethodPanel extends DitoPanel implements ActionListener {
     methods = new JXComboBox(comboModel);
     
     FormLayout layout = new FormLayout("pref, 5dlu, max(100dlu; pref), 5dlu, max(100dlu; pref), pref:grow", 
-      "pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, fill:pref:grow");
+      "pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, fill:pref:grow");
     CellConstraints cc = new CellConstraints();
     DefaultFormBuilder fb = new DefaultFormBuilder(layout, Translation.INSTANCE.getBundle());
   
     fb.addI15dSeparator("s3.lb.method", cc.xyw(1, 1, 5));
-    fb.addI15dLabel("s3.lb.distance", cc.xyw(1, 3, 3));
+    fb.addI15dLabel("s3.lb.coding", cc.xyw(1, 3, 3));
     fb.add(codingGroup, cc.xy(5, 3));
     codingGroup.addActionListener(this);
     
@@ -64,14 +67,18 @@ public class MethodPanel extends DitoPanel implements ActionListener {
     fb.addI15dLabel("s3.lb.parameter", cc.xyw(1, 7, 3));
     fb.add(parameter, cc.xy(5, 7));
     
-    fb.addI15dSeparator("s3.lb.calculation", cc.xyw(1, 9, 5));
-    fb.add(randomSample, cc.xyw(1, 11, 5));
-    fb.addI15dLabel("s3.lb.sampleSize", cc.xy(3, 13));
-    fb.add(sampleSize, cc.xy(5, 13));
+    fb.add(ownDefinition, cc.xyw(1, 9, 3));
+    createDefinition.setText("(a+d)/(a+b+c+d)");
+    fb.add(createDefinition, cc.xy(5, 9));    
     
-    fb.add(parallel, cc.xyw(1, 15, 5));
-    fb.addI15dLabel("s3.lb.numberOfThreads", cc.xy(3, 17));
-    fb.add(numberOfThreads, cc.xy(5, 17));
+    fb.addI15dSeparator("s3.lb.calculation", cc.xyw(1, 11, 5));
+    fb.add(randomSample, cc.xyw(1, 13, 5));
+    fb.addI15dLabel("s3.lb.sampleSize", cc.xy(3, 15));
+    fb.add(sampleSize, cc.xy(5, 15));
+    
+    fb.add(parallel, cc.xyw(1, 17, 5));
+    fb.addI15dLabel("s3.lb.numberOfThreads", cc.xy(3, 19));
+    fb.add(numberOfThreads, cc.xy(5, 19));
     
     Method m = Config.INSTANCE.getDitoConfig().getMethod();
     codingGroup.setSelectedValue(m.getMethod().getCoding());
@@ -136,6 +143,10 @@ public class MethodPanel extends DitoPanel implements ActionListener {
   public void saveToModel() {
     Method m = Config.INSTANCE.getDitoConfig().getMethod();
     m.setMethod(comboModel.getSelectedMethod());
+    if (comboModel.getSelectedMethod() == DistanceMethodEnum.get("Universal")) {
+      UniversalBinaryDist binaryDist = (UniversalBinaryDist) comboModel.getSelectedMethod().getSpec();
+      binaryDist.setExpression(createDefinition.getText());
+    } 
     m.setUseRandomSample(randomSample.isSelected());
     m.setSampleSize(Integer.parseInt(sampleSize.getText()));
     
