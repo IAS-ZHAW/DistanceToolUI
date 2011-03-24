@@ -3,7 +3,6 @@ package ch.zhaw.ias.dito.ui.util;
 import org.jfree.data.DomainOrder;
 import org.jfree.data.general.DatasetChangeListener;
 import org.jfree.data.general.DatasetGroup;
-import org.jfree.data.xy.AbstractXYZDataset;
 import org.jfree.data.xy.XYZDataset;
 
 import ch.zhaw.ias.dito.DVector;

@@ -1,6 +1,7 @@
 package ch.zhaw.ias.dito.ui;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,11 +12,8 @@ import javax.swing.event.ChangeListener;
 
 import org.jdesktop.swingx.JXButton;
 import org.jdesktop.swingx.JXPanel;
-import org.jdesktop.swingx.JXTitledPanel;
 import org.netbeans.validation.api.ui.ValidationPanel;
 
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.debug.FormDebugPanel;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
@@ -34,7 +32,6 @@ public class MainPanel extends JXPanel implements ActionListener, ChangeListener
     //setTitle(Translation.INSTANCE.get("main.main"));
     setBorder(BorderFactory.createEtchedBorder());
     
-    
     FormLayout layout = new FormLayout("fill:20dlu, fill:pref:grow, fill:20dlu", 
     "20dlu, fill:pref:grow(0.8), fill:pref:grow(0.2), fill:20dlu");
     //layout.setRowGroups(new int[][]{{2, 4, 6}}); 
@@ -43,6 +40,9 @@ public class MainPanel extends JXPanel implements ActionListener, ChangeListener
     
     JXPanel buttonPanel = new JXPanel();
     buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+    nextButton.setPreferredSize(new Dimension(100, 25));
+    previousButton.setPreferredSize(new Dimension(100,  25));
+    
     buttonPanel.add(previousButton);
     buttonPanel.add(nextButton);
     validationPanel.addChangeListener(this);
@@ -56,7 +56,7 @@ public class MainPanel extends JXPanel implements ActionListener, ChangeListener
   }
   
   public void switchTo(ScreenEnum e) {
-    currentMainPanel = e.getPanel(validationPanel.getValidationGroup());    
+    currentMainPanel = e.getPanel(validationPanel.getValidationGroup());
     nextButton.setEnabled(currentMainPanel.hasNext());
     previousButton.setEnabled(currentMainPanel.hasPrevious());
     validationPanel.setInnerComponent(currentMainPanel);

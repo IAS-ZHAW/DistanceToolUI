@@ -2,7 +2,6 @@ package ch.zhaw.ias.dito.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -12,13 +11,10 @@ import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableCellEditor;
 
-import org.jdesktop.swingx.JXComboBox;
 import org.jdesktop.swingx.JXPanel;
 import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.decorator.ColorHighlighter;
@@ -26,9 +22,11 @@ import org.jdesktop.swingx.decorator.HighlightPredicate;
 import org.netbeans.validation.api.ui.ValidationGroup;
 
 import ch.zhaw.ias.dito.QuestionType;
+import ch.zhaw.ias.dito.Utils;
 import ch.zhaw.ias.dito.config.Question;
 import ch.zhaw.ias.dito.config.QuestionConfig;
 import ch.zhaw.ias.dito.config.TableColumn;
+import ch.zhaw.ias.dito.ui.resource.AppConfig;
 import ch.zhaw.ias.dito.ui.resource.Translation;
 import ch.zhaw.ias.dito.ui.util.HistogramFrame;
 
@@ -60,18 +58,24 @@ public class QuestionPanel extends DitoPanel implements ActionListener {
       }
     });
     table.setColumnControlVisible(true);
+    for (TableColumn col : TableColumn.values()) {
+      table.packColumn(col.getId(), 5, 100);
+    }
+    
+    //Sorter sorter = table.setgetgetColumnExt("ELEVATION").getSorter();
+    //sorter.setComparator(numberComparator);
 
+    
     //javax.swing.table.TableColumn questionTypeColumn = table.getColumnModel().getColumn(5);
-    JXComboBox comboBox = new JXComboBox();
+    JComboBox comboBox = new JComboBox();
     comboBox.addItem(QuestionType.NOMINAL);
     comboBox.addItem(QuestionType.ORDINAL);
     table.setDefaultEditor(QuestionType.class, new DefaultCellEditor(comboBox));
 
     sp = new JScrollPane(table);
-    //table.setColumnModel(new QuestionColumnModel());
     this.setLayout(new BorderLayout());
     
-    table.addHighlighter(new ColorHighlighter(HighlightPredicate.EDITABLE, Color.LIGHT_GRAY, Color.BLACK));
+    table.addHighlighter(new ColorHighlighter(HighlightPredicate.EDITABLE, AppConfig.ACTIVE, Color.BLACK));
 
     updateCheckboxes();
     
@@ -130,11 +134,7 @@ public class QuestionPanel extends DitoPanel implements ActionListener {
       Question q = questions.get(rowIndex);
       TableColumn column = TableColumn.getById(columnIndex);
       Object value = q.getValue(column);
-      /*if (columnIndex == TableColumn.TYPE.getId()) {
-        return Translation.INSTANCE.get("misc.type." + value.toString());
-      } else {*/
-        return value;
-      //}
+      return value;
     }
     
     @Override
@@ -154,6 +154,11 @@ public class QuestionPanel extends DitoPanel implements ActionListener {
       if (column == TableColumn.SCALING) {
         return column.isEditable() && activateScale.isSelected() && (!activateAutoscale.isSelected());  
       }
+      if (column == TableColumn.EXCLUDE) {
+        Question q = questions.get(rowIndex);
+        QuestionType type = q.getQuestionType();
+        return column.isEditable() && type != QuestionType.BINARY;
+      }
       if (column == TableColumn.TYPE) {
         Question q = questions.get(rowIndex);
         QuestionType type = (QuestionType) q.getValue(column);
@@ -166,7 +171,12 @@ public class QuestionPanel extends DitoPanel implements ActionListener {
     public void setValueAt(Object value, int rowIndex, int columnIndex) {
       Question q = questions.get(rowIndex);
       TableColumn column = TableColumn.getById(columnIndex);
-      q.setValue(column, value);
+      if (column == TableColumn.EXCLUDE) {
+        double[] values = Utils.splitToDouble(value.toString());
+        q.setValue(column, values);
+      } else {
+        q.setValue(column, value);
+      }
     }
   }
   

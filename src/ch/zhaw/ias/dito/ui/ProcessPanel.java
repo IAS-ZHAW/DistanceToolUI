@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
+import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTextPane;
 
@@ -22,6 +23,7 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import ch.zhaw.ias.dito.config.ConfigProperty;
 import ch.zhaw.ias.dito.config.PropertyListener;
+import ch.zhaw.ias.dito.ui.resource.AppConfig;
 import ch.zhaw.ias.dito.ui.resource.Translation;
 
 public class ProcessPanel extends JXPanel {
@@ -74,6 +76,7 @@ public class ProcessPanel extends JXPanel {
   }
   
   static class ProcessStepPanel extends JXTitledPanel implements PropertyListener {
+    private JPanel contentPanel;
     private Map<ConfigProperty, JXLabel> labels = new HashMap<ConfigProperty, JXLabel>();
     
     public ProcessStepPanel(ScreenEnum screen, ConfigProperty... properties) {
@@ -81,7 +84,7 @@ public class ProcessPanel extends JXPanel {
       this.setTitleFont(getTitleFont().deriveFont((float) 20));
       this.setBorder(null);
       
-      JXPanel contentPanel = new JXPanel();
+      contentPanel = new JPanel();
       contentPanel.setLayout(new GridLayout(properties.length, 2, 2, 2));
       contentPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
       for (int i = 0; i < properties.length; i++) {
@@ -91,18 +94,19 @@ public class ProcessPanel extends JXPanel {
         contentPanel.add(new JXLabel(Translation.INSTANCE.get(properties[i].getKey())));
         contentPanel.add(valueLabel);
       }
-      contentPanel.setBackground(Color.LIGHT_GRAY);
       this.setContentContainer(contentPanel);
+      setHighlighted(false);
+      updateUI();
     }
     
     public void setHighlighted(boolean highlight) {
       if (highlight == true) {
         setTitleForeground(Color.WHITE);
-        setBackground(Color.RED);
+        contentPanel.setBackground(AppConfig.ACTIVE);
       } else {
         setTitleForeground(Color.BLACK);
-        setBackground(Color.LIGHT_GRAY);  
-      }
+        contentPanel.setBackground(Color.LIGHT_GRAY);
+      }     
     }
     
     @Override

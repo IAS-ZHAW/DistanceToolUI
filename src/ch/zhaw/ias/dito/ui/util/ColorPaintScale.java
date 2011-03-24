@@ -5,6 +5,10 @@ import java.awt.Paint;
 
 import org.jfree.chart.renderer.PaintScale;
 
+/**
+ * A Color scale supporting a color range from red to blue on the HSB color space. 
+ * @author Thomas Niederberger (nith) - institute of applied simulation (IAS)
+ */
 public class ColorPaintScale implements PaintScale {
   private double lowerBound;
   private double upperBound;
@@ -13,12 +17,13 @@ public class ColorPaintScale implements PaintScale {
   public ColorPaintScale(double lowerBound, double upperBound) {
     this.lowerBound = lowerBound;
     this.upperBound = upperBound;
-    this.step = (upperBound - lowerBound)/255;
+    //0.666 is chosen because this will deliver a blue color for the upper bound.
+    this.step = 0.666/(upperBound - lowerBound);
   }
   
   @Override
   public Paint getPaint(double value) {
-    return Color.getHSBColor((float) (step*(value-lowerBound)), 255.0f, 127.0f);
+    return Color.getHSBColor((float) (step*(value-lowerBound)), 1.0f, 1.0f);
   }
   
   @Override

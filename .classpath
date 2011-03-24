@@ -19,5 +19,7 @@
 			<attribute name="javadoc_location" value="file:/C:/Daten/libs/jfreechart-1.0.13/jfreechart-1.0.13-javadocs/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Daten/libs/jmathplot.jar"/>
+	<classpathentry kind="lib" path="C:/Daten/libs/jmatharray.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -21,7 +21,7 @@ public class MainApp {
 		    //System.out.println("reading input-file: " + config.getInput().getFilename());
 		    Matrix m = Matrix.readFromFile(new File(config.getInput().getFilename()), config.getInput().getSeparator());
 		    DistanceAlgorithm algo = new DistanceAlgorithm(config);
-		    Matrix dist = algo.doIt();
+		    Matrix dist = algo.doIt(false);
 		    
 	      String outputFilename = config.getOutput().getFilename().replace("$$METHOD$$", config.getMethod().getName());
 	      try {

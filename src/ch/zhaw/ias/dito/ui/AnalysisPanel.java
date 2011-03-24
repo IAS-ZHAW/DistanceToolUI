@@ -2,31 +2,32 @@ package ch.zhaw.ias.dito.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.image.BufferedImage;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.labels.XYToolTipGenerator;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.GrayPaintScale;
-import org.jfree.chart.renderer.LookupPaintScale;
 import org.jfree.chart.renderer.PaintScale;
 import org.jfree.chart.renderer.xy.XYBlockRenderer;
+import org.jfree.chart.title.PaintScaleLegend;
 import org.jfree.data.statistics.SimpleHistogramBin;
 import org.jfree.data.statistics.SimpleHistogramDataset;
+import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYZDataset;
+import org.jfree.ui.RectangleEdge;
+import org.jfree.ui.RectangleInsets;
 import org.netbeans.validation.api.ui.ValidationGroup;
 
 import ch.zhaw.ias.dito.DVector;
 import ch.zhaw.ias.dito.Matrix;
 import ch.zhaw.ias.dito.ui.resource.Translation;
+import ch.zhaw.ias.dito.ui.util.ColorPaintScale;
 import ch.zhaw.ias.dito.ui.util.SingleHistogramPanel;
 import ch.zhaw.ias.dito.ui.util.MatrixXYZDataset;
 
@@ -48,15 +49,16 @@ public class AnalysisPanel extends DitoPanel {
     
     title = Translation.INSTANCE.get("misc.graphic.block");
     chart = createColorChart(title, dataset);
-    tabs.addTab(title, new ChartPanel(chart));
+    ChartPanel chartPanel = new ChartPanel(chart);
+    chartPanel.setDisplayToolTips(true);
+    tabs.addTab(title, chartPanel);
     this.setLayout(new BorderLayout());
     this.add(tabs, BorderLayout.CENTER);
   }
   
   @Override
   public void saveToModel() {
-    // TODO Auto-generated method stub
-    
+    // nothing to be saved
   }
   
   private JFreeChart createColorChart(String title, XYZDataset dataset) {
@@ -69,16 +71,29 @@ public class AnalysisPanel extends DitoPanel {
     yAxis.setLowerMargin(0.0);
     yAxis.setUpperMargin(0.0);
     XYBlockRenderer renderer = new XYBlockRenderer();
-    //PaintScale scale = new ColorPaintScale(distanceMatrix.extremum(false), distanceMatrix.extremum(true));
-    
-    PaintScale scale = new GrayPaintScale(distanceMatrix.extremum(false), distanceMatrix.extremum(true));
+    renderer.setBaseToolTipGenerator(new XYToolTipGenerator() {
+      @Override
+      public String generateToolTip(XYDataset dataset, int series, int item) {
+        XYZDataset xyzDataset = (XYZDataset)dataset;
+        double x = xyzDataset.getXValue(series, item);
+        double y = xyzDataset.getYValue(series, item);
+        double z = xyzDataset.getZValue(series, item);
+        return ("X=" + x + ", Y=" + y + ", Z=" + z);
+      }
+    });
+    PaintScale scale = new ColorPaintScale(distanceMatrix.extremum(false), distanceMatrix.extremum(true));
     renderer.setPaintScale(scale);
+    ValueAxis axis = new NumberAxis();
+    axis.setLowerBound(scale.getLowerBound());
+    axis.setUpperBound(scale.getUpperBound());
+    PaintScaleLegend legend = new PaintScaleLegend(scale, axis);
+    legend.setMargin(new RectangleInsets(10, 10, 10, 10));
+    legend.setPosition(RectangleEdge.RIGHT);
+
     XYPlot plot = new XYPlot(dataset, xAxis, yAxis, renderer);
-    //plot.setBackgroundPaint(Color.lightGray);
-    //plot.setDomainGridlinesVisible(false);
-    //plot.setRangeGridlinePaint(Color.white);
     JFreeChart chart = new JFreeChart(title, plot);
     chart.removeLegend();
+    chart.addSubtitle(legend);
     chart.setBackgroundPaint(Color.white);
     return chart;
   }
@@ -98,12 +113,9 @@ public class AnalysisPanel extends DitoPanel {
     }
     //ensure that the maximum is included and not lost because of numerical problems
     dataset.addBin(new SimpleHistogramBin(currentBound, max, true, true));
-        
-    int summe = 0;
     for (int i = 0; i < distanceMatrix.getColCount(); i++) {
       DVector v = distanceMatrix.col(i);
       dataset.addObservations(v.getValues());
-      summe += v.getValues().length;
     }
     return ChartFactory.createHistogram(title, Translation.INSTANCE.get("misc.graphic.distance"), Translation.INSTANCE.get("misc.graphic.frequency"), dataset, PlotOrientation.VERTICAL, false, true, false);
   }
