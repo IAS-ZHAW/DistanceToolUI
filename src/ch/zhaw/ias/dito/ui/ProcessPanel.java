@@ -32,10 +32,9 @@ public class ProcessPanel extends JXPanel {
   private JProgressBar progress = new JProgressBar();
   
   public ProcessPanel() {
-    //setTitle(Translation.INSTANCE.get("main.process"));
     setBorder(BorderFactory.createEtchedBorder());
     
-    FormLayout layout = new FormLayout("5dlu, pref:grow, 5dlu", 
+    FormLayout layout = new FormLayout("5dlu, 50dlu:grow, 5dlu", 
     "5dlu, fill:pref, fill:pref:grow, fill:pref, fill:pref:grow, fill:pref, fill:pref:grow, fill:pref, fill:pref:grow, fill:pref, 5dlu, fill:20dlu, 5dlu");
     int[][] rowGroups = new int[][] {{2, 4, 6, 8}, {3, 5, 7}};
     layout.setRowGroups(rowGroups);
@@ -43,7 +42,7 @@ public class ProcessPanel extends JXPanel {
     PanelBuilder pb = new PanelBuilder(layout);
     panels.put(ScreenEnum.INPUT, new ProcessStepPanel(ScreenEnum.INPUT, ConfigProperty.INPUT_FILENAME, ConfigProperty.INPUT_SIZE));
     panels.put(ScreenEnum.QUESTION, new ProcessStepPanel(ScreenEnum.QUESTION, ConfigProperty.QUESTION_NUMBER));
-    panels.put(ScreenEnum.METHOD, new ProcessStepPanel(ScreenEnum.METHOD, ConfigProperty.METHOD_NAME));
+    panels.put(ScreenEnum.METHOD, new ProcessStepPanel(ScreenEnum.METHOD, ConfigProperty.METHOD_NAME, ConfigProperty.RANDOM_SAMPLE));
     panels.put(ScreenEnum.ANALYSIS, new ProcessStepPanel(ScreenEnum.ANALYSIS));
     panels.put(ScreenEnum.OUTPUT, new ProcessStepPanel(ScreenEnum.OUTPUT, ConfigProperty.OUTPUT_FILENAME, ConfigProperty.OUTPUT_PRECISION));
     

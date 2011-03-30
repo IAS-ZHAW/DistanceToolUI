@@ -3,7 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/DistanceToolCore"/>
-	<classpathentry kind="lib" path="C:/Daten/libs/opencsv-2.2/deploy/opencsv-2.2.jar"/>
 	<classpathentry kind="lib" path="C:/Daten/libs/swingx-1.6.2/swingx-core-1.6.2.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="file:/C:/Daten/libs/swingx-1.6.2/docs/api/"/>

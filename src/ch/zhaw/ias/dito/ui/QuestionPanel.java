@@ -29,6 +29,7 @@ import ch.zhaw.ias.dito.config.TableColumn;
 import ch.zhaw.ias.dito.ui.resource.AppConfig;
 import ch.zhaw.ias.dito.ui.resource.Translation;
 import ch.zhaw.ias.dito.ui.util.HistogramFrame;
+import ch.zhaw.ias.dito.ui.util.NumberComparator;
 
 public class QuestionPanel extends DitoPanel implements ActionListener {
   private JCheckBox activateScale = new JCheckBox(Translation.INSTANCE.get("s2.cb.activateScale"));
@@ -62,11 +63,14 @@ public class QuestionPanel extends DitoPanel implements ActionListener {
       table.packColumn(col.getId(), 5, 100);
     }
     
-    //Sorter sorter = table.setgetgetColumnExt("ELEVATION").getSorter();
-    //sorter.setComparator(numberComparator);
+    NumberComparator comparator = new NumberComparator();
+    table.getColumnExt(TableColumn.DISTANCE_WEIGHT.getId()).setComparator(comparator);
+    table.getColumnExt(TableColumn.MAX.getId()).setComparator(comparator);
+    table.getColumnExt(TableColumn.MIN.getId()).setComparator(comparator);
+    table.getColumnExt(TableColumn.NUMBER.getId()).setComparator(comparator);
+    table.getColumnExt(TableColumn.SCALING.getId()).setComparator(comparator);
+    table.getColumnExt(TableColumn.QUESTION_WEIGHT.getId()).setComparator(comparator);
 
-    
-    //javax.swing.table.TableColumn questionTypeColumn = table.getColumnModel().getColumn(5);
     JComboBox comboBox = new JComboBox();
     comboBox.addItem(QuestionType.NOMINAL);
     comboBox.addItem(QuestionType.ORDINAL);

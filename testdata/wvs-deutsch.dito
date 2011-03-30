@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:ditoConfiguration xmlns:ns2="http://ias.zhaw.ch/">
+    <input>
+        <filename>C:\Daten\java-workspace\DistanceToolCore\Daten\wvs\wvs-deutsch.csv</filename>
+        <separator>;</separator>
+    </input>
+    <output>
+        <filename>C:\daten\java-workspace\DistanceToolUI\testdata\wvs-deutsch-$$METHOD$$.csv</filename>
+        <separator>|</separator>
+        <precision>6</precision>
+    </output>
+    <method>
+        <name>Euklid</name>
+    </method>
+    <questionConfig>
+        <enableScale>true</enableScale>
+        <enableQuestionWeight>true</enableQuestionWeight>
+        <enableDistanceWeight>false</enableDistanceWeight>
+        <enableAutoScale>true</enableAutoScale>
+    </questionConfig>
+    <questions>
+    </questions>
+</ns2:ditoConfiguration>

@@ -9,6 +9,7 @@ import java.io.File;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.xml.bind.JAXBException;
 
 import org.jdesktop.swingx.JXButton;
@@ -51,6 +52,7 @@ public class ToolbarPanel extends JXTitledPanel implements ActionListener {
   @Override
   public void actionPerformed(ActionEvent e) {
     if (e.getSource() == openProject) {
+      checkSave();
       JFileChooser fileChooser = new JFileChooser();
       fileChooser.setFileFilter(ExtensionFileFilter.DITO);
       int returnVal = fileChooser.showOpenDialog(this);
@@ -66,45 +68,52 @@ public class ToolbarPanel extends JXTitledPanel implements ActionListener {
           } catch (Exception e2) {
             throw new Error("We're doomed!!!!", e2);
           }
-          //This is where a real application would open the file.
-          //log.append("Opening: " + file.getName() + "." + newline);
       } else {
           //log.append("Open command cancelled by user." + newline);
       }
     } else if (e.getSource() == newProject) {
+      checkSave();
       DitoConfiguration config = DitoConfiguration.createEmpty();
       Config.INSTANCE.setDitoConfig(config);
       mainFrame.switchTo(ScreenEnum.INPUT);
-    } else if (e.getSource() == saveProject) {
-      mainFrame.save();
-      DitoConfiguration config = Config.INSTANCE.getDitoConfig();
-      if (config.hasLocation() == false) {
-        saveAs();
-      } else {
-        try {          
+    } 
+    
+    if (e.getSource() == saveProject) {
+      save(false);
+    } else if (e.getSource() == saveAsProject) {
+      save(true);
+    }
+  }
+  
+  private void save(boolean saveAs) {
+    mainFrame.save();
+    
+    DitoConfiguration config = Config.INSTANCE.getDitoConfig();
+    if (saveAs || config.hasLocation() == false) {
+      JFileChooser fileChooser = new JFileChooser();
+      int returnVal = fileChooser.showSaveDialog(this);
+      if (returnVal == JFileChooser.APPROVE_OPTION) {
+        File file = fileChooser.getSelectedFile();        
+        try {
+          config.setLocation(file.getAbsolutePath());
           config.save();
         } catch (JAXBException e1) {
           e1.printStackTrace();
         }
       }
-    } else if (e.getSource() == saveAsProject) {
-      mainFrame.save();
-      saveAs();
-    }
-  }
-  
-  private void saveAs() {
-    JFileChooser fileChooser = new JFileChooser();
-    int returnVal = fileChooser.showSaveDialog(this);
-    if (returnVal == JFileChooser.APPROVE_OPTION) {
-      File file = fileChooser.getSelectedFile();        
-      try {
-        DitoConfiguration config = Config.INSTANCE.getDitoConfig();
-        config.setLocation(file.getAbsolutePath());
+    } else {
+      try {          
         config.save();
       } catch (JAXBException e1) {
         e1.printStackTrace();
       }
+    }
+  }
+  
+  public void checkSave() {
+    int save = JOptionPane.showConfirmDialog(null, Translation.INSTANCE.get("misc.saveConfirm"), Translation.INSTANCE.get("toolbar.save"), JOptionPane.YES_NO_OPTION);
+    if (save == JOptionPane.YES_OPTION) {
+      save(false);
     }
   }
 }

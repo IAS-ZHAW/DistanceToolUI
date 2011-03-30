@@ -1,5 +1,7 @@
 package ch.zhaw.ias.dito.ui;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -52,24 +54,20 @@ public class MainFrame extends JXFrame {
     this.add(helpPanel, cc.xy(4, 2));
     this.add(processPanel, cc.xy(2, 4));
     this.add(mainPanel, cc.xy(4, 4));
- 
-    /*JXStatusBar bar = new JXStatusBar();
-    statusLabel = new JLabel("Ready");
-    JXStatusBar.Constraint c1 = new JXStatusBar.Constraint();
-    c1.setFixedWidth(100);
-    bar.add(statusLabel, c1);     // Fixed width of 100 with no inserts
-    JXStatusBar.Constraint c2 = new JXStatusBar.Constraint(
-            JXStatusBar.Constraint.ResizeBehavior.FILL); // Fill with no inserts
-    progressBar = new JProgressBar();
-    bar.add(progressBar, c2);            // Fill with no inserts - will use remaining space
-    this.setStatusBar(bar);*/
-    
+     
     this.setTitle(Translation.INSTANCE.get("misc.title"));
     this.setSize(1200, 1000);
     this.setDefaultCloseOperation(JXFrame.EXIT_ON_CLOSE);
     this.setVisible(true);
     
     switchTo(ScreenEnum.INPUT);
+    //save before closing?
+    this.addWindowListener(new WindowAdapter() {
+      @Override
+      public void windowClosing(WindowEvent e) {
+        toolbarPanel.checkSave();
+      }
+    });
   }
   
   public void switchTo(ScreenEnum e) {
