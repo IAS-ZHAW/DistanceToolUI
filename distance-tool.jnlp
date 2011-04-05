@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jnlp spec="1.0+" 
+    codebase="http://www.a-meisi.ch/dito" 
+    href="distance-tool.jnlp">
+    <information>
+        <title>Distance Tool</title>
+        <vendor>Institute of applied simulation</vendor>
+        <homepage href="http://ias.zhaw.ch"/>
+    </information>
+    <association extensions="dito"/>
+
+    <security>
+      <all-permissions/>
+    </security>
+    
+    <resources>
+        <!-- Application Resources -->
+        <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+        <jar href="DistanceToolUI.jar" main="true" />
+        <jar href="DistanceToolCore.jar"/>
+        <jar href="swingx-core-1.6.2.jar"/>
+        <jar href="jcip-annotations.jar"/>
+        <jar href="jcommon-1.0.16.jar"/>
+        <jar href="jfreechart-1.0.13.jar"/>
+        <jar href="jgoodies-common-1.1.1.jar"/>
+        <jar href="jgoodies-forms-1.4.0.jar"/>
+        <jar href="jgoodies-looks-2.4.0.jar"/>
+        <jar href="jmatharray.jar"/>
+        <jar href="jmathplot.jar"/>
+        <jar href="opencsv-2.2.jar"/>
+        <jar href="ValidationAPI.jar"/>
+    </resources>
+    <application-desc
+         name="Distance Tool"
+         main-class="ch.zhaw.ias.dito.ui.MainFrame"
+         width="500"
+         height="500">
+     </application-desc>
+     <update check="background"/>
+</jnlp> 

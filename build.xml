@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+ <project name="Demo" basedir="." default="build">
+  <property name="build.classes" value="build" />
+ 	<property name="build.libraries" value="libs" />
+  <property name="build.lib" value="deploy" />
+  <property name="java.dir" value="src" />
+ 	<property name="java.dir.core" value="../DistanceToolCore/src" />
+ 	<property name="name.core" value="DistanceToolCore" />
+  <property name="name.ui" value="DistanceToolUI" />
+ 
+ 	<path id="classpath">
+ 	  <fileset dir="${build.libraries}">
+ 	    <include name="**/*.jar" />
+ 	  </fileset>
+ 	</path>
+
+ 
+ 	<target name="build-core">
+    <mkdir dir="${build.classes}"/>
+ 		
+ 		<echo>sourcefiles = ${toString:classpath}</echo>
+ 		
+    <!-- Quelltext UI kompilieren -->
+    <javac srcdir="${java.dir.core}"
+           destdir="${build.classes}"
+           debug="false"
+           deprecation="true"
+           optimize="true" 
+           excludes="ch/zhaw/ias/dito/test/**"
+    	classpathref="classpath">
+      <!-- <classpath refid="classpath" /> -->
+    </javac>
+ 		
+    <!-- Baut die JAR-Datei -->
+    <jar jarfile="${build.libraries}/${name.core}.jar" >
+      <fileset dir="${build.classes}"/>
+    </jar>
+ 		
+    <delete dir="${build.classes}"/>
+  </target>
+ 	
+  <!-- Anwendung bauen  -->
+  <target name="build" depends="clean, build-core" description="Baut die komplette Anwendung">
+    <!-- Verzeichis anlegen -->
+    <mkdir dir="${build.classes}"/>
+  	<mkdir dir="${build.lib}"/>
+ 
+    <!-- Quelltext UI kompilieren -->
+    <javac srcdir="${java.dir}"
+           destdir="${build.classes}"
+           debug="false"
+           deprecation="true"
+           optimize="true" >
+      <classpath refid="classpath" />
+    </javac>
+ 
+    <!-- Kopiert notwendige Dateien -->
+    <copy todir="${build.classes}">
+      <fileset dir="${java.dir}">
+        <include name="**/*.properties" />
+      	<include name="**/*.html" />
+        <include name="**/*.gif" />
+      	<include name="**/*.png" />
+      </fileset>
+    </copy>
+ 
+    <!-- Baut die JAR-Datei -->
+    <jar jarfile="${build.lib}/${name.ui}.jar" >
+      <fileset dir="${build.classes}"/>
+    </jar>
+  	
+    <!-- Libraries kopieren -->
+    <copy todir="${build.lib}">
+      <fileset dir="${build.libraries}">
+        <include name="**/*.jar" />
+      </fileset>
+    </copy>
+
+    <!-- jars signieren -->
+  	<signjar destDir="${build.lib}"
+  	    alias="http://ias.zhaw.ch/dito" keystore="dito.keys"
+  	    storepass="DiTo2011"
+  	    preservelastmodified="true">
+  	  <path>
+  	    <fileset dir="${build.lib}" includes="*.jar" />
+  	  </path>
+  	  <flattenmapper />
+  	</signjar>
+  	
+  	<!-- jnlps kopieren -->
+    <copy todir="${build.lib}">
+      <fileset dir=".">
+        <include name="*.jnlp" />
+      </fileset>
+    </copy>
+  	
+  	<!-- build dir löschen -->
+    <delete dir="${build.classes}"/>
+  </target>
+ 
+  <!-- Aufräumen  -->
+  <target name="clean" description="Räumt die temporär angelegten Dateien weg">
+    <!-- Löscht Dateien -->
+    <delete dir="${build.dir}" />
+    <delete dir="${dist.base}" />
+    <delete dir="${defaultdist.dir}" />
+    <delete> 
+      <fileset dir="." includes="**/*~" defaultexcludes="no"/>
+    </delete>
+  </target>
+</project>
