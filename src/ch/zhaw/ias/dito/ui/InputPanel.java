@@ -3,8 +3,11 @@ package ch.zhaw.ias.dito.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -20,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
+import javax.swing.JTable;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -42,6 +46,7 @@ import ch.zhaw.ias.dito.ui.util.ExtensionFileFilter;
 import ch.zhaw.ias.dito.ui.util.RangeSlider;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.debug.FormDebugPanel;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
@@ -66,8 +71,8 @@ public class InputPanel extends DitoPanel implements ActionListener, ChangeListe
   public InputPanel(ValidationGroup validationGroup) {
     super(ScreenEnum.INPUT, null, ScreenEnum.QUESTION, validationGroup);
     
-    FormLayout layout = new FormLayout("max(50dlu; pref), 5dlu, max(100dlu; pref), 5dlu, max(50dlu; pref), 5dlu, max(100dlu; pref), 5dlu, max(50dlu; pref), pref:grow", 
-    "pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, 10dlu, pref, 2dlu, pref, 2dlu, 20dlu, 2dlu, pref:grow(1.0), pref:grow(1.0), 2dlu, pref, 2dlu, pref, 2dlu, pref");
+    FormLayout layout = new FormLayout("max(20dlu; pref), 30dlu, 5dlu, max(150dlu; pref), 5dlu, max(100dlu; pref), 5dlu, max(50dlu; pref), fill:0:g", 
+    "pref, 2dlu, pref, 2dlu, pref, 10dlu, pref, 2dlu, 20dlu, 2dlu, fill:pref:grow, 2dlu, pref, 2dlu, pref, 2dlu, pref");
     //layout.setRowGroups(new int[][]{{2, 4, 6}}); 
     CellConstraints cc = new CellConstraints();
     DefaultFormBuilder fb = new DefaultFormBuilder(layout, Translation.INSTANCE.getBundle());
@@ -75,18 +80,20 @@ public class InputPanel extends DitoPanel implements ActionListener, ChangeListe
     browseButton = new JXButton(Translation.INSTANCE.get("s1.bu.browse"));
     filePath.setName(Translation.INSTANCE.get("s1.lb.file"));
 
-    fb.addI15dSeparator("s1.title.file", cc.xyw(1, 1, 9));
-    fb.addI15dLabel("s1.lb.file", cc.xy(1, 3));
-    fb.add(filePath, cc.xyw(3, 3, 5));
-    fb.add(browseButton, cc.xy(9, 3));
-    fb.addI15dLabel("s1.lb.separator", cc.xy(1, 5));
-    fb.add(separator, cc.xy(7, 5));
+    fb.addI15dSeparator("s1.title.file", cc.xyw(1, 1, 8));
+    fb.addI15dLabel("s1.lb.file", cc.xyw(1, 3, 2));
+    fb.add(filePath, cc.xyw(4, 3, 3));
+    fb.add(browseButton, cc.xy(8, 3));
+    fb.addI15dLabel("s1.lb.separator", cc.xyw(1, 5, 2));
+    fb.add(separator, cc.xy(8, 5));
     
-    fb.addI15dSeparator("s1.title.data", cc.xyw(1, 9, 9));
+    fb.addI15dSeparator("s1.title.data", cc.xyw(1, 7, 8));
 
     visualTable = new JXTable(tableModel);
     visualTable.setSortable(false);
+    //visualTable.setHorizontalScrollEnabled(true);
     visualTable.getTableHeader().setReorderingAllowed(false);
+    visualTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     visualTable.addHighlighter(new ColorHighlighter(new HighlightPredicate() {
       
       @Override
@@ -106,27 +113,37 @@ public class InputPanel extends DitoPanel implements ActionListener, ChangeListe
     columnMaxSpinner.addChangeListener(this);
     rowMinSpinner.addChangeListener(this);
     rowMaxSpinner.addChangeListener(this);
+    separator.addFocusListener(new FocusAdapter() {
+      @Override
+      public void focusLost(FocusEvent e) {
+        updateTable();
+      }
+    });
+    filePath.addFocusListener(new FocusAdapter() {
+      @Override
+      public void focusLost(FocusEvent e) {
+        updateTable();
+      }
+    });    
     
     JPanel columnSliderPanel = new JPanel();
     columnSliderPanel.setLayout(new BorderLayout());
     columnSliderPanel.add(columnMinSpinner, BorderLayout.WEST);
     columnSliderPanel.add(columnSlider, BorderLayout.CENTER);
     columnSliderPanel.add(columnMaxSpinner, BorderLayout.EAST);
-    fb.add(columnSliderPanel, cc.xyw(2, 13, 9));
+    fb.add(columnSliderPanel, cc.xyw(4, 9, 6));
     
     JPanel rowSliderPanel = new JPanel();
     rowSliderPanel.setLayout(new BorderLayout());
     rowSliderPanel.add(rowMinSpinner, BorderLayout.NORTH);
     rowSliderPanel.add(rowSlider, BorderLayout.CENTER);
     rowSliderPanel.add(rowMaxSpinner, BorderLayout.SOUTH);    
-    fb.add(rowSliderPanel, cc.xywh(1, 15, 1, 2));
+    fb.add(rowSliderPanel, cc.xyw(2, 11, 1));
     
-    fb.add(scrollPane, cc.xywh(2, 15, 9, 2));
-    //fb.addI15dLabel("s1.lb.question", cc.xy(1, 15));
-    fb.add(scrollPane, cc.xywh(2, 15, 9, 2));
-    fb.add(allSurveys, cc.xyw(2, 18, 9));
-    fb.add(allQuestions, cc.xyw(2, 20, 9));
-    fb.add(columnTitles, cc.xyw(2, 22, 9));
+    fb.add(scrollPane, cc.xyw(4, 11, 6));
+    fb.add(allSurveys, cc.xy(4, 13));
+    fb.add(allQuestions, cc.xy(4, 15));
+    fb.add(columnTitles, cc.xy(4, 17));
     
     validationGroup.add(filePath, Validators.FILE_MUST_BE_FILE, Validators.FILE_MUST_EXIST);
     validationGroup.add(separator, Validators.REQUIRE_NON_EMPTY_STRING);
@@ -142,12 +159,7 @@ public class InputPanel extends DitoPanel implements ActionListener, ChangeListe
     browseButton.addActionListener(this);
     this.setLayout(new BorderLayout());
     this.add(fb.getPanel(), BorderLayout.CENTER);
-    try {
-      updateTable();
-    } catch (IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
+    updateTable();
     columnSlider.setValue(i.getStartQuestion());
     columnSlider.setUpperValue(i.getEndQuestion());
     rowSlider.setValue(i.getStartSurvey());
@@ -175,8 +187,7 @@ public class InputPanel extends DitoPanel implements ActionListener, ChangeListe
     i.setAllSurveys(allSurveys.isSelected());
     
     PropertyGuardian guardian = Config.INSTANCE.getPropertyGuardian();
-    guardian.propertyChanged(ConfigProperty.INPUT_FILENAME, "", i.getFile().getName());
-    guardian.propertyChanged(ConfigProperty.INPUT_SEPARATOR, "", i.getSeparator());
+    guardian.propertyChanged(ConfigProperty.INPUT_FILENAME);
   }
   
   @Override
@@ -188,29 +199,41 @@ public class InputPanel extends DitoPanel implements ActionListener, ChangeListe
     if (returnVal == JFileChooser.APPROVE_OPTION) {
         File file = fileChooser.getSelectedFile();
         filePath.setText(file.getAbsolutePath());
-        try {
-          updateTable();
-        } catch (IOException e1) {
-          // TODO Auto-generated catch block
-          e1.printStackTrace();
-        }
+        updateTable();
     }
   }
   
-  private void updateTable() throws IOException {
+  private void updateTable() {
     data.clear();
     File f = new File(filePath.getText());
-    BufferedReader reader = new BufferedReader(new FileReader(f));
-    Pattern pattern = Pattern.compile(Character.toString(separator.getText().charAt(0)));
-    String line;
-    while ((line = reader.readLine()) != null) {
-      Scanner s = new Scanner(line);
-      s.useDelimiter(pattern);
-      List<String> values = new ArrayList<String>();
-      while (s.hasNext()) {
-        values.add(s.next());
+    if (f.isDirectory() || !f.exists()) {
+      return;
+    }
+    BufferedReader reader = null;
+    try {
+      reader = new BufferedReader(new FileReader(f));
+      Pattern pattern = Pattern.compile(Character.toString(separator.getText().charAt(0)));
+      String line;
+      while ((line = reader.readLine()) != null) {
+        Scanner s = new Scanner(line);
+        s.useDelimiter(pattern);
+        List<String> values = new ArrayList<String>();
+        while (s.hasNext()) {
+          values.add(s.next());
+        }
+        data.add(values);
       }
-      data.add(values);
+    } catch (IOException e) {
+      e.printStackTrace();
+    } finally {
+      if (reader != null) {
+        try {
+          reader.close();
+        } catch (IOException e) {
+          // stupid java error handling. no one knows what to do here!
+          e.printStackTrace();
+        }
+      }
     }
         
     tableModel.fireTableStructureChanged();
@@ -225,8 +248,6 @@ public class InputPanel extends DitoPanel implements ActionListener, ChangeListe
     rowSlider.setValue(1);
     rowSlider.setUpperValue(tableModel.getRowCount());
     columnSlider.setUpperValue(tableModel.getColumnCount());
-    
-    //allSurveys.setSelected(i.)
   }
 
   private void synchronizeSpinnersSliders(boolean sliderChanged) {

@@ -161,7 +161,7 @@ public class MethodPanel extends DitoPanel implements ActionListener {
     m.setNumberOfThreads(Integer.parseInt(numberOfThreads.getText()));
     
     PropertyGuardian guardian = Config.INSTANCE.getPropertyGuardian();
-    guardian.propertyChanged(ConfigProperty.METHOD_NAME, "", m.getName());
+    guardian.propertyChanged(ConfigProperty.METHOD_NAME);
   }
   
   static class MethodComboModel extends DefaultComboBoxModel {

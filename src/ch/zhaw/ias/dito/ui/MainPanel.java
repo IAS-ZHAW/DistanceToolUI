@@ -1,6 +1,5 @@
 package ch.zhaw.ias.dito.ui;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -32,8 +31,8 @@ public class MainPanel extends JXPanel implements ActionListener, ChangeListener
     //setTitle(Translation.INSTANCE.get("main.main"));
     setBorder(BorderFactory.createEtchedBorder());
     
-    FormLayout layout = new FormLayout("fill:20dlu, fill:pref:grow, fill:20dlu", 
-    "20dlu, fill:pref:grow(0.8), fill:pref:grow(0.2), fill:20dlu");
+    FormLayout layout = new FormLayout("fill:20dlu, fill:0:grow, fill:20dlu", 
+    "20dlu, fill:min:grow(0.8), fill:0:grow(0.2), fill:20dlu");
     //layout.setRowGroups(new int[][]{{2, 4, 6}}); 
     CellConstraints cc = new CellConstraints();
     //DefaultFormBuilder fb = new DefaultFormBuilder(layout, Translation.INSTANCE.getBundle(), new FormDebugPanel());

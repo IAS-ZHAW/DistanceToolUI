@@ -2,6 +2,7 @@ package ch.zhaw.ias.dito.ui;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -26,23 +27,24 @@ public class MainFrame extends JXFrame {
   
   private ScreenEnum currentScreen;
         
-  public MainFrame() {
-    //Config.INSTANCE.setDitoConfig(DitoConfiguration.createEmpty());
-    //Just for testing purpose
-    try {
-      String testfile = "C:/daten/java-workspace/DistanceToolUI/testdata/irisFlower.dito";
-      DitoConfiguration config = DitoConfiguration.loadFromFile(testfile);
-      config.setLocation(testfile);
-      config.loadMatrix();
-      Config.INSTANCE.setDitoConfig(config);
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-    } catch (JAXBException e) {
-      e.printStackTrace();
-    } catch (IOException e) {
-      e.printStackTrace();
+  public MainFrame(String filename) {
+    if (filename != null) {
+      try {
+        DitoConfiguration config = DitoConfiguration.loadFromFile(filename);
+        config.setLocation(filename);
+        config.loadMatrix();
+        Config.INSTANCE.setDitoConfig(config);
+      } catch (FileNotFoundException e) {
+        e.printStackTrace();
+      } catch (JAXBException e) {
+        e.printStackTrace();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    } else {
+      Config.INSTANCE.setDitoConfig(DitoConfiguration.createEmpty());
     }
-
+    
     FormLayout layout = new FormLayout("2dlu, 150dlu, 2dlu, pref:grow, 2dlu", 
       "2dlu, fill:75dlu, 2dlu, fill:pref:grow, 2dlu");
     CellConstraints cc = new CellConstraints();
@@ -83,22 +85,42 @@ public class MainFrame extends JXFrame {
   }
   
   public static void main(String... args) {
-    SwingUtilities.invokeLater(new Runnable() {
-      public void run() {
-        try {
-          UIManager.setLookAndFeel(new WindowsLookAndFeel());
-          /*
-           * com.jgoodies.looks.windows.WindowsLookAndFeel
-           * com.jgoodies.looks.plastic.PlasticLookAndFeel
-           * com.jgoodies.looks.plastic.Plastic3DLookAndFeel
-           * com.jgoodies.looks.plastic.PlasticXPLookAndFeel 
-           */
-       } catch (Exception e) {
-         
-       }
-       new MainFrame();
+    String filename = null; 
+    if (args.length > 0) {
+      File f = new File(filename);
+      if (f.isFile() && f.exists()) {
+        filename = args[0];
       }
-  });
+    } 
+    //only for testing
+    /*if (filename == null) {
+      filename = "C:/daten/java-workspace/DistanceToolUI/testdata/irisFlower.dito";
+    } */
+   
+    SwingUtilities.invokeLater(new Starter(filename));
+  }
+  
+  private static class Starter implements Runnable {
+    private String filename;
+    
+    Starter(String filename) {
+      this.filename = filename;
+    }
+    
+    public void run() {
+      try {
+        UIManager.setLookAndFeel(new WindowsLookAndFeel());
+        /*
+         * com.jgoodies.looks.windows.WindowsLookAndFeel
+         * com.jgoodies.looks.plastic.PlasticLookAndFeel
+         * com.jgoodies.looks.plastic.Plastic3DLookAndFeel
+         * com.jgoodies.looks.plastic.PlasticXPLookAndFeel 
+         */
+      } catch (Exception e) {
+       
+      }
+      new MainFrame(filename);       
+    }
   }
   
   public void setProcessState(boolean active) {

@@ -22,7 +22,6 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 import ch.zhaw.ias.dito.config.ConfigProperty;
-import ch.zhaw.ias.dito.config.PropertyListener;
 import ch.zhaw.ias.dito.ui.resource.AppConfig;
 import ch.zhaw.ias.dito.ui.resource.Translation;
 
@@ -68,13 +67,16 @@ public class ProcessPanel extends JXPanel {
     }
     currentScreen = e;
     panels.get(currentScreen).setHighlighted(true);
+    for (ProcessStepPanel panel : panels.values()) {
+      panel.update();
+    }
   }
   
   public void setProcessState(boolean active) {
     progress.setIndeterminate(active);
   }
   
-  static class ProcessStepPanel extends JXTitledPanel implements PropertyListener {
+  static class ProcessStepPanel extends JXTitledPanel {
     private JPanel contentPanel;
     private Map<ConfigProperty, JXLabel> labels = new HashMap<ConfigProperty, JXLabel>();
     
@@ -87,7 +89,6 @@ public class ProcessPanel extends JXPanel {
       contentPanel.setLayout(new GridLayout(properties.length, 2, 2, 2));
       contentPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
       for (int i = 0; i < properties.length; i++) {
-        Config.INSTANCE.getPropertyGuardian().addListener(this);
         JXLabel valueLabel = new JXLabel();
         labels.put(properties[i], valueLabel);
         contentPanel.add(new JXLabel(Translation.INSTANCE.get(properties[i].getKey())));
@@ -108,16 +109,14 @@ public class ProcessPanel extends JXPanel {
       }     
     }
     
-    @Override
-    public boolean listensTo(ConfigProperty prop) {
-      return labels.containsKey(prop);
-    }
-    
-    @Override
-    public void propertyChanged(ConfigProperty prop, Object oldValue,
-        Object newValue) {
-      JXLabel lb = labels.get(prop);
-      lb.setText(newValue.toString());
+    public void update() {
+      for (ConfigProperty p : labels.keySet()) {
+        JXLabel lb = labels.get(p);
+        Object value = Config.INSTANCE.getDitoConfig().getPropertyValue(p);
+        if (value != null) {
+          lb.setText(value.toString());
+        }
+      }
     }
   }
   
