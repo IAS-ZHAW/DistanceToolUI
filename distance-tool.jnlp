@@ -15,7 +15,7 @@
     
     <resources>
         <!-- Application Resources -->
-        <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+        <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se" initial-heap-size="64m" max-heap-size="512m"/>
         <jar href="DistanceToolUI.jar" main="true" />
         <jar href="DistanceToolCore.jar"/>
         <jar href="swingx-core-1.6.2.jar"/>
