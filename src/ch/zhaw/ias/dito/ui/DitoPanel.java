@@ -11,7 +11,7 @@ public abstract class DitoPanel extends JXPanel {
   private ScreenEnum previous;
   private ScreenEnum next;
   
-  public DitoPanel(ScreenEnum screenEnum, ScreenEnum previous, ScreenEnum next, ValidationGroup validationGroup) {
+  public DitoPanel(ScreenEnum screenEnum, ScreenEnum previous, ScreenEnum next) {
     this.screenEnum = screenEnum;
     this.previous = previous;
     this.next = next;
@@ -32,10 +32,6 @@ public abstract class DitoPanel extends JXPanel {
   }
   public boolean hasPrevious() {
     return previous != null;
-  }
-
-  public ValidationGroup getValidationGroup() {
-    return validationGroup;
   }
   
   /**

@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTextPane;
@@ -24,17 +25,21 @@ import com.jgoodies.forms.layout.FormLayout;
 import ch.zhaw.ias.dito.config.ConfigProperty;
 import ch.zhaw.ias.dito.ui.resource.AppConfig;
 import ch.zhaw.ias.dito.ui.resource.Translation;
+import ch.zhaw.ias.dito.util.LogInterface;
+import ch.zhaw.ias.dito.util.Logger;
+import ch.zhaw.ias.dito.util.Logger.LogLevel;
 
-public class ProcessPanel extends JXPanel {
+public class ProcessPanel extends JXPanel implements LogInterface {
   private ScreenEnum currentScreen;
   private Map<ScreenEnum, ProcessStepPanel> panels = new HashMap<ScreenEnum, ProcessPanel.ProcessStepPanel>();
   private JProgressBar progress = new JProgressBar();
+  private JLabel status = new JLabel("");
   
   public ProcessPanel() {
     setBorder(BorderFactory.createEtchedBorder());
     
     FormLayout layout = new FormLayout("5dlu, 50dlu:grow, 5dlu", 
-    "5dlu, fill:pref, fill:pref:grow, fill:pref, fill:pref:grow, fill:pref, fill:pref:grow, fill:pref, fill:pref:grow, fill:pref, 5dlu, fill:20dlu, 5dlu");
+    "5dlu, fill:pref, fill:pref:grow, fill:pref, fill:pref:grow, fill:pref, fill:pref:grow, fill:pref, fill:pref:grow, fill:pref, 5dlu, fill:20dlu, 5dlu, fill:8dlu, 5dlu");
     int[][] rowGroups = new int[][] {{2, 4, 6, 8}, {3, 5, 7}};
     layout.setRowGroups(rowGroups);
     CellConstraints cc = new CellConstraints();
@@ -56,9 +61,11 @@ public class ProcessPanel extends JXPanel {
     pb.add(panels.get(ScreenEnum.OUTPUT), cc.xy(2, 10));
     
     pb.add(progress, cc.xy(2, 12));
+    pb.add(status, cc.xy(2, 14));
     
     this.setLayout(new BorderLayout());
     add(pb.getPanel(), BorderLayout.CENTER);
+    Logger.INSTANCE.addInterface(this);
   }
   
   public void switchTo(ScreenEnum e) {
@@ -135,5 +142,21 @@ public class ProcessPanel extends JXPanel {
       g.fillRect(space+arrowW/4, border, arrowW/2, height-2*border-space);
       g.fillPolygon(new int[] {space, space+arrowW/2, (int) (width-space)}, new int[] {height-border-space, height-border, height-border-space}, 3);
     }
+  }
+  
+  @Override
+  public void log(String text, LogLevel level) {
+    status.setText(text); 
+  }
+  
+  @Override
+  public void log(String text, LogLevel level, boolean startProcess) {
+    setProcessState(startProcess);
+    status.setText(text);
+  }
+  
+  @Override
+  public void error(String text, Throwable t) {
+    status.setText(text + ":" + t.getLocalizedMessage());
   }
 }

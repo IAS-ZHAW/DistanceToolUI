@@ -40,8 +40,8 @@ public class QuestionPanel extends DitoPanel implements ActionListener {
   private JScrollPane sp;
   private List<Question> questions;
   
-  public QuestionPanel(ValidationGroup validationGroup) {
-    super(ScreenEnum.QUESTION, ScreenEnum.INPUT, ScreenEnum.METHOD, validationGroup);
+  public QuestionPanel() {
+    super(ScreenEnum.QUESTION, ScreenEnum.INPUT, ScreenEnum.METHOD);
     questions = Config.INSTANCE.getDitoConfig().getQuestions();
     QuestionTableModel model = new QuestionTableModel(questions);
     

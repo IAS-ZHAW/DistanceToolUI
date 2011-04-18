@@ -35,18 +35,16 @@ import org.jdesktop.swingx.JXTextField;
 import org.jdesktop.swingx.decorator.ColorHighlighter;
 import org.jdesktop.swingx.decorator.ComponentAdapter;
 import org.jdesktop.swingx.decorator.HighlightPredicate;
-import org.netbeans.validation.api.builtin.Validators;
-import org.netbeans.validation.api.ui.ValidationGroup;
-
 import ch.zhaw.ias.dito.config.ConfigProperty;
 import ch.zhaw.ias.dito.config.Input;
 import ch.zhaw.ias.dito.config.PropertyGuardian;
 import ch.zhaw.ias.dito.ui.resource.Translation;
 import ch.zhaw.ias.dito.ui.util.ExtensionFileFilter;
 import ch.zhaw.ias.dito.ui.util.RangeSlider;
+import ch.zhaw.ias.dito.util.Logger;
+import ch.zhaw.ias.dito.util.Logger.LogLevel;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.debug.FormDebugPanel;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
@@ -68,8 +66,8 @@ public class InputPanel extends DitoPanel implements ActionListener, ChangeListe
   private SimpleTableModel tableModel = new SimpleTableModel();
   private JXTable visualTable;
   
-  public InputPanel(ValidationGroup validationGroup) {
-    super(ScreenEnum.INPUT, null, ScreenEnum.QUESTION, validationGroup);
+  public InputPanel() {
+    super(ScreenEnum.INPUT, null, ScreenEnum.QUESTION);
     
     FormLayout layout = new FormLayout("max(20dlu; pref), 30dlu, 5dlu, max(150dlu; pref), 5dlu, max(100dlu; pref), 5dlu, max(50dlu; pref), fill:0:g", 
     "pref, 2dlu, pref, 2dlu, pref, 10dlu, pref, 2dlu, 20dlu, 2dlu, fill:pref:grow, 2dlu, pref, 2dlu, pref, 2dlu, pref");
@@ -128,6 +126,8 @@ public class InputPanel extends DitoPanel implements ActionListener, ChangeListe
     
     JPanel columnSliderPanel = new JPanel();
     columnSliderPanel.setLayout(new BorderLayout());
+    columnMinSpinner.setPreferredSize(new Dimension(50, (int) columnMinSpinner.getPreferredSize().getHeight()));
+    columnMaxSpinner.setPreferredSize(new Dimension(50, (int) columnMaxSpinner.getPreferredSize().getHeight()));
     columnSliderPanel.add(columnMinSpinner, BorderLayout.WEST);
     columnSliderPanel.add(columnSlider, BorderLayout.CENTER);
     columnSliderPanel.add(columnMaxSpinner, BorderLayout.EAST);
@@ -145,8 +145,8 @@ public class InputPanel extends DitoPanel implements ActionListener, ChangeListe
     fb.add(allQuestions, cc.xy(4, 15));
     fb.add(columnTitles, cc.xy(4, 17));
     
-    validationGroup.add(filePath, Validators.FILE_MUST_BE_FILE, Validators.FILE_MUST_EXIST);
-    validationGroup.add(separator, Validators.REQUIRE_NON_EMPTY_STRING);
+    //validationGroup.add(filePath, Validators.FILE_MUST_BE_FILE, Validators.FILE_MUST_EXIST);
+    //validationGroup.add(separator, Validators.REQUIRE_NON_EMPTY_STRING);
     
     Input i = Config.INSTANCE.getDitoConfig().getInput();
     filePath.setText(i.getFilename());
@@ -193,13 +193,13 @@ public class InputPanel extends DitoPanel implements ActionListener, ChangeListe
   @Override
   public void actionPerformed(ActionEvent e) {
     JFileChooser fileChooser = new JFileChooser(filePath.getText());
-    fileChooser.setFileFilter(ExtensionFileFilter.CSV);
+    fileChooser.setFileFilter(ExtensionFileFilter.CSV_OR_TXT);
     int returnVal = fileChooser.showOpenDialog(this);
     
     if (returnVal == JFileChooser.APPROVE_OPTION) {
-        File file = fileChooser.getSelectedFile();
-        filePath.setText(file.getAbsolutePath());
-        updateTable();
+      File file = fileChooser.getSelectedFile();
+      filePath.setText(file.getAbsolutePath());
+      updateTable();
     }
   }
   
@@ -209,6 +209,7 @@ public class InputPanel extends DitoPanel implements ActionListener, ChangeListe
     if (f.isDirectory() || !f.exists()) {
       return;
     }
+    Logger.INSTANCE.log("Start reading file", LogLevel.INFORMATION, true);    
     BufferedReader reader = null;
     try {
       reader = new BufferedReader(new FileReader(f));
@@ -248,6 +249,8 @@ public class InputPanel extends DitoPanel implements ActionListener, ChangeListe
     rowSlider.setValue(1);
     rowSlider.setUpperValue(tableModel.getRowCount());
     columnSlider.setUpperValue(tableModel.getColumnCount());
+    
+    Logger.INSTANCE.log("finished reading file", LogLevel.INFORMATION, false);
   }
 
   private void synchronizeSpinnersSliders(boolean sliderChanged) {

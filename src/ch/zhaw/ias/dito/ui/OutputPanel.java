@@ -30,8 +30,8 @@ public class OutputPanel extends DitoPanel implements ActionListener {
   private JXTextField precision = new JXTextField();
   private JXButton saveButton = new JXButton(Translation.INSTANCE.get("s5.lb.save"));
   
-  public OutputPanel(ValidationGroup validationGroup) {
-    super(ScreenEnum.OUTPUT, ScreenEnum.ANALYSIS, null, validationGroup);
+  public OutputPanel() {
+    super(ScreenEnum.OUTPUT, ScreenEnum.ANALYSIS, null);
     
     FormLayout layout = new FormLayout("max(50dlu; pref), 5dlu, max(100dlu; pref), 5dlu, max(50dlu; pref), 5dlu, max(100dlu; pref), 5dlu, max(50dlu; pref)", 
       "pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, 2dlu, pref");
@@ -53,7 +53,7 @@ public class OutputPanel extends DitoPanel implements ActionListener {
     fb.add(saveButton, cc.xy(7, 9));
     
     //validationGroup.add(filePath, Validators.fFILE_MUST_BE_FILE);
-    validationGroup.add(separator, Validators.REQUIRE_NON_EMPTY_STRING);
+    //validationGroup.add(separator, Validators.REQUIRE_NON_EMPTY_STRING);
     Output o = Config.INSTANCE.getDitoConfig().getOutput();
     filePath.setText(o.getFilename());
     separator.setText(Character.toString(o.getSeparator()));

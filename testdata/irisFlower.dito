@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ns2:ditoConfiguration xmlns:ns2="http://ias.zhaw.ch/">
     <input>
-        <filename>C:\Daten\java-workspace\DistanceToolCore\Daten\Smartvote\kandidaten_grossratswahlen-BE_2010-numeric.csv</filename>
-        <separator>59</separator>
+        <filename>C:\Daten\java-workspace\DistanceToolCore\Daten\isis_chemicaldataset.txt</filename>
+        <separator>32</separator>
+        <questionTitles>false</questionTitles>
+        <allQuestions>false</allQuestions>
+        <startQuestion>1</startQuestion>
+        <endQuestion>166</endQuestion>
+        <allSurveys>true</allSurveys>
+        <startSurvey>1</startSurvey>
+        <endSurvey>153</endSurvey>
     </input>
     <output>
         <filename>C:\daten\java-workspace\DistanceToolCore\Daten\bla-$$METHOD$$.csv</filename>
@@ -10,7 +17,7 @@
         <precision>6</precision>
     </output>
     <method>
-        <name>Universal</name>
+        <name>Bray-Curtis</name>
         <useRandomSample>true</useRandomSample>
         <sampleSize>555</sampleSize>
         <parallel>true</parallel>
@@ -26,7 +33,7 @@
         <question>
             <column>1</column>
             <name>bla</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>10.0</questionWeight>
@@ -36,7 +43,7 @@
         <question>
             <column>2</column>
             <name>Juhui2</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>2.0</questionWeight>
@@ -46,7 +53,7 @@
         <question>
             <column>3</column>
             <name>Sepal Width</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -56,7 +63,7 @@
         <question>
             <column>4</column>
             <name>Question 4</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -66,7 +73,7 @@
         <question>
             <column>5</column>
             <name>Question 5</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -76,7 +83,7 @@
         <question>
             <column>6</column>
             <name>Question 6</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -86,7 +93,7 @@
         <question>
             <column>7</column>
             <name>Question 7</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -96,7 +103,7 @@
         <question>
             <column>8</column>
             <name>Question 8</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -106,7 +113,7 @@
         <question>
             <column>9</column>
             <name>Question 9</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -116,7 +123,7 @@
         <question>
             <column>10</column>
             <name>Question 10</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -126,7 +133,7 @@
         <question>
             <column>11</column>
             <name>Question 11</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -136,7 +143,7 @@
         <question>
             <column>12</column>
             <name>Question 12</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -146,7 +153,7 @@
         <question>
             <column>13</column>
             <name>Question 13</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -156,7 +163,7 @@
         <question>
             <column>14</column>
             <name>Question 14</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -166,7 +173,7 @@
         <question>
             <column>15</column>
             <name>Question 15</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -176,7 +183,7 @@
         <question>
             <column>16</column>
             <name>Question 16</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -186,7 +193,7 @@
         <question>
             <column>17</column>
             <name>Question 17</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -196,7 +203,7 @@
         <question>
             <column>18</column>
             <name>Question 18</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -206,7 +213,7 @@
         <question>
             <column>19</column>
             <name>Question 19</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -216,7 +223,7 @@
         <question>
             <column>20</column>
             <name>Question 20</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -226,7 +233,7 @@
         <question>
             <column>21</column>
             <name>Question 21</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -236,7 +243,7 @@
         <question>
             <column>22</column>
             <name>Question 22</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -246,7 +253,7 @@
         <question>
             <column>23</column>
             <name>Question 23</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -256,7 +263,7 @@
         <question>
             <column>24</column>
             <name>Question 24</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -266,7 +273,7 @@
         <question>
             <column>25</column>
             <name>Question 25</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -276,7 +283,7 @@
         <question>
             <column>26</column>
             <name>Question 26</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -286,7 +293,7 @@
         <question>
             <column>27</column>
             <name>Question 27</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -296,7 +303,7 @@
         <question>
             <column>28</column>
             <name>Question 28</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -306,7 +313,7 @@
         <question>
             <column>29</column>
             <name>Question 29</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -316,7 +323,7 @@
         <question>
             <column>30</column>
             <name>Question 30</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -326,7 +333,7 @@
         <question>
             <column>31</column>
             <name>Question 31</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -336,7 +343,7 @@
         <question>
             <column>32</column>
             <name>Question 32</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -346,7 +353,7 @@
         <question>
             <column>33</column>
             <name>Question 33</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -356,7 +363,7 @@
         <question>
             <column>34</column>
             <name>Question 34</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -366,7 +373,7 @@
         <question>
             <column>35</column>
             <name>Question 35</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -376,7 +383,7 @@
         <question>
             <column>36</column>
             <name>Question 36</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -386,7 +393,7 @@
         <question>
             <column>37</column>
             <name>Question 37</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -396,7 +403,7 @@
         <question>
             <column>38</column>
             <name>Question 38</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -406,7 +413,7 @@
         <question>
             <column>39</column>
             <name>Question 39</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -416,7 +423,7 @@
         <question>
             <column>40</column>
             <name>Question 40</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -426,7 +433,7 @@
         <question>
             <column>41</column>
             <name>Question 41</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -436,7 +443,7 @@
         <question>
             <column>42</column>
             <name>Question 42</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -446,7 +453,7 @@
         <question>
             <column>43</column>
             <name>Question 43</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -456,7 +463,7 @@
         <question>
             <column>44</column>
             <name>Question 44</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -466,7 +473,7 @@
         <question>
             <column>45</column>
             <name>Question 45</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -476,7 +483,7 @@
         <question>
             <column>46</column>
             <name>Question 46</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -486,7 +493,7 @@
         <question>
             <column>47</column>
             <name>Question 47</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -496,7 +503,7 @@
         <question>
             <column>48</column>
             <name>Question 48</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -506,7 +513,7 @@
         <question>
             <column>49</column>
             <name>Question 49</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -516,7 +523,7 @@
         <question>
             <column>50</column>
             <name>Question 50</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -526,7 +533,7 @@
         <question>
             <column>51</column>
             <name>Question 51</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -536,7 +543,7 @@
         <question>
             <column>52</column>
             <name>Question 52</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -546,7 +553,7 @@
         <question>
             <column>53</column>
             <name>Question 53</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -556,7 +563,7 @@
         <question>
             <column>54</column>
             <name>Question 54</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -566,7 +573,7 @@
         <question>
             <column>55</column>
             <name>Question 55</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -576,7 +583,7 @@
         <question>
             <column>56</column>
             <name>Question 56</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -586,7 +593,7 @@
         <question>
             <column>57</column>
             <name>Question 57</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -596,7 +603,7 @@
         <question>
             <column>58</column>
             <name>Question 58</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -606,7 +613,7 @@
         <question>
             <column>59</column>
             <name>Question 59</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -616,7 +623,7 @@
         <question>
             <column>60</column>
             <name>Question 60</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -626,7 +633,7 @@
         <question>
             <column>61</column>
             <name>Question 61</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -636,7 +643,7 @@
         <question>
             <column>62</column>
             <name>Question 62</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -646,7 +653,7 @@
         <question>
             <column>63</column>
             <name>Question 63</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -656,7 +663,7 @@
         <question>
             <column>64</column>
             <name>Question 64</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>
@@ -666,7 +673,1017 @@
         <question>
             <column>65</column>
             <name>Question 65</name>
-            <questionType>ORDINAL</questionType>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>66</column>
+            <name>Question 66</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>67</column>
+            <name>Question 67</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>68</column>
+            <name>Question 68</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>69</column>
+            <name>Question 69</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>70</column>
+            <name>Question 70</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>71</column>
+            <name>Question 71</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>72</column>
+            <name>Question 72</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>73</column>
+            <name>Question 73</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>74</column>
+            <name>Question 74</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>75</column>
+            <name>Question 75</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>76</column>
+            <name>Question 76</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>77</column>
+            <name>Question 77</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>78</column>
+            <name>Question 78</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>79</column>
+            <name>Question 79</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>80</column>
+            <name>Question 80</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>81</column>
+            <name>Question 81</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>82</column>
+            <name>Question 82</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>83</column>
+            <name>Question 83</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>84</column>
+            <name>Question 84</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>85</column>
+            <name>Question 85</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>86</column>
+            <name>Question 86</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>87</column>
+            <name>Question 87</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>88</column>
+            <name>Question 88</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>89</column>
+            <name>Question 89</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>90</column>
+            <name>Question 90</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>91</column>
+            <name>Question 91</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>92</column>
+            <name>Question 92</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>93</column>
+            <name>Question 93</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>94</column>
+            <name>Question 94</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>95</column>
+            <name>Question 95</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>96</column>
+            <name>Question 96</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>97</column>
+            <name>Question 97</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>98</column>
+            <name>Question 98</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>99</column>
+            <name>Question 99</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>100</column>
+            <name>Question 100</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>101</column>
+            <name>Question 101</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>102</column>
+            <name>Question 102</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>103</column>
+            <name>Question 103</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>104</column>
+            <name>Question 104</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>105</column>
+            <name>Question 105</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>106</column>
+            <name>Question 106</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>107</column>
+            <name>Question 107</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>108</column>
+            <name>Question 108</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>109</column>
+            <name>Question 109</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>110</column>
+            <name>Question 110</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>111</column>
+            <name>Question 111</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>112</column>
+            <name>Question 112</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>113</column>
+            <name>Question 113</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>114</column>
+            <name>Question 114</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>115</column>
+            <name>Question 115</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>116</column>
+            <name>Question 116</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>117</column>
+            <name>Question 117</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>118</column>
+            <name>Question 118</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>119</column>
+            <name>Question 119</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>120</column>
+            <name>Question 120</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>121</column>
+            <name>Question 121</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>122</column>
+            <name>Question 122</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>123</column>
+            <name>Question 123</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>124</column>
+            <name>Question 124</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>125</column>
+            <name>Question 125</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>126</column>
+            <name>Question 126</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>127</column>
+            <name>Question 127</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>128</column>
+            <name>Question 128</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>129</column>
+            <name>Question 129</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>130</column>
+            <name>Question 130</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>131</column>
+            <name>Question 131</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>132</column>
+            <name>Question 132</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>133</column>
+            <name>Question 133</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>134</column>
+            <name>Question 134</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>135</column>
+            <name>Question 135</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>136</column>
+            <name>Question 136</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>137</column>
+            <name>Question 137</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>138</column>
+            <name>Question 138</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>139</column>
+            <name>Question 139</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>140</column>
+            <name>Question 140</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>141</column>
+            <name>Question 141</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>142</column>
+            <name>Question 142</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>143</column>
+            <name>Question 143</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>144</column>
+            <name>Question 144</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>145</column>
+            <name>Question 145</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>146</column>
+            <name>Question 146</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>147</column>
+            <name>Question 147</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>148</column>
+            <name>Question 148</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>149</column>
+            <name>Question 149</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>150</column>
+            <name>Question 150</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>151</column>
+            <name>Question 151</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>152</column>
+            <name>Question 152</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>153</column>
+            <name>Question 153</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>154</column>
+            <name>Question 154</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>155</column>
+            <name>Question 155</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>156</column>
+            <name>Question 156</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>157</column>
+            <name>Question 157</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>158</column>
+            <name>Question 158</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>159</column>
+            <name>Question 159</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>160</column>
+            <name>Question 160</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>161</column>
+            <name>Question 161</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>162</column>
+            <name>Question 162</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>163</column>
+            <name>Question 163</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>164</column>
+            <name>Question 164</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>165</column>
+            <name>Question 165</name>
+            <questionType>BINARY</questionType>
+            <enabled>true</enabled>
+            <scaling>1.0</scaling>
+            <questionWeight>1.0</questionWeight>
+            <distanceWeight>1.0</distanceWeight>
+            <excludeValues/>
+        </question>
+        <question>
+            <column>166</column>
+            <name>Question 166</name>
+            <questionType>BINARY</questionType>
             <enabled>true</enabled>
             <scaling>1.0</scaling>
             <questionWeight>1.0</questionWeight>

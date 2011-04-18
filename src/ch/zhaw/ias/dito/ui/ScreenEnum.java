@@ -27,10 +27,10 @@ public enum ScreenEnum {
     return "s" + getScreenId() + ".title";
   }
   
-  public DitoPanel getPanel(ValidationGroup validationGroup) {
+  public DitoPanel getPanel() {
     try {
-      Constructor<DitoPanel> c = panelClass.getConstructor(ValidationGroup.class);
-      return (DitoPanel) c.newInstance(validationGroup);
+      Constructor<DitoPanel> c = panelClass.getConstructor();//ValidationGroup.class);
+      return (DitoPanel) c.newInstance();//validationGroup);
       //return (DitoPanel) panelClass.newInstance();
     } catch (Exception e) {
       throw new Error("this should never happen", e);

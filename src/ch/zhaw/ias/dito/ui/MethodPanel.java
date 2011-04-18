@@ -1,25 +1,27 @@
 package ch.zhaw.ias.dito.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
+import java.net.URL;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.SwingWorker;
-import javax.swing.plaf.basic.BasicBorders.RadioButtonBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.jdesktop.swingx.JXButton;
 import org.jdesktop.swingx.JXRadioGroup;
 import org.jdesktop.swingx.JXTextField;
-import org.netbeans.validation.api.ui.ValidationGroup;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.debug.FormDebugPanel;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
@@ -35,7 +37,7 @@ import ch.zhaw.ias.dito.dist.UniversalBinaryDist;
 import ch.zhaw.ias.dito.ui.resource.Translation;
 import ch.zhaw.ias.dito.ui.util.DistancePlot;
 
-public class MethodPanel extends DitoPanel implements ActionListener {
+public class MethodPanel extends DitoPanel implements ActionListener, ChangeListener {
   private JComboBox methods;
   private JXTextField parameter = new JXTextField();
   private JCheckBox ownDefinition = new JCheckBox(Translation.INSTANCE.get("s3.lb.ownDefinition"));
@@ -46,14 +48,15 @@ public class MethodPanel extends DitoPanel implements ActionListener {
   private JXTextField numberOfThreads = new JXTextField();
   private MethodComboModel comboModel;
   private JXRadioGroup<Coding> codingGroup = new JXRadioGroup<Coding>(new Coding[] {Coding.REAL, Coding.BINARY});
-  private JXButton plotButton = new JXButton("Plot it!");
+  private JXButton plotButton = new JXButton("Plot it! asdf");
+  private JLabel formula = new JLabel();
   
-  public MethodPanel(ValidationGroup validationGroup) {
-    super(ScreenEnum.METHOD, ScreenEnum.QUESTION, ScreenEnum.ANALYSIS, validationGroup);
+  public MethodPanel() {
+    super(ScreenEnum.METHOD, ScreenEnum.QUESTION, ScreenEnum.ANALYSIS);
     comboModel = new MethodComboModel(DistanceMethodEnum.get(Coding.REAL));
     methods = new JComboBox(comboModel);
     
-    FormLayout layout = new FormLayout("pref, 5dlu, max(100dlu; pref), 5dlu, max(100dlu; pref), pref:grow", 
+    FormLayout layout = new FormLayout("pref, 5dlu, max(100dlu; pref), 5dlu, max(100dlu; pref), 5dlu, max(100dlu; pref), pref:grow", 
       "pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, 2dlu, pref, fill:pref:grow");
     CellConstraints cc = new CellConstraints();
     DefaultFormBuilder fb = new DefaultFormBuilder(layout, Translation.INSTANCE.getBundle());
@@ -65,9 +68,12 @@ public class MethodPanel extends DitoPanel implements ActionListener {
     
     fb.addI15dLabel("s3.lb.distance", cc.xyw(1, 5, 3));
     fb.add(methods, cc.xy(5, 5));
+    methods.addActionListener(this);
     
     fb.addI15dLabel("s3.lb.parameter", cc.xyw(1, 7, 3));
     fb.add(parameter, cc.xy(5, 7));
+    
+    fb.add(formula, cc.xywh(7, 3, 1, 5));
     
     fb.add(ownDefinition, cc.xyw(1, 9, 3));
     createDefinition.setText("(a+d)/(a+b+c+d)");
@@ -99,6 +105,11 @@ public class MethodPanel extends DitoPanel implements ActionListener {
     
     this.setLayout(new BorderLayout());
     this.add(fb.getPanel(), BorderLayout.CENTER);
+    
+    //set distance matrix to null. this way it can be garbage collected
+    //the distance matrix is probably quite large, and the calculations will need a lot of memory
+    Config.INSTANCE.setDistanceMatrix(null);
+    updateEnabling();
   }
   
   private void updateEnabling() {
@@ -112,20 +123,34 @@ public class MethodPanel extends DitoPanel implements ActionListener {
       comboModel = new MethodComboModel(DistanceMethodEnum.get(codingGroup.getSelectedValue()));
       methods.setModel(comboModel);
     } else if (e.getSource() == plotButton){
-      new DistancePlot(comboModel.getSelectedMethod().getSpec());
+      new DistancePlot(comboModel.getSelectedMethod());
+    } else if (e.getSource() == methods) {
+      DistanceMethodEnum method = comboModel.getSelectedMethod();
+      //formula.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(Translation.class.getResource("formula/Simple.png"))));
+      URL image = Translation.class.getResource("formula/" + method.getName() + ".png");
+      if (image != null) {
+        formula.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(image)));  
+      } else {
+        formula.setIcon(null);
+      }
     } else {
       updateEnabling();
     }
   }
   
-  public void calculate(final ActionEvent e, final MainPanel mp) {
-    
+  @Override
+  public void stateChanged(ChangeEvent e) {
+    DistanceMethodEnum method = comboModel.getSelectedMethod();
+    formula.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(Translation.class.getResource("formula/" + method.getName()))));
+  }
+  
+  public void calculate(final ActionEvent e, final MainPanel mp) {    
     SwingWorker<Matrix, Void> worker = new SwingWorker<Matrix, Void> () {
       @Override
       protected Matrix doInBackground() throws Exception {
         DitoConfiguration config = Config.INSTANCE.getDitoConfig();
-        DistanceAlgorithm algo = new DistanceAlgorithm(config);
-        return algo.doIt(false);
+        DistanceAlgorithm algo = new DistanceAlgorithm(config, true);
+        return algo.doIt(true);
       }
       
       @Override

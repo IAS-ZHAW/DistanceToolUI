@@ -4,6 +4,7 @@ import javax.swing.*;
 import org.math.plot.*;
 
 import ch.zhaw.ias.dito.DVector;
+import ch.zhaw.ias.dito.dist.DistanceMethodEnum;
 import ch.zhaw.ias.dito.dist.DistanceSpec;
 
 import static org.math.array.DoubleArray.*;
@@ -11,8 +12,8 @@ import static org.math.array.DoubleArray.*;
 public class DistancePlot {
   private DistanceSpec spec;
   
-  public DistancePlot(DistanceSpec spec) {
-    this.spec = spec;
+  public DistancePlot(DistanceMethodEnum method) {
+    this.spec = method.getSpec();
     // define your data
     double[] x = increment(0.1, 0.1, 5.0);
     double[] y = increment(0.1, 0.1, 5.0);
@@ -26,7 +27,7 @@ public class DistancePlot {
     plot.addGridPlot("Distanz", x, y, z1);
 
     // put the PlotPanel in a JFrame like a JPanel
-    JFrame frame = new JFrame("a plot panel");
+    JFrame frame = new JFrame(method.getName());
     frame.setSize(600, 600);
     frame.setContentPane(plot);
     frame.setVisible(true);
@@ -34,7 +35,6 @@ public class DistancePlot {
 
   public double f1(double x, double y) {
     return spec.distance(new DVector(x, x, x), new DVector(y, y, y));
-    //return spec.distance(new DVector(x, y), new DVector(0.1, 0.1));
   }
 
   public double[][] f1(double[] x, double[] y) {

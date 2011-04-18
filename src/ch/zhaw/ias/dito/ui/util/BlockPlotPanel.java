@@ -69,7 +69,7 @@ public class BlockPlotPanel extends JPanel implements ChangeListener {
     legend.setMargin(new RectangleInsets(10, 10, 10, 10));
     legend.setPosition(RectangleEdge.RIGHT);
 
-    MatrixXYZDataset dataset = new MatrixXYZDataset(m);
+    MatrixXYDataset dataset = new MatrixXYDataset(m);
     plot = new XYPlot(dataset, xAxis, yAxis, renderer);
     chart = new JFreeChart(plot);
     chart.removeLegend();
@@ -85,7 +85,7 @@ public class BlockPlotPanel extends JPanel implements ChangeListener {
     slider.setMajorTickSpacing(50);
     slider.setPaintTicks(true);
     this.slider.addChangeListener(this);    
-    this.add(slider, BorderLayout.SOUTH);
+    //this.add(slider, BorderLayout.SOUTH);
   }
 
   public void stateChanged(ChangeEvent event) {
@@ -96,7 +96,7 @@ public class BlockPlotPanel extends JPanel implements ChangeListener {
   private void switchColumn(int column) {
     chart.setTitle(Translation.INSTANCE.get("misc.graphic.singleHistogramColumn") + " " + column);
     this.m = m.sortBy(column);
-    plot.setDataset(new MatrixXYZDataset(m));
+    plot.setDataset(new MatrixXYDataset(m));
     plot.datasetChanged(null);
   }
 }

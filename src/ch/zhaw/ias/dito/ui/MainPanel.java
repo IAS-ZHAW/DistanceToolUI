@@ -55,7 +55,7 @@ public class MainPanel extends JXPanel implements ActionListener, ChangeListener
   }
   
   public void switchTo(ScreenEnum e) {
-    currentMainPanel = e.getPanel(validationPanel.getValidationGroup());
+    currentMainPanel = e.getPanel();//validationPanel.getValidationGroup());
     nextButton.setEnabled(currentMainPanel.hasNext());
     previousButton.setEnabled(currentMainPanel.hasPrevious());
     validationPanel.setInnerComponent(currentMainPanel);

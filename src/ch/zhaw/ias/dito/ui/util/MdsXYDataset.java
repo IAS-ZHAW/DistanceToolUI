@@ -3,21 +3,18 @@ package ch.zhaw.ias.dito.ui.util;
 import org.jfree.data.DomainOrder;
 import org.jfree.data.general.DatasetChangeListener;
 import org.jfree.data.general.DatasetGroup;
-import org.jfree.data.xy.XYZDataset;
+import org.jfree.data.xy.XYDataset;
 
-import ch.zhaw.ias.dito.DVector;
-import ch.zhaw.ias.dito.Matrix;
+public class MdsXYDataset implements XYDataset {
+  private double[][] values;
 
-public class MatrixXYZDataset implements XYZDataset {
-  private Matrix m;
-
-  public MatrixXYZDataset(Matrix m) {
-    this.m = m;
+  public MdsXYDataset(double[][] values) {
+    this.values = values;
   }
   
   @Override
   public int getItemCount(int series) {
-    return m.getRowCount() * m.getColCount();
+    return values.length;
   }
 
   @Override
@@ -27,7 +24,7 @@ public class MatrixXYZDataset implements XYZDataset {
 
   @Override
   public double getXValue(int series, int item) {
-    return item / m.getColCount();
+    return values[item][0];
   }
 
   @Override
@@ -37,20 +34,7 @@ public class MatrixXYZDataset implements XYZDataset {
 
   @Override
   public double getYValue(int series, int item) {
-    return item % m.getColCount();
-  }
-  
-  @Override
-  public Number getZ(int series, int item) {
-    return new Double(getZValue(series, item));
-  }
-
-  @Override
-  public double getZValue(int series, int item) {
-    int row = (int) getXValue(series, item);
-    int col = (int) getYValue(series, item);
-    DVector v = m.col(col);
-    return v.component(row);
+    return values[item][1];
   }
 
   @Override

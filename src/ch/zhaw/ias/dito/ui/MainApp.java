@@ -20,7 +20,7 @@ public class MainApp {
 		    DitoConfiguration config = DitoConfiguration.loadFromFile(params.get("-p"));
 		    //System.out.println("reading input-file: " + config.getInput().getFilename());
 		    Matrix m = Matrix.readFromFile(new File(config.getInput().getFilename()), config.getInput().getSeparator());
-		    DistanceAlgorithm algo = new DistanceAlgorithm(config);
+		    DistanceAlgorithm algo = new DistanceAlgorithm(config, false);
 		    Matrix dist = algo.doIt(false);
 		    
 	      String outputFilename = config.getOutput().getFilename().replace("$$METHOD$$", config.getMethod().getName());

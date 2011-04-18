@@ -1,20 +1,28 @@
 package ch.zhaw.ias.dito.ui.util;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.jdesktop.swingx.JXButton;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.statistics.SimpleHistogramBin;
 import org.jfree.data.statistics.SimpleHistogramDataset;
+
+import com.jgoodies.forms.builder.DefaultFormBuilder;
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
 
 import ch.zhaw.ias.dito.DVector;
 import ch.zhaw.ias.dito.Matrix;
@@ -25,6 +33,7 @@ public class SingleHistogramPanel extends JPanel implements ChangeListener {
   private ChartPanel chartPanel;
   private JFreeChart chart;
   private JSlider slider;
+  private JSpinner spinner;
 
   private SimpleHistogramDataset dataset;
 
@@ -38,17 +47,28 @@ public class SingleHistogramPanel extends JPanel implements ChangeListener {
         BorderFactory.createEmptyBorder(4, 4, 4, 4),
         BorderFactory.createEtchedBorder());
     this.chartPanel.setBorder(border);
-    add(this.chartPanel);
+    add(this.chartPanel, BorderLayout.CENTER);
 
     JPanel dashboard = new JPanel(new BorderLayout());
     dashboard.setBorder(BorderFactory.createEmptyBorder(0, 4, 4, 4));
-    // make the slider units "minutes"
+
+    this.spinner = new JSpinner(new SpinnerNumberModel(0, 0, m.getColCount()-1, 1));
+    spinner.addChangeListener(this);
     this.slider = new JSlider(0, m.getColCount()-1, 0);
     slider.setPaintLabels(true);
-    slider.setMajorTickSpacing(50);
+    
+    slider.setMajorTickSpacing(Math.max(50, 10 * Math.round(m.getColCount()/100)));
     slider.setPaintTicks(true);
     this.slider.addChangeListener(this);
-    dashboard.add(this.slider);
+    
+    FormLayout layout = new FormLayout("fill:0:g, max(20dlu; pref)", "top:pref"); 
+    CellConstraints cc = new CellConstraints();
+    DefaultFormBuilder fb = new DefaultFormBuilder(layout, Translation.INSTANCE.getBundle());
+    
+    fb.add(slider, cc.xy(1, 1));
+    fb.add(spinner, cc.xy(2, 1));
+    
+    dashboard.add(fb.getPanel(), BorderLayout.CENTER);
     add(dashboard, BorderLayout.SOUTH);
     switchColumn(0);
   }
@@ -65,9 +85,16 @@ public class SingleHistogramPanel extends JPanel implements ChangeListener {
     return dataset;
   }
 
-  public void stateChanged(ChangeEvent event) {
-    int value = this.slider.getValue();
-    switchColumn(value);
+  public void stateChanged(ChangeEvent e) {
+    if (e.getSource() == slider) {
+      int value = this.slider.getValue();
+      spinner.setValue(value);
+      switchColumn(value);
+    } else {
+      int value = (Integer) this.spinner.getValue();
+      slider.setValue(value);
+      switchColumn(value);      
+    }
   }
   
   private void switchColumn(int column) {

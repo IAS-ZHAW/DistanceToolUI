@@ -2,12 +2,10 @@ package ch.zhaw.ias.dito.ui.util;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.net.URLEncoder;
 
 import ch.zhaw.ias.dito.Coding;
@@ -23,8 +21,8 @@ public class DownloadPictures {
 
     try {
       String formula = method.getFormula();
-      URL url = new URL("http://www.mathtran.org/cgi-bin/mathtran?D=5&tex=" + URLEncoder.encode(formula));
-      System.out.println(url);
+      URL url = new URL(MATHTRAN_BASE_URL + "D=3&tex=" + URLEncoder.encode(formula));
+      System.out.println(method.getName() + ":" + formula);
       
       bis = new BufferedInputStream(url.openStream());
       bos = new BufferedOutputStream( new FileOutputStream("src/ch/zhaw/ias/dito/ui/resource/formula/" + method.getName() + ".png"));
@@ -33,7 +31,7 @@ public class DownloadPictures {
       while ((i = bis.read()) != -1)
       {
          bos.write( i );
-         System.out.print((char) i);
+         //System.out.print((char) i);
       }        
     } catch (MalformedURLException e) {
       // TODO Auto-generated catch block
@@ -57,5 +55,8 @@ public class DownloadPictures {
     for (DistanceMethodEnum method : DistanceMethodEnum.get(Coding.BINARY)) {
       savePic(method);
     }
+    for (DistanceMethodEnum method : DistanceMethodEnum.get(Coding.REAL)) {
+      savePic(method);
+    }    
   }
 }

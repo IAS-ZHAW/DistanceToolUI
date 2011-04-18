@@ -6,21 +6,35 @@ import javax.swing.filechooser.FileFilter;
 
 public class ExtensionFileFilter extends FileFilter {
   public final static ExtensionFileFilter CSV = new ExtensionFileFilter(".csv");
+  public final static ExtensionFileFilter CSV_OR_TXT = new ExtensionFileFilter(".csv", ".txt");
   public final static ExtensionFileFilter DITO = new ExtensionFileFilter(".dito");
   
-  private String extension;
+  private String[] extensions;
   
-  public ExtensionFileFilter(String extension) {
-    this.extension = extension;
+  public ExtensionFileFilter(String... extensions) {
+    this.extensions = extensions;
   }
   
   @Override
   public boolean accept(File f) {
-    return f.isDirectory() || f.getAbsolutePath().endsWith(extension);
+    if (f.isDirectory()) {
+      return true;
+    } 
+    String path = f.getAbsolutePath();
+    for (String s : extensions) {
+      if (path.endsWith(s)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   @Override
   public String getDescription() {
-    return extension + " Files";
+    String desc = "";
+    for (String s : extensions) {
+      desc += s + ", ";
+    }
+    return desc.substring(0, desc.length()-3) + " Files";
   }
 }
