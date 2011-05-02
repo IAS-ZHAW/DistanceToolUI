@@ -139,7 +139,9 @@ public class InputPanel extends DitoPanel implements ActionListener, ChangeListe
     rowSliderPanel.add(rowSlider, BorderLayout.CENTER);
     rowSliderPanel.add(rowMaxSpinner, BorderLayout.SOUTH);    
     fb.add(rowSliderPanel, cc.xyw(2, 11, 1));
-    
+
+    //set preferred size explicitly, otherwise the preferred height is too big and the screen doesn't scale its size in an appropriate way
+    scrollPane.setPreferredSize(new Dimension(scrollPane.getWidth(), 100));
     fb.add(scrollPane, cc.xyw(4, 11, 6));
     fb.add(allSurveys, cc.xy(4, 13));
     fb.add(allQuestions, cc.xy(4, 15));

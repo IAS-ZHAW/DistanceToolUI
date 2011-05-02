@@ -1,6 +1,7 @@
 package ch.zhaw.ias.dito.ui;
 
 import java.awt.BorderLayout;
+import java.io.IOException;
 
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -89,6 +90,13 @@ public class AnalysisPanel extends DitoPanel {
   
   private JFreeChart createMdsChart(String title, Matrix distanceMatrix) {
     double[][] values = MdsHelper.getMds(distanceMatrix);
+    Matrix m = Matrix.createDoubleMatrix(values);
+    try {
+      Matrix.writeToFile(m, "c:/daten/mds.txt", ';', 5);
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
     //return ChartFactory.createHistogram(
     return ChartFactory.createScatterPlot(title, null, null, new MdsXYDataset(values), PlotOrientation.VERTICAL, false, true, false);
   }  

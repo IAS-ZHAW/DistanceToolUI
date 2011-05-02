@@ -48,7 +48,7 @@ public class MethodPanel extends DitoPanel implements ActionListener, ChangeList
   private JXTextField numberOfThreads = new JXTextField();
   private MethodComboModel comboModel;
   private JXRadioGroup<Coding> codingGroup = new JXRadioGroup<Coding>(new Coding[] {Coding.REAL, Coding.BINARY});
-  private JXButton plotButton = new JXButton("Plot it! asdf");
+  private JXButton plotButton = new JXButton(Translation.INSTANCE.get("s3.lb.plot"));
   private JLabel formula = new JLabel();
   
   public MethodPanel() {
