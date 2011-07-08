@@ -21,7 +21,7 @@ public class DownloadPictures {
 
     try {
       String formula = method.getFormula();
-      URL url = new URL(MATHTRAN_BASE_URL + "D=6&tex=" + URLEncoder.encode(formula));
+      URL url = new URL(MATHTRAN_BASE_URL + "D=3&tex=" + URLEncoder.encode(formula));
       System.out.println(method.getName() + ":" + formula);
       
       bis = new BufferedInputStream(url.openStream());

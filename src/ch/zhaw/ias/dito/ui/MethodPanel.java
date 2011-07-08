@@ -36,6 +36,7 @@ import ch.zhaw.ias.dito.dist.DistanceMethodEnum;
 import ch.zhaw.ias.dito.dist.UniversalBinaryDist;
 import ch.zhaw.ias.dito.ui.resource.Translation;
 import ch.zhaw.ias.dito.ui.util.DistancePlot;
+import ch.zhaw.ias.dito.ui.util.HelpArea;
 
 public class MethodPanel extends DitoPanel implements ActionListener, ChangeListener {
   private JComboBox methods;
@@ -51,7 +52,7 @@ public class MethodPanel extends DitoPanel implements ActionListener, ChangeList
   private JXButton plotButton = new JXButton(Translation.INSTANCE.get("s3.lb.plot"));
   private JLabel formula = new JLabel();
   
-  public MethodPanel() {
+  public MethodPanel(HelpArea helpArea) {
     super(ScreenEnum.METHOD, ScreenEnum.QUESTION, ScreenEnum.ANALYSIS);
     comboModel = new MethodComboModel(DistanceMethodEnum.get(Coding.REAL));
     methods = new JComboBox(comboModel);
@@ -122,6 +123,7 @@ public class MethodPanel extends DitoPanel implements ActionListener, ChangeList
     if (e == null) {
       comboModel = new MethodComboModel(DistanceMethodEnum.get(codingGroup.getSelectedValue()));
       methods.setModel(comboModel);
+      methods.setSelectedIndex(0);
     } else if (e.getSource() == plotButton){
       new DistancePlot(comboModel.getSelectedMethod());
     } else if (e.getSource() == methods) {

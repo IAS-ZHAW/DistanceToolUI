@@ -4,6 +4,8 @@ import java.lang.reflect.Constructor;
 
 import org.netbeans.validation.api.ui.ValidationGroup;
 
+import ch.zhaw.ias.dito.ui.util.HelpArea;
+
 public enum ScreenEnum {
   INPUT(1, InputPanel.class), 
   QUESTION(2, QuestionPanel.class),
@@ -27,10 +29,10 @@ public enum ScreenEnum {
     return "s" + getScreenId() + ".title";
   }
   
-  public DitoPanel getPanel() {
+  public DitoPanel getPanel(HelpArea helpArea) {
     try {
-      Constructor<DitoPanel> c = panelClass.getConstructor();//ValidationGroup.class);
-      return (DitoPanel) c.newInstance();//validationGroup);
+      Constructor<DitoPanel> c = panelClass.getConstructor(HelpArea.class);
+      return (DitoPanel) c.newInstance(helpArea);
       //return (DitoPanel) panelClass.newInstance();
     } catch (Exception e) {
       throw new Error("this should never happen", e);

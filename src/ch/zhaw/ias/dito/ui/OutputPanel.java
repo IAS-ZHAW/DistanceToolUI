@@ -18,6 +18,7 @@ import ch.zhaw.ias.dito.config.DitoConfiguration;
 import ch.zhaw.ias.dito.config.Output;
 import ch.zhaw.ias.dito.ui.resource.Translation;
 import ch.zhaw.ias.dito.ui.util.ExtensionFileFilter;
+import ch.zhaw.ias.dito.ui.util.HelpArea;
 
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.CellConstraints;
@@ -30,7 +31,7 @@ public class OutputPanel extends DitoPanel implements ActionListener {
   private JXTextField precision = new JXTextField();
   private JXButton saveButton = new JXButton(Translation.INSTANCE.get("s5.lb.save"));
   
-  public OutputPanel() {
+  public OutputPanel(HelpArea helpArea) {
     super(ScreenEnum.OUTPUT, ScreenEnum.ANALYSIS, null);
     
     FormLayout layout = new FormLayout("max(50dlu; pref), 5dlu, max(100dlu; pref), 5dlu, max(50dlu; pref), 5dlu, max(100dlu; pref), 5dlu, max(50dlu; pref)", 

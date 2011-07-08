@@ -17,6 +17,7 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 import ch.zhaw.ias.dito.ui.resource.Translation;
+import ch.zhaw.ias.dito.ui.util.HelpArea;
 
 public class MainPanel extends JXPanel implements ActionListener, ChangeListener {
   private MainFrame mainFrame;
@@ -32,7 +33,7 @@ public class MainPanel extends JXPanel implements ActionListener, ChangeListener
     setBorder(BorderFactory.createEtchedBorder());
     
     FormLayout layout = new FormLayout("fill:20dlu, fill:0:grow, fill:20dlu", 
-    "20dlu, fill:min:grow(0.8), fill:0:grow(0.2), fill:20dlu");
+      "20dlu, fill:min:grow(0.8), fill:0:grow(0.2), fill:20dlu");
     //layout.setRowGroups(new int[][]{{2, 4, 6}}); 
     CellConstraints cc = new CellConstraints();
     //DefaultFormBuilder fb = new DefaultFormBuilder(layout, Translation.INSTANCE.getBundle(), new FormDebugPanel());
@@ -54,8 +55,8 @@ public class MainPanel extends JXPanel implements ActionListener, ChangeListener
     previousButton.addActionListener(this);
   }
   
-  public void switchTo(ScreenEnum e) {
-    currentMainPanel = e.getPanel();//validationPanel.getValidationGroup());
+  public void switchTo(ScreenEnum e, HelpArea helpArea) {
+    currentMainPanel = e.getPanel(helpArea);//validationPanel.getValidationGroup());
     nextButton.setEnabled(currentMainPanel.hasNext());
     previousButton.setEnabled(currentMainPanel.hasPrevious());
     validationPanel.setInnerComponent(currentMainPanel);

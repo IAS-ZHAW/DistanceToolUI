@@ -10,8 +10,10 @@ import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.table.AbstractTableModel;
 
@@ -28,6 +30,8 @@ import ch.zhaw.ias.dito.config.QuestionConfig;
 import ch.zhaw.ias.dito.config.TableColumn;
 import ch.zhaw.ias.dito.ui.resource.AppConfig;
 import ch.zhaw.ias.dito.ui.resource.Translation;
+import ch.zhaw.ias.dito.ui.util.BlockPlotPanel;
+import ch.zhaw.ias.dito.ui.util.HelpArea;
 import ch.zhaw.ias.dito.ui.util.HistogramFrame;
 import ch.zhaw.ias.dito.ui.util.NumberComparator;
 
@@ -39,8 +43,9 @@ public class QuestionPanel extends DitoPanel implements ActionListener {
   private JXTable table;
   private JScrollPane sp;
   private List<Question> questions;
+  private JButton correlationButton;
   
-  public QuestionPanel() {
+  public QuestionPanel(HelpArea helpArea) {
     super(ScreenEnum.QUESTION, ScreenEnum.INPUT, ScreenEnum.METHOD);
     questions = Config.INSTANCE.getDitoConfig().getQuestions();
     QuestionTableModel model = new QuestionTableModel(questions);
@@ -74,6 +79,8 @@ public class QuestionPanel extends DitoPanel implements ActionListener {
     JComboBox comboBox = new JComboBox();
     comboBox.addItem(QuestionType.NOMINAL);
     comboBox.addItem(QuestionType.ORDINAL);
+    comboBox.addItem(QuestionType.METRIC);
+    comboBox.addItem(QuestionType.BINARY);
     table.setDefaultEditor(QuestionType.class, new DefaultCellEditor(comboBox));
 
     sp = new JScrollPane(table);
@@ -90,6 +97,9 @@ public class QuestionPanel extends DitoPanel implements ActionListener {
     checkboxPanel.add(activateAutoscale);
     checkboxPanel.add(activateDistanceWeight);
     checkboxPanel.add(activateQuestionWeight);
+    correlationButton = new JButton("Correlation TODO");
+    correlationButton.addActionListener(this);
+    checkboxPanel.add(correlationButton);
     this.add(sp, BorderLayout.CENTER);
     this.add(checkboxPanel, BorderLayout.SOUTH);
   }
@@ -195,7 +205,14 @@ public class QuestionPanel extends DitoPanel implements ActionListener {
   
   @Override
   public void actionPerformed(ActionEvent e) {
-    activateAutoscale.setEnabled(activateScale.isSelected());
-    table.updateUI();
+    if (e.getSource() == correlationButton) {
+      BlockPlotPanel blockPanel = new BlockPlotPanel(Config.INSTANCE.getDitoConfig().getData().correlationCoeffs());
+      JFrame frame = new JFrame("Korrelation TODO");
+      frame.add(blockPanel);
+      frame.setVisible(true);
+    } else {
+      activateAutoscale.setEnabled(activateScale.isSelected());
+      table.updateUI();
+    }
   }
 }

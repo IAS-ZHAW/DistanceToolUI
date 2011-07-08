@@ -44,7 +44,7 @@ public class MdsXYDataset implements XYDataset {
 
   @Override
   public Comparable getSeriesKey(int series) {
-    return "Test";
+    return "item #" + series;
   }
 
   @Override

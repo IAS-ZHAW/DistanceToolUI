@@ -13,6 +13,7 @@ import javax.xml.bind.JAXBException;
 import org.jdesktop.swingx.JXFrame;
 
 import ch.zhaw.ias.dito.config.DitoConfiguration;
+import ch.zhaw.ias.dito.ui.resource.AppConfig;
 import ch.zhaw.ias.dito.ui.resource.Translation;
 
 import com.jgoodies.forms.layout.CellConstraints;
@@ -57,7 +58,7 @@ public class MainFrame extends JXFrame {
     this.add(processPanel, cc.xy(2, 4));
     this.add(mainPanel, cc.xy(4, 4));
      
-    this.setTitle(Translation.INSTANCE.get("misc.title"));
+    this.setTitle(Translation.INSTANCE.get("misc.title") + " (build #" + AppConfig.BUILD_NUMBER + " built on " + AppConfig.BUILD_DATE +")");
     this.setSize(1200, 1000);
     this.setDefaultCloseOperation(JXFrame.EXIT_ON_CLOSE);
     this.setVisible(true);
@@ -73,7 +74,7 @@ public class MainFrame extends JXFrame {
   }
   
   public void switchTo(ScreenEnum e) {
-    mainPanel.switchTo(e);
+    mainPanel.switchTo(e, helpPanel);
     helpPanel.switchTo(e);
     processPanel.switchTo(e);
     this.currentScreen = e;

@@ -40,6 +40,8 @@ import ch.zhaw.ias.dito.config.Input;
 import ch.zhaw.ias.dito.config.PropertyGuardian;
 import ch.zhaw.ias.dito.ui.resource.Translation;
 import ch.zhaw.ias.dito.ui.util.ExtensionFileFilter;
+import ch.zhaw.ias.dito.ui.util.HelpArea;
+import ch.zhaw.ias.dito.ui.util.HelpLabel;
 import ch.zhaw.ias.dito.ui.util.RangeSlider;
 import ch.zhaw.ias.dito.util.Logger;
 import ch.zhaw.ias.dito.util.Logger.LogLevel;
@@ -66,10 +68,10 @@ public class InputPanel extends DitoPanel implements ActionListener, ChangeListe
   private SimpleTableModel tableModel = new SimpleTableModel();
   private JXTable visualTable;
   
-  public InputPanel() {
+  public InputPanel(HelpArea helpArea) {
     super(ScreenEnum.INPUT, null, ScreenEnum.QUESTION);
     
-    FormLayout layout = new FormLayout("max(20dlu; pref), 30dlu, 5dlu, max(150dlu; pref), 5dlu, max(100dlu; pref), 5dlu, max(50dlu; pref), fill:0:g", 
+    FormLayout layout = new FormLayout("max(30dlu; pref), 30dlu, 5dlu, max(150dlu; pref), 5dlu, max(100dlu; pref), 5dlu, max(50dlu; pref), fill:0:g", 
     "pref, 2dlu, pref, 2dlu, pref, 10dlu, pref, 2dlu, 20dlu, 2dlu, fill:pref:grow, 2dlu, pref, 2dlu, pref, 2dlu, pref");
     //layout.setRowGroups(new int[][]{{2, 4, 6}}); 
     CellConstraints cc = new CellConstraints();
@@ -79,10 +81,11 @@ public class InputPanel extends DitoPanel implements ActionListener, ChangeListe
     filePath.setName(Translation.INSTANCE.get("s1.lb.file"));
 
     fb.addI15dSeparator("s1.title.file", cc.xyw(1, 1, 8));
-    fb.addI15dLabel("s1.lb.file", cc.xyw(1, 3, 2));
+    fb.add(new HelpLabel(helpArea, "s1.lb.file"), cc.xyw(1, 3, 2));
     fb.add(filePath, cc.xyw(4, 3, 3));
     fb.add(browseButton, cc.xy(8, 3));
-    fb.addI15dLabel("s1.lb.separator", cc.xyw(1, 5, 2));
+    fb.add(new HelpLabel(helpArea, "s1.lb.separator"), cc.xyw(1, 5, 2));
+    //fb.addI15dLabel("s1.lb.separator", cc.xyw(1, 5, 2));
     fb.add(separator, cc.xy(8, 5));
     
     fb.addI15dSeparator("s1.title.data", cc.xyw(1, 7, 8));

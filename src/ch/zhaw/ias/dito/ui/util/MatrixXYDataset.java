@@ -60,7 +60,7 @@ public class MatrixXYDataset implements XYZDataset {
 
   @Override
   public Comparable getSeriesKey(int series) {
-    return "Test";
+    return "item " + series;
   }
 
   @Override
