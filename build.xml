@@ -45,6 +45,13 @@
     <mkdir dir="${build.classes}"/>
   	<mkdir dir="${build.lib}"/>
  
+  	<!-- Increase Versionnumber  -->
+    <propertyfile
+        file="src/ch/zhaw/ias/dito/ui/resource/version.properties" comment="Build version info">
+        <entry key="buildDate" type="date" value="now"/>
+        <entry key="buildNum" default="0" type="int" operation="+" value="1"/>
+    </propertyfile>
+  	
     <!-- Quelltext UI kompilieren -->
     <javac srcdir="${java.dir}"
            destdir="${build.classes}"
