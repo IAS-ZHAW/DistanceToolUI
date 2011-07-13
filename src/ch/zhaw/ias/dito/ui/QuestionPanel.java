@@ -97,7 +97,7 @@ public class QuestionPanel extends DitoPanel implements ActionListener {
     checkboxPanel.add(activateAutoscale);
     checkboxPanel.add(activateDistanceWeight);
     checkboxPanel.add(activateQuestionWeight);
-    correlationButton = new JButton("Correlation TODO");
+    correlationButton = new JButton(Translation.INSTANCE.get("s2.bu.correlationCoef"));
     correlationButton.addActionListener(this);
     checkboxPanel.add(correlationButton);
     this.add(sp, BorderLayout.CENTER);
@@ -206,9 +206,10 @@ public class QuestionPanel extends DitoPanel implements ActionListener {
   @Override
   public void actionPerformed(ActionEvent e) {
     if (e.getSource() == correlationButton) {
-      BlockPlotPanel blockPanel = new BlockPlotPanel(Config.INSTANCE.getDitoConfig().getData().correlationCoeffs());
-      JFrame frame = new JFrame("Korrelation TODO");
+      BlockPlotPanel blockPanel = new BlockPlotPanel(Config.INSTANCE.getDitoConfig().getData().correlationCoeffs(), -1.0, 1.0);
+      JFrame frame = new JFrame(Translation.INSTANCE.get("s2.title.correlationCoef"));
       frame.add(blockPanel);
+      frame.setSize(400, 400);
       frame.setVisible(true);
     } else {
       activateAutoscale.setEnabled(activateScale.isSelected());

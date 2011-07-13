@@ -3,44 +3,34 @@ package ch.zhaw.ias.dito.ui.util;
 import java.awt.BorderLayout;
 import java.awt.Color;
 
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.border.Border;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
-import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.labels.XYToolTipGenerator;
-import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.PaintScale;
 import org.jfree.chart.renderer.xy.XYBlockRenderer;
 import org.jfree.chart.title.PaintScaleLegend;
-import org.jfree.data.statistics.SimpleHistogramBin;
-import org.jfree.data.statistics.SimpleHistogramDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYZDataset;
 import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.RectangleInsets;
 
-import ch.zhaw.ias.dito.DVector;
 import ch.zhaw.ias.dito.Matrix;
-import ch.zhaw.ias.dito.ui.resource.Translation;
 
-public class BlockPlotPanel extends JPanel implements ChangeListener {
-  private Matrix m;
+public class BlockPlotPanel extends JPanel {
   private JFreeChart chart;
-  private JSlider slider;
   private XYPlot plot; 
 
   public BlockPlotPanel(Matrix m) {
+    this(m, m.extremum(false), m.extremum(true));
+  }
+  
+  public BlockPlotPanel(Matrix m, double lowerBound, double upperBound) {
     super(new BorderLayout());
-    this.m = m;
     NumberAxis xAxis = new NumberAxis();
     xAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
     xAxis.setLowerMargin(0.0);
@@ -60,7 +50,7 @@ public class BlockPlotPanel extends JPanel implements ChangeListener {
         return ("X=" + x + ", Y=" + y + ", Z=" + z);
       }
     });
-    PaintScale scale = new ColorPaintScale(m.extremum(false), m.extremum(true));
+    PaintScale scale = new ColorPaintScale(lowerBound, upperBound);
     renderer.setPaintScale(scale);
     ValueAxis axis = new NumberAxis();
     axis.setLowerBound(scale.getLowerBound());
@@ -79,24 +69,5 @@ public class BlockPlotPanel extends JPanel implements ChangeListener {
     ChartPanel chartPanel = new ChartPanel(chart);
     chartPanel.setDisplayToolTips(true);
     this.add(chartPanel, BorderLayout.CENTER);
-    
-    this.slider = new JSlider(0, m.getColCount()-1, 0);
-    slider.setPaintLabels(true);
-    slider.setMajorTickSpacing(50);
-    slider.setPaintTicks(true);
-    this.slider.addChangeListener(this);    
-    //this.add(slider, BorderLayout.SOUTH);
-  }
-
-  public void stateChanged(ChangeEvent event) {
-    int value = this.slider.getValue();
-    switchColumn(value);
-  }
-  
-  private void switchColumn(int column) {
-    chart.setTitle(Translation.INSTANCE.get("misc.graphic.singleHistogramColumn") + " " + column);
-    this.m = m.sortBy(column);
-    plot.setDataset(new MatrixXYDataset(m));
-    plot.datasetChanged(null);
   }
 }

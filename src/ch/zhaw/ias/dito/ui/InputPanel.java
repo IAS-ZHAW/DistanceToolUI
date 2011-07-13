@@ -158,8 +158,10 @@ public class InputPanel extends DitoPanel implements ActionListener, ChangeListe
     separator.setText(Character.toString(i.getSeparator()));
     allQuestions.addChangeListener(this);
     allSurveys.addChangeListener(this);
+    columnTitles.addChangeListener(this);
     allQuestions.setSelected(i.isAllQuestions());
     allSurveys.setSelected(i.isAllSurveys());
+    columnTitles.setSelected(i.isQuestionTitles());
     
     browseButton.addActionListener(this);
     this.setLayout(new BorderLayout());
@@ -172,11 +174,19 @@ public class InputPanel extends DitoPanel implements ActionListener, ChangeListe
   }
   
   private boolean isColumnSelected(int col) {
-    return (columnSlider.getValue() - 1) <= col && col <= (columnSlider.getUpperValue() - 1);
+    if (allQuestions.isSelected()) {
+      return true;
+    } else {
+      return (columnSlider.getValue() - 1) <= col && col <= (columnSlider.getUpperValue() - 1);
+    }
   }
   
   private boolean isRowSelected(int row) {
-    return (rowSlider.getValue() - 1) <= row && row <= (rowSlider.getUpperValue() - 1);
+    if (allSurveys.isSelected()) {
+      return true;
+    } else {
+      return (rowSlider.getValue() - 1) <= row && row <= (rowSlider.getUpperValue() - 1);
+    }
   }
   
   @Override
@@ -190,6 +200,7 @@ public class InputPanel extends DitoPanel implements ActionListener, ChangeListe
     i.setEndSurvey(rowSlider.getUpperValue());
     i.setAllQuestions(allQuestions.isSelected());
     i.setAllSurveys(allSurveys.isSelected());
+    i.setQuestionTitles(columnTitles.isSelected());
     
     PropertyGuardian guardian = Config.INSTANCE.getPropertyGuardian();
     guardian.propertyChanged(ConfigProperty.INPUT_FILENAME);
@@ -247,8 +258,7 @@ public class InputPanel extends DitoPanel implements ActionListener, ChangeListe
     
     columnSlider.setMaximum(tableModel.getColumnCount());
     ((SpinnerNumberModel) columnMaxSpinner.getModel()).setMaximum(tableModel.getColumnCount());
-    rowSlider.setMaximum(tableModel.getRowCount());
-    ((SpinnerNumberModel) rowMaxSpinner.getModel()).setMaximum(tableModel.getRowCount());
+    updateRowMaximum();
     
     columnSlider.setValue(1);
     rowSlider.setValue(1);
@@ -256,6 +266,11 @@ public class InputPanel extends DitoPanel implements ActionListener, ChangeListe
     columnSlider.setUpperValue(tableModel.getColumnCount());
     
     Logger.INSTANCE.log("finished reading file", LogLevel.INFORMATION, false);
+  }
+
+  private void updateRowMaximum() {
+    rowSlider.setMaximum(tableModel.getRowCount());
+    ((SpinnerNumberModel) rowMaxSpinner.getModel()).setMaximum(tableModel.getRowCount());
   }
 
   private void synchronizeSpinnersSliders(boolean sliderChanged) {
@@ -286,6 +301,9 @@ public class InputPanel extends DitoPanel implements ActionListener, ChangeListe
       synchronizeSpinnersSliders(true);
     } else if (e.getSource() == allQuestions || e.getSource() == allSurveys) {
       activateSliders();
+    } else if (e.getSource() == columnTitles) {
+      updateRowMaximum(); 
+      tableModel.fireTableStructureChanged();
     } else {
       synchronizeSpinnersSliders(false);
     }
@@ -315,12 +333,29 @@ public class InputPanel extends DitoPanel implements ActionListener, ChangeListe
     
     @Override
     public int getRowCount() {
-      return data.size();
+      if (columnTitles.isSelected()) {
+        return data.size() - 1;
+      } else {
+        return data.size();  
+      }
     }
         
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-      return data.get(rowIndex).get(columnIndex);
+      if (columnTitles.isSelected()) {
+        return data.get(rowIndex + 1).get(columnIndex);
+      } else {
+        return data.get(rowIndex).get(columnIndex);  
+      }
+    }
+    
+    @Override
+    public String getColumnName(int columnIndex) {
+      if (columnTitles.isSelected()) {
+        return data.get(0).get(columnIndex); 
+      } else {
+        return "" + columnIndex;
+      }
     }
   }
 }
