@@ -36,5 +36,5 @@
          width="500"
          height="500">
      </application-desc>
-     <update check="background"/>
+     <update check="always"/>
 </jnlp> 
