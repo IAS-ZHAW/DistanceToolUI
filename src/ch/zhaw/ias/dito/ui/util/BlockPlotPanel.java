@@ -33,11 +33,11 @@ public class BlockPlotPanel extends JPanel {
     super(new BorderLayout());
     NumberAxis xAxis = new NumberAxis();
     xAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-    xAxis.setLowerMargin(0.0);
+    xAxis.setLowerMargin(1.0);
     xAxis.setUpperMargin(0.0);
     NumberAxis yAxis = new NumberAxis();
     yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-    yAxis.setLowerMargin(0.0);
+    yAxis.setLowerMargin(1.0);
     yAxis.setUpperMargin(0.0);
     XYBlockRenderer renderer = new XYBlockRenderer();
     renderer.setBaseToolTipGenerator(new XYToolTipGenerator() {

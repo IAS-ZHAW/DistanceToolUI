@@ -27,7 +27,7 @@ public class MatrixXYDataset implements XYZDataset {
 
   @Override
   public double getXValue(int series, int item) {
-    return item / m.getColCount();
+    return item / m.getColCount() + 1.0;
   }
 
   @Override
@@ -37,7 +37,7 @@ public class MatrixXYDataset implements XYZDataset {
 
   @Override
   public double getYValue(int series, int item) {
-    return item % m.getColCount();
+    return item % m.getColCount() + 1.0;
   }
   
   @Override
@@ -47,8 +47,8 @@ public class MatrixXYDataset implements XYZDataset {
 
   @Override
   public double getZValue(int series, int item) {
-    int row = (int) getXValue(series, item);
-    int col = (int) getYValue(series, item);
+    int row = (int) getXValue(series, item) - 1;
+    int col = (int) getYValue(series, item) - 1;
     DVector v = m.col(col);
     return v.component(row);
   }

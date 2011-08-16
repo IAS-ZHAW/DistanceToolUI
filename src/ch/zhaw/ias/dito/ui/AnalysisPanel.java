@@ -39,6 +39,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 import org.netbeans.validation.api.ui.ValidationGroup;
 
 import ch.zhaw.ias.dito.DVector;
+import ch.zhaw.ias.dito.DecompositionException;
 import ch.zhaw.ias.dito.DistanceAlgorithm;
 import ch.zhaw.ias.dito.EigenvalueDecomposition;
 import ch.zhaw.ias.dito.Matrix;
@@ -73,31 +74,51 @@ public class AnalysisPanel extends DitoPanel implements ActionListener {
       title = Translation.INSTANCE.get("misc.graphic.block");
       tabs.addTab(title, new BlockPlotPanel(distanceMatrix));
       
-      DistanceAlgorithm algo = new DistanceAlgorithm(Config.INSTANCE.getDitoConfig(), true);
-      decomp = new PcaDecomposition(algo.getRescaledOfFiltered());
-      mdsValues = decomp.getReducedDimensions();
       title = Translation.INSTANCE.get("misc.graphic.pca");
-      tabs.addTab(title, createDecompositionPanel(title, mdsValues));
-      
-      mdsValues = ((PcaDecomposition) decomp).getQuestions(2);
-      title = Translation.INSTANCE.get("misc.graphic.question");
-      tabs.addTab(title, new ChartPanel(createQuestionChart(title, mdsValues)));
-      
-      title = Translation.INSTANCE.get("misc.graphic.eigenvalues");
-      tabs.addTab(title, new ChartPanel(createEigenvaluesChart(title, decomp)));
+      try {
+        DistanceAlgorithm algo = new DistanceAlgorithm(Config.INSTANCE.getDitoConfig(), true);
+        decomp = new PcaDecomposition(algo.getRescaledOfFiltered());
+        mdsValues = decomp.getReducedDimensions();
+        tabs.addTab(title, createDecompositionPanel(title, mdsValues));
+        mdsValues = ((PcaDecomposition) decomp).getQuestions(2);
+        title = Translation.INSTANCE.get("misc.graphic.question");
+        tabs.addTab(title, new ChartPanel(createQuestionChart(title, mdsValues)));
+        title = Translation.INSTANCE.get("misc.graphic.eigenvalues");
+        tabs.addTab(title, new ChartPanel(createEigenvaluesChart(title, decomp)));
+      } catch (DecompositionException e) {
+        String error = Translation.INSTANCE.get(e.getMessage());
+        title += " [" + error + "]";
+        tabs.addTab(title, new JPanel());
+        title = Translation.INSTANCE.get("misc.graphic.question");
+        title += " [" + error + "]";
+        tabs.addTab(title, new JPanel());
+        title = Translation.INSTANCE.get("misc.graphic.eigenvalues");
+        title += " [" + error + "]";
+        tabs.addTab(title, new JPanel());
+      }
     } else {
       //those analysis tools are only supported for datasets smaller than 500
       if (distanceMatrix.getColCount() <= 500) {
         title = Translation.INSTANCE.get("misc.graphic.block");
         tabs.addTab(title, new BlockPlotPanel(distanceMatrix));
         
-        title = Translation.INSTANCE.get("misc.graphic.mds");        
-        decomp = new MdsDecomposition(distanceMatrix);
-        double[][] mdsValues = decomp.getReducedDimensions();
-        tabs.addTab(title, createDecompositionPanel(title, mdsValues));
-        
-        title = Translation.INSTANCE.get("misc.graphic.eigenvalues");
-        tabs.addTab(title, new ChartPanel(createEigenvaluesChart(title, decomp)));
+        try {
+          title = Translation.INSTANCE.get("misc.graphic.mds");
+          decomp = new MdsDecomposition(distanceMatrix);
+          double[][] mdsValues = decomp.getReducedDimensions();
+          tabs.addTab(title, createDecompositionPanel(title, mdsValues));
+          
+          title = Translation.INSTANCE.get("misc.graphic.eigenvalues");
+          tabs.addTab(title, new ChartPanel(createEigenvaluesChart(title, decomp)));
+        } catch (DecompositionException e) {
+          String error = Translation.INSTANCE.get(e.getMessage());
+          title = Translation.INSTANCE.get("misc.graphic.question");
+          title += " [" + error + "]";
+          tabs.addTab(title, new JPanel());
+          title = Translation.INSTANCE.get("misc.graphic.eigenvalues");
+          title += " [" + error + "]";
+          tabs.addTab(title, new JPanel());
+        }
       } else {
         String tooBig = Translation.INSTANCE.get("misc.graphic.bigDataset");
         title = Translation.INSTANCE.get("misc.graphic.block");
@@ -184,6 +205,12 @@ public class AnalysisPanel extends DitoPanel implements ActionListener {
       @Override
       public String generateLabel(XYDataset dataset, int series, int item) {
         return "#" + (item + 1);
+      }
+    });
+    plot.getRenderer().setBaseToolTipGenerator(new XYToolTipGenerator() {
+      @Override
+      public String generateToolTip(XYDataset dataset, int series, int item) {
+        return "#" + (item + 1) + ":" + Config.INSTANCE.getDitoConfig().getQuestion(item + 1).getName();
       }
     });
     return chart;

@@ -2,6 +2,7 @@ package ch.zhaw.ias.dito.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -20,6 +21,7 @@ import javax.swing.table.AbstractTableModel;
 import org.jdesktop.swingx.JXPanel;
 import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.decorator.ColorHighlighter;
+import org.jdesktop.swingx.decorator.ComponentAdapter;
 import org.jdesktop.swingx.decorator.HighlightPredicate;
 import org.netbeans.validation.api.ui.ValidationGroup;
 
@@ -87,6 +89,14 @@ public class QuestionPanel extends DitoPanel implements ActionListener {
     this.setLayout(new BorderLayout());
     
     table.addHighlighter(new ColorHighlighter(HighlightPredicate.EDITABLE, AppConfig.ACTIVE, Color.BLACK));
+    table.addHighlighter(new ColorHighlighter(new HighlightPredicate() {
+      
+      @Override
+      public boolean isHighlighted(Component arg0, ComponentAdapter ca) {
+        Question q = questions.get(ca.row);
+        return q.getData().isConstant();
+      }
+    }, Color.ORANGE, Color.BLACK, Color.ORANGE, Color.BLACK));
 
     updateCheckboxes();
     
