@@ -204,7 +204,8 @@ public class AnalysisPanel extends DitoPanel implements ActionListener {
     plot.getRenderer().setBaseItemLabelGenerator(new XYItemLabelGenerator() {
       @Override
       public String generateLabel(XYDataset dataset, int series, int item) {
-        return "#" + (item + 1);
+        //return "#" + (item + 1);
+        return "#" + (item + 1) + ":" + Config.INSTANCE.getDitoConfig().getQuestion(item + 1).getName();
       }
     });
     plot.getRenderer().setBaseToolTipGenerator(new XYToolTipGenerator() {
