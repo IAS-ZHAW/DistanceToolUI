@@ -72,7 +72,7 @@
     </copy>
  
     <!-- Baut die JAR-Datei -->
-    <jar jarfile="${build.lib}/${name.ui}.jar" >
+    <jar jarfile="${build.lib}/${name.ui}.jar" manifest="MANIFEST.MF">
       <fileset dir="${build.classes}"/>
     </jar>
   	
