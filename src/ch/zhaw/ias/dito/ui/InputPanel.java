@@ -336,7 +336,7 @@ public class InputPanel extends DitoPanel implements ActionListener, ChangeListe
       if (columnTitles.isSelected()) {
         return data.size() - 1;
       } else {
-        return data.size();  
+        return data.size();
       }
     }
         

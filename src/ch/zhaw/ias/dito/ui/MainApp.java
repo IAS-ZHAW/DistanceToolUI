@@ -81,7 +81,7 @@ public class MainApp {
 	    System.out.println();
 	    
 	    Matrix dist = algo.doIt(false);
-	    
+	    //dist = dist.addSymmetricRandomNoise();
 	    //String outputFilename = config.getOutput().getFilename().replace("$$METHOD$$", config.getMethod().getName());
 	    String outputFilename = outputDir + "/distance-" + currentFile.getName();
 	    try {
